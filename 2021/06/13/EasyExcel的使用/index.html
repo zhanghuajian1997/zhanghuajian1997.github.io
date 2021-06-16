@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Category: 多线程 AQS | Hexo</title>
+  <title>EasyExcel的使用 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="疯狂输出">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B-AQS/index.html">
+  <meta name="description" content="EasyExcel相关说明">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EasyExcel的使用">
+<meta property="og:url" content="http://example.com/2021/06/13/EasyExcel%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="疯狂输出">
+<meta property="og:description" content="EasyExcel相关说明">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-13T12:35:13.946Z">
+<meta property="article:modified_time" content="2021-06-13T12:35:13.946Z">
 <meta property="article:author" content="ZHANG_JAVA">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -209,41 +212,177 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-EasyExcel的使用" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2021/04/13/AQS/" class="archive-article-date">
-        <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2021/04/13/AQS/" target="_blank">AQS原理</a>
   
+    <h1 class="article-title" itemprop="name">
+      EasyExcel的使用
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2021/06/13/EasyExcel%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+        <time datetime="2021-06-13T12:35:13.946Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-13</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">5分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>EasyExcel相关说明</p>
+<span id="more"></span>
+
+<h1 id="EasyExcel"><a href="#EasyExcel" class="headerlink" title="EasyExcel"></a>EasyExcel</h1><h2 id="一-EsayExcel导入导出的应用场景"><a href="#一-EsayExcel导入导出的应用场景" class="headerlink" title="一.EsayExcel导入导出的应用场景"></a>一.EsayExcel导入导出的应用场景</h2><p>1、数据导入：减轻录入工作量</p>
+<p>2、数据导出：统计信息归档</p>
+<p>3、数据传输：异构系统之间数据传输</p>
+<h2 id="二、EasyExcel简介"><a href="#二、EasyExcel简介" class="headerlink" title="二、EasyExcel简介"></a>二、EasyExcel简介</h2><h3 id="1、EasyExcel特点"><a href="#1、EasyExcel特点" class="headerlink" title="1、EasyExcel特点"></a>1、EasyExcel特点</h3><ul>
+<li>Java领域解析、生成Excel比较有名的框架有Apache poi、jxl等。但他们都存在一个严重的问题就是非常的耗内存。如果你的系统并发量不大的话可能还行，但是一旦并发上来后一定会OOM或者JVM频繁的full gc。</li>
+<li>EasyExcel是阿里巴巴开源的一个excel处理框架，<strong>以使用简单、节省内存著称</strong>。EasyExcel能大大减少占用内存的主要原因是在解析Excel时没有将文件数据一次性全部加载到内存中，而是从磁盘上一行行读取数据，逐个解析。</li>
+<li>EasyExcel采用一行一行的解析模式，并将一行的解析结果以观察者的模式通知处理（AnalysisEventListener）。</li>
+</ul>
+<h3 id="2、EasyExcel写操作"><a href="#2、EasyExcel写操作" class="headerlink" title="2、EasyExcel写操作"></a>2、EasyExcel写操作</h3><p>（1）添加依赖</p>
+<p>（2）在测试目录下创建实体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoData</span> </span>&#123;</span><br><span class="line">    <span class="comment">//设置表头名称</span></span><br><span class="line">    <span class="meta">@ExcelProperty(&quot;学生编号&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> sno;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置表头名称</span></span><br><span class="line">    <span class="meta">@ExcelProperty(&quot;学生姓名&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String sname;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（3）创建测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// 写法1</span></span><br><span class="line">    String fileName = <span class="string">&quot;D:\\test\\201021\\write.xlsx&quot;</span>;</span><br><span class="line">    <span class="comment">// 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭</span></span><br><span class="line">    <span class="comment">// 如果这里想使用03 则 传入excelType参数即可</span></span><br><span class="line">    EasyExcel.write(fileName, DemoData.class).sheet(<span class="string">&quot;学生列表&quot;</span>).doWrite(data());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//循环设置要添加的数据，最终封装到list集合中</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;DemoData&gt; <span class="title">data</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;DemoData&gt; list = <span class="keyword">new</span> ArrayList&lt;DemoData&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        DemoData data = <span class="keyword">new</span> DemoData();</span><br><span class="line">        data.setSno(i);</span><br><span class="line">        data.setSname(<span class="string">&quot;张三&quot;</span>+i);</span><br><span class="line">        list.add(data);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3、EasyExcel读操作"><a href="#3、EasyExcel读操作" class="headerlink" title="3、EasyExcel读操作"></a>3、EasyExcel读操作</h3><p>1、读取数据文档</p>
+<p>列固定，行不固定</p>
+<p>2、修改实体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoData</span> </span>&#123;</span><br><span class="line">    <span class="comment">//设置表头名称</span></span><br><span class="line">    <span class="meta">@ExcelProperty(value = &quot;学生编号&quot;,index = 0)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> sno;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置表头名称</span></span><br><span class="line">    <span class="meta">@ExcelProperty(value = &quot;学生姓名&quot;,index = 1)</span></span><br><span class="line">    <span class="keyword">private</span> String sname;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3.创建监听器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcelListener</span> <span class="keyword">extends</span> <span class="title">AnalysisEventListener</span>&lt;<span class="title">DemoData</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">//读取每一行数据</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invoke</span><span class="params">(DemoData demoData, AnalysisContext analysisContext)</span> </span>&#123;</span><br><span class="line">        System.out.println(demoData);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据读取完做的事</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAfterAllAnalysed</span><span class="params">(AnalysisContext analysisContext)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>4、实现方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span>  <span class="title">readTest</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String fileName = <span class="string">&quot;D:\\test\\201021\\write.xlsx&quot;</span>;</span><br><span class="line">    EasyExcel.read(fileName, DemoData.class,<span class="keyword">new</span> ExcelListener()).sheet().doRead();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-EasyExcel读取课程分类"><a href="#4-EasyExcel读取课程分类" class="headerlink" title="4.EasyExcel读取课程分类"></a>4.EasyExcel读取课程分类</h3><p>1、代码生成器生成代码</p>
+<p>2、引入依赖</p>
+<p>3、实现controller</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Api(description=&quot;课程分类管理&quot;)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/eduservice/edusubject&quot;)</span></span><br><span class="line"><span class="meta">@CrossOrigin</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EduSubjectController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EduSubjectService subjectService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ApiOperation(value = &quot;批量导入课程分类&quot;)</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;addSubject&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> R <span class="title">addSubject</span><span class="params">(MultipartFile file)</span></span>&#123;</span><br><span class="line">        subjectService.addSubject(file);</span><br><span class="line">        <span class="keyword">return</span> R.ok();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4、创建实体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcelSubjectData</span> </span>&#123;</span><br><span class="line">    <span class="meta">@ExcelProperty(index = 0)</span></span><br><span class="line">    <span class="keyword">private</span> String oneSubjectName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExcelProperty(index = 1)</span></span><br><span class="line">    <span class="keyword">private</span> String twoSubjectName;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>5、创建监听器</p>
+<p>（1）监听器直接new，不能交个框架管理，service不能自动注入</p>
+<p>（2）有参构造，手动注入service</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> EduSubjectService subjectService;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">SubjectExcelListener</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">//创建有参数构造，传递subjectService用于操作数据库</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">SubjectExcelListener</span><span class="params">(EduSubjectService subjectService)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.subjectService = subjectService;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>6、修改controller</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ApiOperation(value = &quot;批量导入课程分类&quot;)</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;addSubject&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> R <span class="title">addSubject</span><span class="params">(MultpartFile file)</span></span>&#123;</span><br><span class="line">    subjectService.addSubject(file,subjectService);</span><br><span class="line">    <span class="keyword">return</span> R.ok();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>7、实现service</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EduSubjectServiceImpl</span> <span class="keyword">extends</span> <span class="title">ServiceImpl</span>&lt;<span class="title">EduSubjectMapper</span>, <span class="title">EduSubject</span>&gt; <span class="keyword">implements</span> <span class="title">EduSubjectService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//批量导入课程分类</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addSubject</span><span class="params">(MultipartFile file, EduSubjectService subjectService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            InputStream inputStream = file.getInputStream();</span><br><span class="line">            EasyExcel.read(inputStream, ExcelSubjectData.class,</span><br><span class="line">                    <span class="keyword">new</span> SubjectExcelListener(subjectService)).sheet().doRead();</span><br><span class="line">            </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> GuliException(<span class="number">20001</span>,<span class="string">&quot;导入课程分类失败&quot;</span>);</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>8、实现监听方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubjectExcelListener</span> <span class="keyword">extends</span> <span class="title">AnalysisEventListener</span>&lt;<span class="title">ExcelSubjectData</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> EduSubjectService subjectService;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SubjectExcelListener</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="comment">//创建有参数构造，传递subjectService用于操作数据库</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SubjectExcelListener</span><span class="params">(EduSubjectService subjectService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.subjectService = subjectService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invoke</span><span class="params">(ExcelSubjectData excelSubjectData, AnalysisContext analysisContext)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1读取数据验空</span></span><br><span class="line">        <span class="keyword">if</span>(excelSubjectData==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span>  <span class="keyword">new</span> GuliException(<span class="number">20001</span>,<span class="string">&quot;导入课程分类失败&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//2判断一级分类名称是否重复</span></span><br><span class="line">        EduSubject existOneSubject = <span class="keyword">this</span>.existOneSubject(subjectService, excelSubjectData.getOneSubjectName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//3一级不重复插入数据库</span></span><br><span class="line">        <span class="keyword">if</span>(existOneSubject==<span class="keyword">null</span>)&#123;</span><br><span class="line">            existOneSubject = <span class="keyword">new</span> EduSubject();</span><br><span class="line">            existOneSubject.setTitle(excelSubjectData.getOneSubjectName());</span><br><span class="line">            existOneSubject.setParentId(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">            subjectService.save(existOneSubject);</span><br><span class="line">        &#125;</span><br><span class="line">        String pid = existOneSubject.getId();</span><br><span class="line">        <span class="comment">//4判断二级名称是否重复</span></span><br><span class="line">        EduSubject existTwoSubject = <span class="keyword">this</span>.existTwoSubject(subjectService, excelSubjectData.getTwoSubjectName(), pid);</span><br><span class="line">        <span class="comment">//5二级不重复插入数据库</span></span><br><span class="line">        <span class="keyword">if</span>(existTwoSubject==<span class="keyword">null</span>)&#123;</span><br><span class="line">            existTwoSubject = <span class="keyword">new</span> EduSubject();</span><br><span class="line">            existTwoSubject.setTitle(excelSubjectData.getTwoSubjectName());</span><br><span class="line">            existTwoSubject.setParentId(pid);</span><br><span class="line">            subjectService.save(existTwoSubject);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断一级分类是否重复</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> EduSubject <span class="title">existOneSubject</span><span class="params">(EduSubjectService subjectService, String name)</span> </span>&#123;</span><br><span class="line">        QueryWrapper&lt;EduSubject&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">        wrapper.eq(<span class="string">&quot;parent_id&quot;</span>,<span class="string">&quot;0&quot;</span>);</span><br><span class="line">        wrapper.eq(<span class="string">&quot;title&quot;</span>,name);</span><br><span class="line">        EduSubject eduSubject = subjectService.getOne(wrapper);</span><br><span class="line">        <span class="keyword">return</span> eduSubject;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断二级分类是否重复</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> EduSubject <span class="title">existTwoSubject</span><span class="params">(EduSubjectService subjectService, String name,String pid)</span> </span>&#123;</span><br><span class="line">        QueryWrapper&lt;EduSubject&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">        wrapper.eq(<span class="string">&quot;parent_id&quot;</span>,pid);</span><br><span class="line">        wrapper.eq(<span class="string">&quot;title&quot;</span>,name);</span><br><span class="line">        EduSubject eduSubject = subjectService.getOne(wrapper);</span><br><span class="line">        <span class="keyword">return</span> eduSubject;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAfterAllAnalysed</span><span class="params">(AnalysisContext analysisContext)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          ZHANG_JAVA
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2021/06/13/EasyExcel的使用/" title="EasyExcel的使用" target="_blank">http://example.com/2021/06/13/EasyExcel的使用/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -255,30 +394,140 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/多线程-AQS//" class="article-tag-list-link color3">多线程 AQS</a>
+        			<a href="/categories/项目要，第三方插件//" class="article-tag-list-link color5">项目要，第三方插件</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+    
 
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/06/13/EasyExcel%E7%9A%84%E4%BD%BF%E7%94%A8/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/06/13/%E5%9C%A8%E7%BA%BF%E6%95%99%E8%82%B2%E9%A1%B9%E7%9B%AE%E4%B8%ADRedis%E7%9A%84%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          在线教育项目中Redis的使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/04/13/%E5%89%91%E6%8C%87Offer/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">剑指Offer</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#EasyExcel"><span class="toc-number">1.</span> <span class="toc-text">EasyExcel</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-EsayExcel%E5%AF%BC%E5%85%A5%E5%AF%BC%E5%87%BA%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">一.EsayExcel导入导出的应用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81EasyExcel%E7%AE%80%E4%BB%8B"><span class="toc-number">1.2.</span> <span class="toc-text">二、EasyExcel简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81EasyExcel%E7%89%B9%E7%82%B9"><span class="toc-number">1.2.1.</span> <span class="toc-text">1、EasyExcel特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81EasyExcel%E5%86%99%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.2.</span> <span class="toc-text">2、EasyExcel写操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81EasyExcel%E8%AF%BB%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.3.</span> <span class="toc-text">3、EasyExcel读操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-EasyExcel%E8%AF%BB%E5%8F%96%E8%AF%BE%E7%A8%8B%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.4.</span> <span class="toc-text">4.EasyExcel读取课程分类</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -319,10 +568,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
