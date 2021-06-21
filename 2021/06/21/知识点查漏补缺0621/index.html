@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Category: 项目要，第三方插件 | Hexo</title>
+  <title>知识点查漏补缺0621 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="疯狂输出">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/categories/%E9%A1%B9%E7%9B%AE%E8%A6%81%EF%BC%8C%E7%AC%AC%E4%B8%89%E6%96%B9%E6%8F%92%E4%BB%B6/index.html">
+  <meta name="description" content="知识点查漏补缺">
+<meta property="og:type" content="article">
+<meta property="og:title" content="知识点查漏补缺0621">
+<meta property="og:url" content="http://example.com/2021/06/21/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA0621/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="疯狂输出">
+<meta property="og:description" content="知识点查漏补缺">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-21T14:01:13.774Z">
+<meta property="article:modified_time" content="2021-06-21T14:01:13.775Z">
 <meta property="article:author" content="ZHANG_JAVA">
+<meta property="article:tag" content="知识点查漏补缺">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -209,76 +212,466 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-知识点查漏补缺0621" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2021/06/13/EasyExcel%E7%9A%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-        <time datetime="2021-06-13T12:35:13.946Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-13</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2021/06/13/EasyExcel%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank">EasyExcel的使用</a>
   
+    <h1 class="article-title" itemprop="name">
+      知识点查漏补缺0621
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2021/06/21/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA0621/" class="archive-article-date">
+        <time datetime="2021-06-21T14:01:13.774Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-21</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">4.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">15分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>知识点查漏补缺</p>
+<span id="more"></span>
+
+<h2 id="1-JDBC接口相关"><a href="#1-JDBC接口相关" class="headerlink" title="1.JDBC接口相关"></a>1.JDBC接口相关</h2><p>1.Statement、PreparedStatement和CallableStatement都是接口(interface)。 </p>
+<p>2.Statement继承自Wrapper、PreparedStatement继承自Statement、CallableStatement继承自PreparedStatement。 </p>
+<ol start="3">
+<li>​    Statement接口提供了执行语句和获取结果的基本方法； <pre><code> PreparedStatement接口添加了处理 IN 参数的方法； 
+ CallableStatement接口添加了处理 OUT 参数的方法。 
+</code></pre>
+</li>
+</ol>
+<p>4.a.Statement:<br>普通的不带参的查询SQL；支持批量更新,批量删除;<br>b.PreparedStatement:<br>可变参数的SQL,编译一次,执行多次,效率高;<br>安全性好，有效防止Sql注入等问题;<br>支持批量更新,批量删除;<br>c.CallableStatement:<br>继承自PreparedStatement,支持带参数的SQL操作;<br>支持调用存储过程,提供了对输出和输入/输出参数(INOUT)的支持; </p>
+<p>Statement每次执行sql语句，数据库都要执行sql语句的编译 ，<br>最好用于仅执行一次查询并返回结果的情形，效率高于PreparedStatement</p>
+<p>PreparedStatement是预编译的，使用PreparedStatement有几个好处 </p>
+<ol>
+<li>在执行可变参数的一条SQL时，PreparedStatement比Statement的效率高，因为DBMS预编译一条SQL当然会比多次编译一条SQL的效率要高。 <ol start="2">
+<li>安全性好，有效防止Sql注入等问题。 <ol start="3">
+<li>对于多次重复执行的语句，使用PreparedStament效率会更高一点，并且在这种情况下也比较适合使用batch<ol start="4">
+<li>代码的可读性和可维护性。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id="2-关于事务的传播特性"><a href="#2-关于事务的传播特性" class="headerlink" title="2.关于事务的传播特性"></a>2.关于事务的传播特性</h2><p>  <strong>事务属性的种类：</strong>  <strong>传播行为、隔离级别、只读和事务超时</strong></p>
+<p><strong>a)</strong>  <strong>传播行为定义了被调用方法的事务边界。</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>传播行为</strong></th>
+<th><strong>意义</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>PROPERGATION_MANDATORY</strong></td>
+<td><strong>表示方法必须运行在一个事务中，如果当前事务不存在，就抛出异常</strong></td>
+</tr>
+<tr>
+<td><strong>PROPAGATION_NESTED</strong></td>
+<td><strong>表示如果当前事务存在，则方法应该运行在一个嵌套事务中。否则，它看起来和 PROPAGATION_REQUIRED</strong> <strong>看起来没什么俩样</strong></td>
+</tr>
+<tr>
+<td><strong>PROPAGATION_NEVER</strong></td>
+<td><strong>表示方法不能运行在一个事务中，否则抛出异常</strong></td>
+</tr>
+<tr>
+<td><strong>PROPAGATION_NOT_SUPPORTED</strong></td>
+<td><strong>表示方法不能运行在一个事务中，如果当前存在一个事务，则该方法将被挂起</strong></td>
+</tr>
+<tr>
+<td><strong>PROPAGATION_REQUIRED</strong></td>
+<td><strong>表示当前方法必须运行在一个事务中，如果当前存在一个事务，那么该方法运行在这个事务中，否则，将创建一个新的事务</strong></td>
+</tr>
+<tr>
+<td><strong>PROPAGATION_REQUIRES_NEW</strong></td>
+<td><strong>表示当前方法必须运行在自己的事务中，如果当前存在一个事务，那么这个事务将在该方法运行期间被挂起</strong></td>
+</tr>
+<tr>
+<td><strong>PROPAGATION_SUPPORTS</strong></td>
+<td><strong>表示当前方法不需要运行在一个是事务中，但如果有一个事务已经存在，该方法也可以运行在这个事务中</strong></td>
+</tr>
+</tbody></table>
+<p><strong>b)</strong>  <strong>隔离级别</strong></p>
+<p><strong>在操作数据时可能带来 3</strong> <strong>个副作用，分别是脏读、不可重复读、幻读。为了避免这 3</strong> <strong>中副作用的发生，在标准的 SQL</strong> <strong>语句中定义了 4</strong> <strong>种隔离级别，分别是未提交读、已提交读、可重复读、可序列化。而在 spring</strong> <strong>事务中提供了 5</strong> <strong>种隔离级别来对应在 SQL</strong> <strong>中定义的 4</strong> <strong>种隔离级别，如下：</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>隔离级别</strong></th>
+<th><strong>意义</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ISOLATION_DEFAULT</strong></td>
+<td><strong>使用后端数据库默认的隔离级别</strong></td>
+</tr>
+<tr>
+<td><strong>ISOLATION_READ_UNCOMMITTED</strong></td>
+<td><strong>允许读取未提交的数据（对应未提交读），可能导致脏读、不可重复读、幻读</strong></td>
+</tr>
+<tr>
+<td><strong>ISOLATION_READ_COMMITTED</strong></td>
+<td><strong>允许在一个事务中读取另一个已经提交的事务中的数据（对应已提交读）。可以避免脏读，但是无法避免不可重复读和幻读</strong></td>
+</tr>
+<tr>
+<td><strong>ISOLATION_REPEATABLE_READ</strong></td>
+<td><strong>一个事务不可能更新由另一个事务修改但尚未提交（回滚）的数据（对应可重复读）。可以避免脏读和不可重复读，但无法避免幻读</strong></td>
+</tr>
+<tr>
+<td><strong>ISOLATION_SERIALIZABLE</strong></td>
+<td><strong>这种隔离级别是所有的事务都在一个执行队列中，依次顺序执行，而不是并行（对应可序列化）。可以避免脏读、不可重复读、幻读。但是这种隔离级别效率很低，因此，除非必须，否则不建议使用。</strong></td>
+</tr>
+</tbody></table>
+<p><strong>c)</strong>  <strong>只读</strong></p>
+<p><strong>如果在一个事务中所有关于数据库的操作都是只读的，也就是说，这些操作只读取数据库中的数据，而并不更新数据，那么应将事务设为只读模式（ READ_ONLY_MARKER</strong> <strong>） ,</strong> <strong>这样更有利于数据库进行优化</strong> <strong>。</strong></p>
+<p><strong>因为只读的优化措施是事务启动后由数据库实施的，因此，只有将那些具有可能启动新事务的传播行为 (PROPAGATION_NESTED</strong> <strong>、 PROPAGATION_REQUIRED</strong> <strong>、 PROPAGATION_REQUIRED_NEW)</strong> <strong>的方法的事务标记成只读才有意义。</strong></p>
+<p><strong>如果使用 Hibernate</strong> <strong>作为持久化机制，那么将事务标记为只读后，会将 Hibernate</strong> <strong>的 flush</strong> <strong>模式设置为 FULSH_NEVER,</strong> <strong>以告诉 Hibernate</strong> <strong>避免和数据库之间进行不必要的同步，并将所有更新延迟到事务结束。</strong></p>
+<p><strong>d)</strong>  <strong>事务超时</strong></p>
+<p><strong>如果一个事务长时间运行，这时为了尽量避免浪费系统资源，应为这个事务设置一个有效时间，使其等待数秒后自动回滚。与设</strong></p>
+<p><strong>置“只读”属性一样，事务有效属性也需要给那些具有可能启动新事物的传播行为的方法的事务标记成只读才有意义。</strong></p>
+<h2 id="3-Servlet生命周期"><a href="#3-Servlet生命周期" class="headerlink" title="3.Servlet生命周期"></a>3.Servlet生命周期</h2><p>Servlet的生命周期分为5个阶段：加载、创建、初始化、处理客户请求、卸载。</p>
+<p>(1)加载：容器通过类加载器使用servlet类对应的文件加载servlet</p>
+<p>(2)创建：通过调用servlet构造函数创建一个servlet对象</p>
+<p>(3)初始化：调用init方法初始化</p>
+<p>(4)处理客户请求：每当有一个客户请求，容器会创建一个线程来处理客户请求</p>
+<p>(5)卸载：调用destroy方法让servlet自己释放其占用的资源</p>
+<p>Servlet的生命周期</p>
+<p>1.加载：容器通过类加载器使用Servlet类对应的文件来加载Servlet</p>
+<p>2.创建：通过<strong>调用Servlet的构造函数来创建一个Servlet实例</strong></p>
+<p>3.初始化：通过调用Servlet的init()方法来完成初始化工作，<strong>这个方法是在Servlet已经被创建，但在向客户端提供服务之前调用。</strong></p>
+<p>4.处理客户请求：Servlet创建后就可以处理请求，当有新的客户端请求时，Web容器都会<strong>创建一个新的线程</strong>来处理该请求。接着调用Servlet的</p>
+<p>Service()方法来响应客户端请求（Service方***根据请求的method属性来调用doGet（）和doPost（））</p>
+<p>5.卸载：<strong>容器在卸载Servlet之前</strong>需要调用destroy()方法，让Servlet释放其占用的资源。</p>
+<h2 id="4-Servlet的一些方法"><a href="#4-Servlet的一些方法" class="headerlink" title="4.Servlet的一些方法"></a>4.Servlet的一些方法</h2><p>init方法： 是在servlet实例创建时调用的方法，用于创建或打开任何与servlet相的资源和初始 化servlet的状态，Servlet规范保证调用init方法前不会处理任何请求 </p>
+<p> service方法：是servlet真正处理客户端传过来的请求的方法，由web容器调用， 根据HTTP请求方法（GET、POST等），将请求分发到doGet、doPost等方法 </p>
+<p>destory方法：是在servlet实例被销毁时由web容器调用。Servlet规范确保在destroy方法调用之 前所有请求的处理均完成，需要覆盖destroy方法的情况：释放任何在init方法中 打开的与servlet相关的资源存储servlet的状态</p>
+<p>servlet在多线程下其本身并不是线程安全的。</p>
+<p>如果在类中定义成员变量，而在service中根据不同的线程对该成员变量进行更改，那么在并发的时候就会引起错误。最好是在方法中，定义局部变量，而不是类变量或者对象的成员变量。由于方法中的局部变量是在栈中，彼此各自都拥有独立的运行空间而不会互相干扰，因此才做到线程安全。</p>
+<h2 id="5-请求转发和请求重定向"><a href="#5-请求转发和请求重定向" class="headerlink" title="5.请求转发和请求重定向"></a>5.请求转发和请求重定向</h2><p>forward，服务器获取跳转页面内容传给用户，用户地址栏不变</p>
+<p>redirect，是服务器向用户发送转向的地址，redirect后地址栏变成新的地址</p>
+<h2 id="6-多线程问题"><a href="#6-多线程问题" class="headerlink" title="6.多线程问题"></a>6.多线程问题</h2><p>Java中的多线程是一种抢占式的机制，而不是分时机制。抢占式的机制是有多个线程处于可运行状态，但是只有一个线程在运行。<br><strong>共同点</strong> <strong>：</strong><br>1.他们都是在多线程的环境下，都可以在程序的调用处阻塞指定的毫秒数，并返回。 </p>
+<ol start="2">
+<li>wait()和sleep()都可以通过interrupt()方法 打断线程的暂停状态 ，从而使线程立刻抛出InterruptedException。<br>如果线程A希望立即结束线程B，则可以对线程B对应的Thread实例调用interrupt方法。如果此刻线程B正在wait/sleep/join，则线程B会立刻抛出InterruptedException，在catch() {} 中直接return即可安全地结束线程。<br>需要注意的是，InterruptedException是线程自己从内部抛出的，并不是interrupt()方法抛出的。对某一线程调用 interrupt()时，如果该线程正在执行普通的代码，那么该线程根本就不会抛出InterruptedException。但是，一旦该线程进入到 wait()/sleep()/join()后，就会立刻抛出InterruptedException 。<br><strong>不同点</strong> <strong>：</strong><br>1.每个对象都有一个锁来控制同步访问。Synchronized关键字可以和对象的锁交互，来实现线程的同步。<br>sleep方法没有释放锁，而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。<br>2.wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用<br>3.sleep必须捕获异常，而wait，notify和notifyAll不需要捕获异常 </li>
+</ol>
+<p>4.sleep是线程类（Thread）的方法，导致此线程暂停执行指定时间，给执行机会给其他线程，但是监控状态依然保持，到时后会自动恢复。调用sleep不会释放对象锁。</p>
+<p>5.wait是Object类的方法，对此对象调用wait方法导致本线程放弃对象锁，进入等待此对象的等待锁定池，只有针对此对象发出notify方法（或notifyAll）后本线程才进入对象锁定池准备获得对象锁进入运行状态。</p>
+<h2 id="7-Integer问题？"><a href="#7-Integer问题？" class="headerlink" title="7.Integer问题？"></a>7.Integer问题？</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Integer i01 = <span class="number">59</span>;</span><br><span class="line"><span class="keyword">int</span> i02 = <span class="number">59</span>;</span><br><span class="line">Integer i03 =Integer.valueOf(<span class="number">59</span>);</span><br><span class="line">Integer i04 = <span class="keyword">new</span> Integer(<span class="number">59</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Integer i01=59 的时候，会调用 Integer 的 valueOf 方法，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">assert</span> IntegerCache.high&gt;= <span class="number">127</span>;</span><br><span class="line">   <span class="keyword">if</span> (i &gt;= IntegerCache.low&amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">   <span class="keyword">return</span> IntegerCache.***[i+ (-IntegerCache.low)];</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">new</span> Integer(i); &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法就是返回一个 Integer 对象，只是在返回之前，看作了一个判断，判断当前 i 的值是否在 [-128,127] 区别，且 IntegerCache 中是否存在此对象，如果存在，则直接返回引用，否则，创建一个新的对象。</p>
+<p>在这里的话，因为程序初次运行，没有 59 ，所以，直接创建了一个新的对象。</p>
+<p>int i02=59 ，这是一个基本类型，存储在栈中。</p>
+<p>Integer i03 =Integer.<em>valueOf</em>(59); 因为 IntegerCache 中已经存在此对象，所以，直接返回引用。</p>
+<p>Integer i04 = <strong>new</strong> Integer(59) ；直接创建一个新的对象。</p>
+<p>System. <em>out</em> .println(i01== i02); i01 是 Integer 对象， i02 是 int ，这里比较的不是地址，而是值。 Integer 会自动拆箱成 int ，然后进行值的比较。所以，为真。</p>
+<p>System. <em>out</em> .println(i01== i03); 因为 i03 返回的是 i01 的引用，所以，为真。</p>
+<p>System. <em>out</em> .println(i03==i04); 因为 i04 是重新创建的对象，所以 i03,i04 是指向不同的对象，因此比较结果为假。</p>
+<p>System. <em>out</em> .println(i02== i04); 因为 i02 是基本类型，所以此时 i04 会自动拆箱，进行值比较，所以，结果为真。</p>
+<h2 id="8-异常代码块中的执行顺序"><a href="#8-异常代码块中的执行顺序" class="headerlink" title="8.异常代码块中的执行顺序"></a>8.异常代码块中的执行顺序</h2><p>1、finally块一定会执行，无论是否try…catch。</p>
+<p>2、finally前有return，会先执行return语句，并保存下来，再执行finally块，最后return。</p>
+<p>3、finally前有return、finally块中也有return，先执行前面的return，保存下来，再执行finally的return，覆盖之前的结果，并返回。</p>
+<h2 id="9-JVM配置参数"><a href="#9-JVM配置参数" class="headerlink" title="9.JVM配置参数"></a>9.JVM配置参数</h2><p>-Xmx10240m：代表最大堆</p>
+<p> -Xms10240m：代表最小堆</p>
+<p> -Xmn5120m：代表新生代</p>
+<p> -XXSurvivorRatio=3：年轻代中Eden区与Survivor区的大小比值，代表Eden:Survivor = 3  根据Generation-Collection算法(目前大部分JVM采用的算法)，一般根据对象的生存周期将堆内存分为若干不同的区域，一般情况将新生代分为Eden ，两块Survivor；</p>
+<h2 id="10-关于synchronized和volatile的比较"><a href="#10-关于synchronized和volatile的比较" class="headerlink" title="10.关于synchronized和volatile的比较:"></a>10.关于synchronized和volatile的比较:</h2><ul>
+<li><p>关键字volatile是线程同步的轻量级实现，所以volatile性能肯定比synchronized要好，并且只能修改变量，而synchronized可以修饰方法，以及代码块。</p>
+</li>
+<li><p>多线程访问volatile不会发生阻塞，而synchronized会出现阻塞</p>
+</li>
+<li><p>volatile能保证数据的可见性，但不能保证原子性；而synchronized可以保证原子性，也可以间接保证可见性，因为它会将私有内存和公共内存中的数据做同步</p>
+</li>
+<li><p>关键字volatile解决的下变量在多线程之间的可见性；而synchronized解决的是多线程之间资源同步问题</p>
+<p><em>摘自《Java多线程编程核心技术》</em></p>
+</li>
+</ul>
+<h2 id="11-考察栈的先进后出"><a href="#11-考察栈的先进后出" class="headerlink" title="11.考察栈的先进后出"></a>11.考察栈的先进后出</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        split(12);</span><br><span class="line">    &#125;</span><br><span class="line">    public static int split(int number) &#123;</span><br><span class="line">        if (number &gt; 1) &#123;</span><br><span class="line">            if (number % 2 !&#x3D; 0) System.out.print(split((number + 1) &#x2F; 2));</span><br><span class="line">                System.out.print(split(number &#x2F; 2));</span><br><span class="line">            &#125;</span><br><span class="line">        return number;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>考察方法进栈与出栈的顺序。先进后出</p>
+<p>有个知识点，方法在出栈的时候，执行的是return语句。因为出栈就意味着方法结束并消费，如果没有return语句，那么方法出栈的时候什么都不执行，就直接销毁。</p>
+<p>1.执行split（12）时，执行代码System.out.print(split(number / 2))</p>
+<p>  split（12/2）进栈，此时number=6；</p>
+<p>2.执行split（6）时，执行代码System.out.print(split(number / 2))</p>
+<p>  split（6/2）进栈，此时number=3；</p>
+<p>3.执行split（3）时</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">第<span class="number">1</span>行 <span class="keyword">if</span> (number % <span class="number">2</span> != <span class="number">0</span>)</span><br><span class="line">第<span class="number">2</span>行          System.out.print(split((number + <span class="number">1</span>) / <span class="number">2</span>));</span><br><span class="line">第<span class="number">3</span>行    System.out.print(split(number / <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+
+<p> 按照顺序执行  </p>
+<p> 先执行第2行</p>
+<p>​      首先split（(3+1)/2）进栈，此时number=2，</p>
+<p>​      再执行split（2），那么split（2/2）进栈，此时number=1， 最后return 1，</p>
+<p>​      注意此时第2行代码还没有结束</p>
+<p>​      此时</p>
+<p>​      split（2/2）出栈，输出1；</p>
+<p>​      split（(3+1)/2）出栈，输出2；</p>
+<p>  第二行代码结束，再执行第三行，此时number=3，执行System.out.print(split(number / 2))</p>
+<p>​      split（3/2）进栈，number=1，return，那么就需要出栈了</p>
+<p>split（3/2）出栈，输出1</p>
+<p>split（6/2）出栈，输出3</p>
+<p>split（12/2）出栈，输出6；</p>
+<p>最终结果12136；</p>
+<p>split（number）方法，最终返回的是number这个值，所以split（n）出栈的输出结果就是n</p>
+<p>整理：</p>
+<p>split（12/2）进栈</p>
+<p>split（6/2）进栈</p>
+<p>split（(3+1)/2）进栈</p>
+<p>split（2/2）进栈</p>
+<p>​    split（2/2）出栈，输出1</p>
+<p>​    split（(3+1)/2）出栈，输出2</p>
+<p>split（2/2）进栈</p>
+<p>​    split（2/2）出栈，输出1</p>
+<p>split（6/2）出栈，输出3</p>
+<p>split（12/2）出栈，输出6</p>
+<h2 id="12-Object-类中的方法总结"><a href="#12-Object-类中的方法总结" class="headerlink" title="12.Object()类中的方法总结"></a>12.Object()类中的方法总结</h2><p>protected Object clone()创建并返回此对象的一个副本。 </p>
+<p>boolean equals(Object obj)指示其他某个对象是否与此对象“相等”。<br>protected void finalize()当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。<br>class  getClass()返回此 Object 的运行时类。<br>int hashCode()返回该对象的哈希码值。<br>void notify()唤醒在此对象监视器上等待的单个线程。<br>void notifyAll()唤醒在此对象监视器上等待的所有线程。<br>String toString()返回该对象的字符串表示。<br>void wait()在其他线程调用此对象的 notify() 方法或 notifyAll() 方法前，导致当前线程等待。<br>void wait(long timeout)在其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量前，导致当前线程等待。<br>void wait(long timeout, int nanos)在其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量前，导致当前线程等待。</p>
+<h2 id="13-数组的一些说法"><a href="#13-数组的一些说法" class="headerlink" title="13.数组的一些说法"></a>13.数组的一些说法</h2><p>A 数组是对象，因为可以调用方法，从上面的输出结果可以看出不同类型的数组具有不同的类</p>
+<p>B 数组长度是不能动态调整的</p>
+<p>C Java中的数组中的数据是连续存储在一块内存中的，所以可以通过下标(即偏移量)的方式访问</p>
+<p>D 固定长度的数组定义如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array=<span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">100</span>]; <span class="keyword">int</span> array[]=<span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">100</span>];</span><br></pre></td></tr></table></figure>
+
+
+
+<p>E 查看源码可以知道数组的equals方法是object的equals，比较的是内存地址</p>
+<p>F java可以有多维数组</p>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          ZHANG_JAVA
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2021/06/21/知识点查漏补缺0621/" title="知识点查漏补缺0621" target="_blank">http://example.com/2021/06/21/知识点查漏补缺0621/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">知识点查漏补缺</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/项目要，第三方插件//" class="article-tag-list-link color5">项目要，第三方插件</a>
+        			<a href="/categories/查漏补缺、牛客//" class="article-tag-list-link color3">查漏补缺、牛客</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+    
 
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/06/21/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA0621/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2021/06/17/%E4%BB%8E%E8%BE%93%E5%85%A5URL%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">从输入URL到页面加载发生了什么？</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-JDBC%E6%8E%A5%E5%8F%A3%E7%9B%B8%E5%85%B3"><span class="toc-number">1.</span> <span class="toc-text">1.JDBC接口相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%85%B3%E4%BA%8E%E4%BA%8B%E5%8A%A1%E7%9A%84%E4%BC%A0%E6%92%AD%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">2.关于事务的传播特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Servlet%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">3.</span> <span class="toc-text">3.Servlet生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Servlet%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">4.Servlet的一些方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E5%92%8C%E8%AF%B7%E6%B1%82%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-number">5.</span> <span class="toc-text">5.请求转发和请求重定向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%97%AE%E9%A2%98"><span class="toc-number">6.</span> <span class="toc-text">6.多线程问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Integer%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">7.Integer问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%BC%82%E5%B8%B8%E4%BB%A3%E7%A0%81%E5%9D%97%E4%B8%AD%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="toc-number">8.</span> <span class="toc-text">8.异常代码块中的执行顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-JVM%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="toc-number">9.</span> <span class="toc-text">9.JVM配置参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%85%B3%E4%BA%8Esynchronized%E5%92%8Cvolatile%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">10.</span> <span class="toc-text">10.关于synchronized和volatile的比较:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E8%80%83%E5%AF%9F%E6%A0%88%E7%9A%84%E5%85%88%E8%BF%9B%E5%90%8E%E5%87%BA"><span class="toc-number">11.</span> <span class="toc-text">11.考察栈的先进后出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-Object-%E7%B1%BB%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93"><span class="toc-number">12.</span> <span class="toc-text">12.Object()类中的方法总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AF%B4%E6%B3%95"><span class="toc-number">13.</span> <span class="toc-text">13.数组的一些说法</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -319,10 +712,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
