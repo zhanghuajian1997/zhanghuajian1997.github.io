@@ -6,41 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Spring的aop顺序和循环依赖 | Hexo</title>
+  <title>知识点查漏补缺0624 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="Spring的aop顺序和循环依赖">
+  <meta name="description" content="知识点查漏补缺0624">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring的aop顺序和循环依赖">
-<meta property="og:url" content="http://example.com/2021/04/13/Spring/index.html">
+<meta property="og:title" content="知识点查漏补缺0624">
+<meta property="og:url" content="http://example.com/2021/06/24/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA0624/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Spring的aop顺序和循环依赖">
+<meta property="og:description" content="知识点查漏补缺0624">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/aop1.png">
-<meta property="og:image" content="http://example.com/images/aop2.png">
-<meta property="og:image" content="http://example.com/images/aop3.png">
-<meta property="og:image" content="http://example.com/images/aop4.png">
-<meta property="og:image" content="http://example.com/images/aop5.png">
-<meta property="og:image" content="http://example.com/images/aop6.png">
-<meta property="og:image" content="http://example.com/images/aop7.png">
-<meta property="og:image" content="http://example.com/images/aop8.png">
-<meta property="og:image" content="http://example.com/images/aop9.png">
-<meta property="og:image" content="http://example.com/images/aop10.png">
-<meta property="og:image" content="http://example.com/images/aop11.png">
-<meta property="og:image" content="http://example.com/images/aop12.png">
-<meta property="og:image" content="http://example.com/images/aop13.png">
-<meta property="og:image" content="http://example.com/images/aop14.png">
-<meta property="og:image" content="http://example.com/images/aop15.png">
-<meta property="og:image" content="http://example.com/images/aop16.png">
-<meta property="og:image" content="http://example.com/images/aop17.png">
-<meta property="og:image" content="http://example.com/images/aop18.png">
-<meta property="article:published_time" content="2021-04-13T07:27:26.000Z">
-<meta property="article:modified_time" content="2021-04-17T14:02:20.180Z">
+<meta property="og:image" content="http://example.com/images/0624.png">
+<meta property="article:published_time" content="2021-06-24T11:49:07.991Z">
+<meta property="article:modified_time" content="2021-06-24T11:49:26.418Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/aop1.png">
+<meta name="twitter:image" content="http://example.com/images/0624.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -231,14 +214,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Spring" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-知识点查漏补缺0624" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      Spring的aop顺序和循环依赖
+      知识点查漏补缺0624
     </h1>
   
 
@@ -250,8 +233,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/04/13/Spring/" class="archive-article-date">
-        <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
+<a href="/2021/06/24/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA0624/" class="archive-article-date">
+        <time datetime="2021-06-24T11:49:07.991Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-24</time>
 </a>
 
   
@@ -264,7 +247,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">395字</span>
+      <span class="post-count">609字</span>
     </span>
   </span>
 
@@ -273,7 +256,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -284,54 +267,84 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>Spring的aop顺序和循环依赖</p>
+    <p>知识点查漏补缺0624</p>
 <span id="more"></span>
 
+<h1 id="switch（）支持的数据类型"><a href="#switch（）支持的数据类型" class="headerlink" title="switch（）支持的数据类型"></a>switch（）支持的数据类型</h1><p>jdk1.7之前byte,short ,int ,char以及对应的包装类和Enum类型</p>
+<p>jdk1.7之后加入String </p>
+<h1 id="八大基本数据类型"><a href="#八大基本数据类型" class="headerlink" title="八大基本数据类型"></a>八大基本数据类型</h1><table>
+<thead>
+<tr>
+<th>基本数据类型</th>
+<th>默认值</th>
+<th>存储需求（字节）</th>
+<th>取值范围</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>byte</td>
+<td>0</td>
+<td>1</td>
+<td>-2^7—2^7-1</td>
+<td>byte b=10;</td>
+</tr>
+<tr>
+<td>char</td>
+<td>‘ \u0000′</td>
+<td>2</td>
+<td>0—2^16-1</td>
+<td>char c=’c’ ;</td>
+</tr>
+<tr>
+<td>short</td>
+<td>0</td>
+<td>2</td>
+<td>-2^15—2^15-1</td>
+<td>short s=10;</td>
+</tr>
+<tr>
+<td>int</td>
+<td>0</td>
+<td>4</td>
+<td>-2^31—2^31-1</td>
+<td>int i=10;</td>
+</tr>
+<tr>
+<td>long</td>
+<td>0</td>
+<td>8</td>
+<td>-2^63—2^63-1</td>
+<td>long o=10L;</td>
+</tr>
+<tr>
+<td>float</td>
+<td>0.0f</td>
+<td>4</td>
+<td>-2^31—2^31-1</td>
+<td>float f=10.0F</td>
+</tr>
+<tr>
+<td>double</td>
+<td>0.0d</td>
+<td>8</td>
+<td>-2^63—2^63-1</td>
+<td>double d=10.0;</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>false</td>
+<td>1</td>
+<td>true\false</td>
+<td>boolean flag=true;</td>
+</tr>
+</tbody></table>
+<h1 id="抽象类和接口的区别"><a href="#抽象类和接口的区别" class="headerlink" title="抽象类和接口的区别"></a>抽象类和接口的区别</h1><p>在JDK1.8之前的版本（不包括JDK1.8），接口中不能有静态方法，抽象类中因为有普通方法，故也可以有静态方法。<br>在JDK1.8后（包括JDK1.8），在抽象类中依旧可以有静态方法，同时在接口中也可以定义静态方法了。</p>
+<p>在JDK1.8，接口中新加了默认方法和静态方法：<br>        默认方法：使用default修饰，在接口的实现类中，可以直接调用该方法，也可以重写该方法。<br>        静态方法：使用static修饰，通过接口直接调用。</p>
+<p>1.接口的方法默认为public abstract ,接口中的变量默认为public static final，在java8之前所有的方法不能有实现<br>抽象类中可以有非抽象方法<br>2.一个类可以实现多个接口，但只能继承一个抽象类<br>3.一个类实现接口，要实现该接口的所有抽象方法。<br>4.接口不能被实例化，但可以声明，但是必须引用一个实现该接口的对象。<br>抽象类可以有构造方法，但是不能被直接通过new进行实例化。但可以通过子类继承，实例化子类的时候抽象类也会被实例化。<br>这其实用到了多态，向上转型。父类引用指向子类对象。<br>5.从设计层面来说，抽象类是对类的抽象，是一种模板设计，接口是行为的抽象，是一种行为的规范。</p>
+<h1 id="Statement说明"><a href="#Statement说明" class="headerlink" title="Statement说明"></a>Statement说明</h1><p>1、Statement对象用于执行不带参数的简单SQL语句。<br>2、Prepared Statement 对象用于执行预编译SQL语句。<br>3、Callable Statement对象用于执行对存储过程的调用。</p>
+<h1 id="TCP建立连接的过程"><a href="#TCP建立连接的过程" class="headerlink" title="TCP建立连接的过程"></a>TCP建立连接的过程</h1><p><img src="/images/0624.png" alt="TCP"></p>
 
-
-
-
-<h2 id="Spring的aop顺序"><a href="#Spring的aop顺序" class="headerlink" title="Spring的aop顺序"></a>Spring的aop顺序</h2><p>Spring 4/5 对于AOP的执行顺序是不同的</p>
-<h3 id="AOP的前置注解"><a href="#AOP的前置注解" class="headerlink" title="AOP的前置注解"></a>AOP的前置注解</h3><p><img src="/images/aop1.png"></p>
-<p>Spring 4 </p>
-<p><img src="/images/aop2.png"></p>
-<p>出异常情况下</p>
-<p><img src="/images/aop3.png"></p>
-<p><img src="/images/aop4.png"></p>
-<p>Spring 5</p>
-<p><img src="/images/aop5.png"></p>
-<p>出异常情况下</p>
-<p><img src="/images/aop6.png"></p>
-<p>总结：</p>
-<p><img src="/images/aop7.png"></p>
-<h2 id="Spring的循环依赖"><a href="#Spring的循环依赖" class="headerlink" title="Spring的循环依赖"></a>Spring的循环依赖</h2><h3 id="面试题："><a href="#面试题：" class="headerlink" title="面试题："></a>面试题：</h3><p><img src="/images/aop8.png"></p>
-<h3 id="什么是循环依赖："><a href="#什么是循环依赖：" class="headerlink" title="什么是循环依赖："></a>什么是循环依赖：</h3><p>多个Bean之间相互依赖，形成了一个闭环。比如，A依赖B，B依赖C，C依赖A。</p>
-<p><img src="/images/aop9.png"></p>
-<h3 id="两种注入方式对循环依赖的影响："><a href="#两种注入方式对循环依赖的影响：" class="headerlink" title="两种注入方式对循环依赖的影响："></a>两种注入方式对循环依赖的影响：</h3><p>构造注入：创建一个循环依赖无法解决的问题,无法解决</p>
-<p>我们AB循环依赖问题只要A的注入方式是setter注入并且<strong>Singketon</strong>就不会有循环依赖问题</p>
-<p><img src="/images/aop10.png"></p>
-<h3 id="循环依赖Java代码验证："><a href="#循环依赖Java代码验证：" class="headerlink" title="循环依赖Java代码验证："></a>循环依赖Java代码验证：</h3><h4 id="构造方式注入依赖："><a href="#构造方式注入依赖：" class="headerlink" title="构造方式注入依赖："></a>构造方式注入依赖：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceB</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ServiceA serviceA;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServiceB</span><span class="params">(ServiceA serviceA)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serviceA = serviceA;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceA</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ServiceB serviceB;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServiceA</span><span class="params">(ServiceB serviceB)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serviceB = serviceB;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientConstructor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">new</span> ServicrA(<span class="keyword">new</span> ServiceB());  <span class="comment">//报错！！</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="Setter方式注入依赖："><a href="#Setter方式注入依赖：" class="headerlink" title="Setter方式注入依赖："></a>Setter方式注入依赖：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceA</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> ServiceB serviceB;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServiceB</span><span class="params">(ServiceB serviceB)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span> serviceB = serviceB;</span><br><span class="line">        System.out.println(<span class="string">&quot;A里面设置了B&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceB</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> ServiceA serviceA;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServiceA</span><span class="params">(ServiceA serviceA)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span> serviceA = serviceA;</span><br><span class="line">        System.out.println(<span class="string">&quot;B里面设置了A&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientConstructor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建serviceA</span></span><br><span class="line">        ServiceA a = <span class="keyword">new</span> ServiceA();</span><br><span class="line">        <span class="comment">//创建serviceA</span></span><br><span class="line">        ServiceB b = <span class="keyword">new</span> ServiceB();</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        b.setServiceA(a);</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">		a.setServiceB(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="基于Spring容器的循环依赖"><a href="#基于Spring容器的循环依赖" class="headerlink" title="基于Spring容器的循环依赖"></a>基于Spring容器的循环依赖</h3><p><img src="/images/aop11.png"></p>
-<h4 id="循环依赖异常"><a href="#循环依赖异常" class="headerlink" title="循环依赖异常"></a>循环依赖异常</h4><p><img src="/images/aop12.png"></p>
-<h4 id="重要结论："><a href="#重要结论：" class="headerlink" title="重要结论："></a>重要结论：</h4><p>Spring内部通过三级缓存来解决循环依赖 —–&gt;DefaultSingletonBeanRegistry</p>
-<p><img src="/images/aop13.png"></p>
-<p><img src="/images/aop14.png"></p>
-<h3 id="Spring循环依赖debug的前置知识"><a href="#Spring循环依赖debug的前置知识" class="headerlink" title="Spring循环依赖debug的前置知识"></a>Spring循环依赖debug的前置知识</h3><p><img src="/images/aop15.png"></p>
-<p><img src="/images/aop16.png"></p>
-<p><img src="/images/aop17.png"></p>
-<p><img src="/images/aop18.png"></p>
-<h3 id="Spring是怎么如何解决的循环依赖debug"><a href="#Spring是怎么如何解决的循环依赖debug" class="headerlink" title="Spring是怎么如何解决的循环依赖debug"></a>Spring是怎么如何解决的循环依赖debug</h3>
     
 
     
@@ -377,7 +390,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/04/13/Spring/" title="Spring的aop顺序和循环依赖" target="_blank">http://example.com/2021/04/13/Spring/</a>
+          <a href="http://example.com/2021/06/24/知识点查漏补缺0624/" title="知识点查漏补缺0624" target="_blank">http://example.com/2021/06/24/知识点查漏补缺0624/</a>
         </li>
         
         <li>
@@ -411,7 +424,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
+        			<a href="/categories/查漏补缺//" class="article-tag-list-link color5">查漏补缺</a>
         		</li>
       		
 		</ul>
@@ -466,7 +479,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/04/13/Spring/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/06/24/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA0624/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -481,18 +494,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/06/24/final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          ThreadLocal使用与原理
+          final关键字的底层原理
         
       </div>
     </a>
   
   
-    <a href="/2021/04/13/AQS/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">AQS原理</div>
+    <a href="/2021/06/23/B%E6%A0%91%E5%92%8CB+%E6%A0%91%E7%9A%84%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">B树和B+树的详细说明</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -519,7 +532,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E7%9A%84aop%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text">Spring的aop顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP%E7%9A%84%E5%89%8D%E7%BD%AE%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">AOP的前置注解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="toc-number">2.</span> <span class="toc-text">Spring的循环依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">面试题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">什么是循环依赖：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F%E5%AF%B9%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%BD%B1%E5%93%8D%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">两种注入方式对循环依赖的影响：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96Java%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81%EF%BC%9A"><span class="toc-number">2.4.</span> <span class="toc-text">循环依赖Java代码验证：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E5%BC%8F%E6%B3%A8%E5%85%A5%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.4.1.</span> <span class="toc-text">构造方式注入依赖：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Setter%E6%96%B9%E5%BC%8F%E6%B3%A8%E5%85%A5%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.4.2.</span> <span class="toc-text">Setter方式注入依赖：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ESpring%E5%AE%B9%E5%99%A8%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="toc-number">2.5.</span> <span class="toc-text">基于Spring容器的循环依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E5%BC%82%E5%B8%B8"><span class="toc-number">2.5.1.</span> <span class="toc-text">循环依赖异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E7%BB%93%E8%AE%BA%EF%BC%9A"><span class="toc-number">2.5.2.</span> <span class="toc-text">重要结论：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96debug%E7%9A%84%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">2.6.</span> <span class="toc-text">Spring循环依赖debug的前置知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E6%98%AF%E6%80%8E%E4%B9%88%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96debug"><span class="toc-number">2.7.</span> <span class="toc-text">Spring是怎么如何解决的循环依赖debug</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#switch%EF%BC%88%EF%BC%89%E6%94%AF%E6%8C%81%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">switch（）支持的数据类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E5%A4%A7%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">八大基本数据类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.</span> <span class="toc-text">抽象类和接口的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Statement%E8%AF%B4%E6%98%8E"><span class="toc-number">4.</span> <span class="toc-text">Statement说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">TCP建立连接的过程</span></a></li></ol>
                     </div>
                 </span>
             </div>

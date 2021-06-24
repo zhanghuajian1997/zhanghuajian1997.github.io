@@ -6,41 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Spring的aop顺序和循环依赖 | Hexo</title>
+  <title>final关键字的底层原理 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="Spring的aop顺序和循环依赖">
+  <meta name="description" content="final关键字的底层原理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring的aop顺序和循环依赖">
-<meta property="og:url" content="http://example.com/2021/04/13/Spring/index.html">
+<meta property="og:title" content="final关键字的底层原理">
+<meta property="og:url" content="http://example.com/2021/06/24/final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Spring的aop顺序和循环依赖">
+<meta property="og:description" content="final关键字的底层原理">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/aop1.png">
-<meta property="og:image" content="http://example.com/images/aop2.png">
-<meta property="og:image" content="http://example.com/images/aop3.png">
-<meta property="og:image" content="http://example.com/images/aop4.png">
-<meta property="og:image" content="http://example.com/images/aop5.png">
-<meta property="og:image" content="http://example.com/images/aop6.png">
-<meta property="og:image" content="http://example.com/images/aop7.png">
-<meta property="og:image" content="http://example.com/images/aop8.png">
-<meta property="og:image" content="http://example.com/images/aop9.png">
-<meta property="og:image" content="http://example.com/images/aop10.png">
-<meta property="og:image" content="http://example.com/images/aop11.png">
-<meta property="og:image" content="http://example.com/images/aop12.png">
-<meta property="og:image" content="http://example.com/images/aop13.png">
-<meta property="og:image" content="http://example.com/images/aop14.png">
-<meta property="og:image" content="http://example.com/images/aop15.png">
-<meta property="og:image" content="http://example.com/images/aop16.png">
-<meta property="og:image" content="http://example.com/images/aop17.png">
-<meta property="og:image" content="http://example.com/images/aop18.png">
-<meta property="article:published_time" content="2021-04-13T07:27:26.000Z">
-<meta property="article:modified_time" content="2021-04-17T14:02:20.180Z">
+<meta property="og:image" content="http://example.com/images/final1.png">
+<meta property="og:image" content="http://example.com/images/final2.png">
+<meta property="og:image" content="http://example.com/images/final3.png">
+<meta property="article:published_time" content="2021-06-24T12:07:30.154Z">
+<meta property="article:modified_time" content="2021-06-24T12:07:30.154Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/aop1.png">
+<meta name="twitter:image" content="http://example.com/images/final1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -231,14 +216,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Spring" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-final关键字的底层原理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      Spring的aop顺序和循环依赖
+      final关键字的底层原理
     </h1>
   
 
@@ -250,8 +235,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/04/13/Spring/" class="archive-article-date">
-        <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
+<a href="/2021/06/24/final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" class="archive-article-date">
+        <time datetime="2021-06-24T12:07:30.154Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-24</time>
 </a>
 
   
@@ -264,7 +249,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">395字</span>
+      <span class="post-count">2.2k字</span>
     </span>
   </span>
 
@@ -273,7 +258,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">8分</span>
     </span>
   </span>
 </div>
@@ -284,54 +269,77 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>Spring的aop顺序和循环依赖</p>
+    <p>final关键字的底层原理</p>
 <span id="more"></span>
 
+<h1 id="final关键字的底层原理是什么？"><a href="#final关键字的底层原理是什么？" class="headerlink" title="final关键字的底层原理是什么？"></a>final关键字的底层原理是什么？</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>final在Java中是一个保留的关键字，可以声明成员变量、方法、类以及本地变量。</p>
+<p>一旦你将引用声明作final，你将不能改变这个引用了，编译器会检查代码，如果你试图将变量再次初始化的话，编译器会报编译错误。</p>
+<h2 id="一、final变量"><a href="#一、final变量" class="headerlink" title="一、final变量"></a>一、final变量</h2><p>final成员变量表示常量，只能被赋值一次，赋值后值不再改变（final要求地址值不能改变）</p>
+<p>当final修饰一个基本数据类型时，表示该基本数据类型的值一旦在初始化后便不能发生变化；如果final修饰一个引用类型时，则在对其初始化之后便不能再让其指向其他对象了，但该引用所指向的对象的内容是可以发生变化的。本质上是一回事，因为引用的值是一个地址，final要求值，即地址的值不发生变化。</p>
+<p>final修饰一个成员变量（属性），必须要显示初始化。这里有两种初始化方式，一种是在变量声明的时候初始化；第二种方法是在声明变量的时候不赋初值，但是要在这个变量所在的类的所有的构造函数中对这个变量赋初值。</p>
+<h2 id="二、final方法"><a href="#二、final方法" class="headerlink" title="二、final方法"></a>二、final方法</h2><p>使用final方法的原因有两个。</p>
+<p>第一个原因是把方法锁定，以防任何继承类修改它的含义，不能被重写；</p>
+<p>第二个原因是效率，final方法比非final方法要快，因为在编译的时候已经静态绑定了，不需要在运行时再动态绑定。</p>
+<p>（注：类的private方法会隐式地被指定为final方法）</p>
+<h2 id="三、final类"><a href="#三、final类" class="headerlink" title="三、final类"></a>三、final类</h2><p>当用final修饰一个类时，表明这个类不能被继承。</p>
+<p>final类中的成员变量可以根据需要设为final，但是要注意final类中的所有成员方法都会被隐式地指定为final方法。</p>
+<p>在使用final修饰类的时候，要注意谨慎选择，除非这个类真的在以后不会用来继承或者出于安全的考虑，尽量不要将类设计为final类。</p>
+<h2 id="四、final使用总结"><a href="#四、final使用总结" class="headerlink" title="四、final使用总结"></a>四、final使用总结</h2><h3 id="final关键字的好处："><a href="#final关键字的好处：" class="headerlink" title="final关键字的好处："></a>final关键字的好处：</h3><p>（1）final关键字提高了性能。JVM和Java应用都会缓存final变量。</p>
+<p>（2）final变量可以安全的在多线程环境下进行共享，而不需要额外的同步开销。</p>
+<p>（3）使用final关键字，JVM会对方法、变量及类进行优化。</p>
+<h3 id="关于final的重要知识点"><a href="#关于final的重要知识点" class="headerlink" title="关于final的重要知识点"></a>关于final的重要知识点</h3><ul>
+<li>final关键字可以用于成员变量、本地变量、方法以及类。</li>
+<li>final成员变量必须在声明的时候初始化或者在构造器中初始化，否则就会报编译错误。</li>
+<li>你不能够对final变量再次赋值。</li>
+<li>本地变量必须在声明时赋值。</li>
+<li>在匿名类中所有变量都必须是final变量。</li>
+<li>final方法不能被重写。</li>
+<li>final类不能被继承。</li>
+<li>final关键字不同于finally关键字，后者用于异常处理。</li>
+<li>final关键字容易与finalize()方法搞混，后者是在Object类中定义的方法，是在垃圾回收之前被JVM调用的方法。</li>
+<li>接口中声明的所有变量本身是final的。</li>
+<li>final和abstract这两个关键字是反相关的，final类就不可能是abstract的。</li>
+<li>final方法在编译阶段绑定，称为静态绑定(static binding)。</li>
+<li>没有在声明时初始化final变量的称为空白final变量(blank final variable)，它们必须在构造器中初始化，或者调用this()初始化。不这么做的话，编译器会报错“final变量(变量名)需要进行初始化”。</li>
+<li>将类、方法、变量声明为final能够提高性能，这样JVM就有机会进行估计，然后优化。</li>
+<li>按照Java代码惯例，final变量就是常量，而且通常常量名要大写。</li>
+<li>对于集合对象声明为final指的是引用不能被更改，但是你可以向其中增加，删除或者改变内容。</li>
+</ul>
+<h2 id="五、final原理"><a href="#五、final原理" class="headerlink" title="五、final原理"></a>五、final原理</h2><p>注：最好先理解java内存模型，后期专门开专题讲解</p>
+<p>对于final域，编译器和处理器要遵守两个重排序规则：</p>
+<p>1.在构造函数内对一个final域的写入，与随后把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。</p>
+<p>（先写入final变量，后调用该对象引用）</p>
+<p>原因：编译器会在final域的写之后，插入一个StoreStore屏障</p>
+<p>2.初次读一个包含final域的对象的引用，与随后初次读这个final域，这两个操作之间不能重排序。</p>
+<p>（先读对象的引用，后读final变量）</p>
+<p>编译器会在读final域操作的前面插入一个LoadLoad屏障</p>
+<p>示例1</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalExample</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">int</span> i; <span class="comment">// 普通变量   </span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> j; <span class="comment">// final 变量   </span></span><br><span class="line">    <span class="keyword">static</span> FinalExample obj;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FinalExample</span><span class="params">()</span> </span>&#123; <span class="comment">// 构造函数       </span></span><br><span class="line">        i = <span class="number">1</span>; <span class="comment">// 写普通域        </span></span><br><span class="line">        j = <span class="number">2</span>; <span class="comment">// 写 final 域    </span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writer</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="comment">// 写线程 A 执行      </span></span><br><span class="line">        obj = <span class="keyword">new</span> FinalExample();    </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reader</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="comment">// 读线程 B 执行       </span></span><br><span class="line">        FinalExample object = obj;</span><br><span class="line">        <span class="comment">// 读对象引用        </span></span><br><span class="line">        <span class="keyword">int</span> a = object.i; <span class="comment">// 读普通域       </span></span><br><span class="line">        a=<span class="number">1</span>或者a=<span class="number">0</span>或者直接报错i没有初始化       </span><br><span class="line">            <span class="keyword">int</span> b = object.j; </span><br><span class="line">        <span class="comment">// 读 final域     </span></span><br><span class="line">        b=<span class="number">2</span> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h3 id="第一种情况"><a href="#第一种情况" class="headerlink" title="第一种情况"></a>第一种情况</h3><p>写普通域的操作被编译器重排序到了构造函数之外</p>
+<p>而写 final 域的操作，被写 final 域的重排序规则“限定”在了构造函数之内，读线程 B 正确的读取了 final 变量初始化之后的值。</p>
+<p>写 final 域的重排序规则可以确保：在对象引用为任意线程可见之前，对象的 final 域已经被正确初始化过了，而普通域不具有这个保障。</p>
+<p><img src="/images/final1.png"></p>
+<h3 id="第二种情况"><a href="#第二种情况" class="headerlink" title="第二种情况"></a>第二种情况</h3><p>读对象的普通域的操作被处理器重排序到读对象引用之前</p>
+<p>而读 final 域的重排序规则会把读对象 final 域的操作“限定”在读对象引用之后，此时该 final 域已经被 A 线程初始化过了，这是一个正确的读取操作。</p>
+<p>读 final 域的重排序规则可以确保：在读一个对象的 final 域之前，一定会先读包含这个 final 域的对象的引用。</p>
+<p><img src="/images/final2.png"></p>
+<p>示例2</p>
+<p>示例2：如果 final 域是引用类型</p>
+<p>对于引用类型，写 final 域的重排序规则对编译器和处理器增加了如下约束：</p>
+<p>在构造函数内对一个 final 引用的对象的成员域的写入，与随后在构造函数外把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalReferenceExample</span> </span>&#123;    </span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span>[] intArray; <span class="comment">// final 是引用类型    </span></span><br><span class="line">    <span class="keyword">static</span> FinalReferenceExample obj;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FinalReferenceExample</span><span class="params">()</span> </span>&#123; <span class="comment">// 构造函数    </span></span><br><span class="line">        intArray = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>]; <span class="comment">// 1       </span></span><br><span class="line">        intArray[<span class="number">0</span>] = <span class="number">1</span>; <span class="comment">// 2    &#125;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writerOne</span><span class="params">()</span> </span>&#123; <span class="comment">// 写线程 A 执行     </span></span><br><span class="line">        obj = <span class="keyword">new</span> FinalReferenceExample(); <span class="comment">// 3    &#125;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">writerTwo</span><span class="params">()</span> </span>&#123; <span class="comment">// 写线程 B 执行    </span></span><br><span class="line">        obj.intArray[<span class="number">0</span>] = <span class="number">2</span>; <span class="comment">// 4    &#125;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reader</span><span class="params">()</span> </span>&#123; <span class="comment">// 读线程 C 执行      </span></span><br><span class="line">        <span class="keyword">if</span> (obj != <span class="keyword">null</span>) &#123; <span class="comment">// 5         </span></span><br><span class="line">            <span class="keyword">int</span> temp1 = obj.intArray[<span class="number">0</span>]; <span class="comment">// 6 </span></span><br><span class="line">            temp1=<span class="number">1</span>或者temp1=<span class="number">2</span>，不可能等于<span class="number">0</span>      </span><br><span class="line">        &#125;   </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>假设首先线程 A 执行 writerOne() 方法，执行完后线程 B 执行 writerTwo() 方法，执行完后线程 C 执行 reader () 方法。</p>
+<p><img src="/images/final3.png"></p>
+<p>在上图中<br> 1 是对 final 域的写入；<br> 2 是对这个 final 域引用的对象的成员域的写入；<br> 3 是把被构造的对象的引用赋值给某个引用变量。这里除了前面提到的 1 不能和 3 重排序外，2 和 3 也不能重排序。</p>
+<p>JMM 可以确保读线程 C 至少能看到写线程 A 在构造函数中对 final 引用对象的成员域的写入。即 C 至少能看到数组下标 0 的值为 1。而写线程 B 对数组元素的写入，读线程 C 可能看的到，也可能看不到。JMM 不保证线程 B 的写入对读线程 C 可见，因为写线程 B 和读线程 C 之间存在数据竞争，此时的执行结果不可预知。</p>
+<h2 id="六、final、finally、-finalize区别"><a href="#六、final、finally、-finalize区别" class="headerlink" title="六、final、finally、 finalize区别"></a>六、final、finally、 finalize区别</h2><ul>
+<li>final可以用来修饰类、方法、变量，分别有不同的意义，final修饰的class代表不可以继承扩展，final的变量是不可以修改的，而final的方法也是不可以重写的（override）。</li>
+<li>finally则是Java保证重点代码一定要被执行的一种机制。我们可以使用try-finally或者try-catch-finally来进行类似关闭JDBC连接、保证unlock锁等动作。</li>
+<li>finalize是基础类java.lang.Object的一个方法，它的设计目的是保证对象在被垃圾收集前完成特定资源的回收。finalize机制现在已经不推荐使用，并且在JDK 9开始被标记为deprecated。</li>
+</ul>
 
-
-<h2 id="Spring的aop顺序"><a href="#Spring的aop顺序" class="headerlink" title="Spring的aop顺序"></a>Spring的aop顺序</h2><p>Spring 4/5 对于AOP的执行顺序是不同的</p>
-<h3 id="AOP的前置注解"><a href="#AOP的前置注解" class="headerlink" title="AOP的前置注解"></a>AOP的前置注解</h3><p><img src="/images/aop1.png"></p>
-<p>Spring 4 </p>
-<p><img src="/images/aop2.png"></p>
-<p>出异常情况下</p>
-<p><img src="/images/aop3.png"></p>
-<p><img src="/images/aop4.png"></p>
-<p>Spring 5</p>
-<p><img src="/images/aop5.png"></p>
-<p>出异常情况下</p>
-<p><img src="/images/aop6.png"></p>
-<p>总结：</p>
-<p><img src="/images/aop7.png"></p>
-<h2 id="Spring的循环依赖"><a href="#Spring的循环依赖" class="headerlink" title="Spring的循环依赖"></a>Spring的循环依赖</h2><h3 id="面试题："><a href="#面试题：" class="headerlink" title="面试题："></a>面试题：</h3><p><img src="/images/aop8.png"></p>
-<h3 id="什么是循环依赖："><a href="#什么是循环依赖：" class="headerlink" title="什么是循环依赖："></a>什么是循环依赖：</h3><p>多个Bean之间相互依赖，形成了一个闭环。比如，A依赖B，B依赖C，C依赖A。</p>
-<p><img src="/images/aop9.png"></p>
-<h3 id="两种注入方式对循环依赖的影响："><a href="#两种注入方式对循环依赖的影响：" class="headerlink" title="两种注入方式对循环依赖的影响："></a>两种注入方式对循环依赖的影响：</h3><p>构造注入：创建一个循环依赖无法解决的问题,无法解决</p>
-<p>我们AB循环依赖问题只要A的注入方式是setter注入并且<strong>Singketon</strong>就不会有循环依赖问题</p>
-<p><img src="/images/aop10.png"></p>
-<h3 id="循环依赖Java代码验证："><a href="#循环依赖Java代码验证：" class="headerlink" title="循环依赖Java代码验证："></a>循环依赖Java代码验证：</h3><h4 id="构造方式注入依赖："><a href="#构造方式注入依赖：" class="headerlink" title="构造方式注入依赖："></a>构造方式注入依赖：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceB</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ServiceA serviceA;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServiceB</span><span class="params">(ServiceA serviceA)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serviceA = serviceA;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceA</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ServiceB serviceB;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServiceA</span><span class="params">(ServiceB serviceB)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serviceB = serviceB;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientConstructor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">new</span> ServicrA(<span class="keyword">new</span> ServiceB());  <span class="comment">//报错！！</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="Setter方式注入依赖："><a href="#Setter方式注入依赖：" class="headerlink" title="Setter方式注入依赖："></a>Setter方式注入依赖：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceA</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> ServiceB serviceB;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServiceB</span><span class="params">(ServiceB serviceB)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span> serviceB = serviceB;</span><br><span class="line">        System.out.println(<span class="string">&quot;A里面设置了B&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceB</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> ServiceA serviceA;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServiceA</span><span class="params">(ServiceA serviceA)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span> serviceA = serviceA;</span><br><span class="line">        System.out.println(<span class="string">&quot;B里面设置了A&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientConstructor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建serviceA</span></span><br><span class="line">        ServiceA a = <span class="keyword">new</span> ServiceA();</span><br><span class="line">        <span class="comment">//创建serviceA</span></span><br><span class="line">        ServiceB b = <span class="keyword">new</span> ServiceB();</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        b.setServiceA(a);</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">		a.setServiceB(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="基于Spring容器的循环依赖"><a href="#基于Spring容器的循环依赖" class="headerlink" title="基于Spring容器的循环依赖"></a>基于Spring容器的循环依赖</h3><p><img src="/images/aop11.png"></p>
-<h4 id="循环依赖异常"><a href="#循环依赖异常" class="headerlink" title="循环依赖异常"></a>循环依赖异常</h4><p><img src="/images/aop12.png"></p>
-<h4 id="重要结论："><a href="#重要结论：" class="headerlink" title="重要结论："></a>重要结论：</h4><p>Spring内部通过三级缓存来解决循环依赖 —–&gt;DefaultSingletonBeanRegistry</p>
-<p><img src="/images/aop13.png"></p>
-<p><img src="/images/aop14.png"></p>
-<h3 id="Spring循环依赖debug的前置知识"><a href="#Spring循环依赖debug的前置知识" class="headerlink" title="Spring循环依赖debug的前置知识"></a>Spring循环依赖debug的前置知识</h3><p><img src="/images/aop15.png"></p>
-<p><img src="/images/aop16.png"></p>
-<p><img src="/images/aop17.png"></p>
-<p><img src="/images/aop18.png"></p>
-<h3 id="Spring是怎么如何解决的循环依赖debug"><a href="#Spring是怎么如何解决的循环依赖debug" class="headerlink" title="Spring是怎么如何解决的循环依赖debug"></a>Spring是怎么如何解决的循环依赖debug</h3>
     
 
     
@@ -377,7 +385,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/04/13/Spring/" title="Spring的aop顺序和循环依赖" target="_blank">http://example.com/2021/04/13/Spring/</a>
+          <a href="http://example.com/2021/06/24/final关键字的底层原理/" title="final关键字的底层原理" target="_blank">http://example.com/2021/06/24/final关键字的底层原理/</a>
         </li>
         
         <li>
@@ -406,17 +414,6 @@
 	</div>
 
     
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
     
 
@@ -466,7 +463,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/04/13/Spring/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/06/24/final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -481,18 +478,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          ThreadLocal使用与原理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/04/13/AQS/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">AQS原理</div>
+    <a href="/2021/06/24/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA0624/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">知识点查漏补缺0624</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -519,7 +507,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E7%9A%84aop%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text">Spring的aop顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP%E7%9A%84%E5%89%8D%E7%BD%AE%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">AOP的前置注解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="toc-number">2.</span> <span class="toc-text">Spring的循环依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">面试题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">什么是循环依赖：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F%E5%AF%B9%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%BD%B1%E5%93%8D%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">两种注入方式对循环依赖的影响：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96Java%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81%EF%BC%9A"><span class="toc-number">2.4.</span> <span class="toc-text">循环依赖Java代码验证：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E5%BC%8F%E6%B3%A8%E5%85%A5%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.4.1.</span> <span class="toc-text">构造方式注入依赖：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Setter%E6%96%B9%E5%BC%8F%E6%B3%A8%E5%85%A5%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.4.2.</span> <span class="toc-text">Setter方式注入依赖：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ESpring%E5%AE%B9%E5%99%A8%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="toc-number">2.5.</span> <span class="toc-text">基于Spring容器的循环依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E5%BC%82%E5%B8%B8"><span class="toc-number">2.5.1.</span> <span class="toc-text">循环依赖异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E7%BB%93%E8%AE%BA%EF%BC%9A"><span class="toc-number">2.5.2.</span> <span class="toc-text">重要结论：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96debug%E7%9A%84%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">2.6.</span> <span class="toc-text">Spring循环依赖debug的前置知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E6%98%AF%E6%80%8E%E4%B9%88%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96debug"><span class="toc-number">2.7.</span> <span class="toc-text">Spring是怎么如何解决的循环依赖debug</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">final关键字的底层原理是什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81final%E5%8F%98%E9%87%8F"><span class="toc-number">1.2.</span> <span class="toc-text">一、final变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81final%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">二、final方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81final%E7%B1%BB"><span class="toc-number">1.4.</span> <span class="toc-text">三、final类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81final%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">四、final使用总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%A5%BD%E5%A4%84%EF%BC%9A"><span class="toc-number">1.5.1.</span> <span class="toc-text">final关键字的好处：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Efinal%E7%9A%84%E9%87%8D%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.5.2.</span> <span class="toc-text">关于final的重要知识点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81final%E5%8E%9F%E7%90%86"><span class="toc-number">1.6.</span> <span class="toc-text">五、final原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.6.1.</span> <span class="toc-text">第一种情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-number">1.6.2.</span> <span class="toc-text">第二种情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81final%E3%80%81finally%E3%80%81-finalize%E5%8C%BA%E5%88%AB"><span class="toc-number">1.7.</span> <span class="toc-text">六、final、finally、 finalize区别</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
