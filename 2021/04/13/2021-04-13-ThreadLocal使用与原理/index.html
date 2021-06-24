@@ -6,22 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>hashcode()方法和equals()方法的一些说明 | Hexo</title>
+  <title>ThreadLocal使用与原理 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="hashcode()方法和equals()方法的一些说明">
+  <meta name="description" content="ThreadLocal使用与原理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hashcode()方法和equals()方法的一些说明">
-<meta property="og:url" content="http://example.com/2021/04/13/hashcode/index.html">
+<meta property="og:title" content="ThreadLocal使用与原理">
+<meta property="og:url" content="http://example.com/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="hashcode()方法和equals()方法的一些说明">
+<meta property="og:description" content="ThreadLocal使用与原理">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/local1.png">
+<meta property="og:image" content="e:/blog/source/images/local1.png">
+<meta property="og:image" content="http://example.com/images/local2.png">
 <meta property="article:published_time" content="2021-04-13T07:27:26.000Z">
-<meta property="article:modified_time" content="2021-06-10T13:47:10.269Z">
+<meta property="article:modified_time" content="2021-06-24T11:41:27.309Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/local1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -212,14 +216,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hashcode" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2021-04-13-ThreadLocal使用与原理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      hashcode()方法和equals()方法的一些说明
+      ThreadLocal使用与原理
     </h1>
   
 
@@ -231,7 +235,7 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/04/13/hashcode/" class="archive-article-date">
+<a href="/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/" class="archive-article-date">
         <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
 </a>
 
@@ -245,7 +249,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">811字</span>
+      <span class="post-count">1.5k字</span>
     </span>
   </span>
 
@@ -254,7 +258,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">2分</span>
+      <span class="post-count">5分</span>
     </span>
   </span>
 </div>
@@ -265,17 +269,52 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>hashcode()方法和equals()方法的一些说明</p>
+    <p>ThreadLocal使用与原理</p>
 <span id="more"></span>
 
-<h1 id="1-hashcode-介绍"><a href="#1-hashcode-介绍" class="headerlink" title="1.hashcode()介绍"></a>1.hashcode()介绍</h1><p>hashCode() 的作用是<strong>获取哈希码</strong>，也称为散列码；它实际上是返回一个int整数。这个<strong>哈希码的作用</strong>是确定该对象在哈希表中的索引位置。</p>
-<p>hashCode() 定义在JDK的Object.java中，这就意味着Java中的任何类都包含有hashCode() 函数。<br>    虽然，每个Java类都包含hashCode() 函数。但是，仅仅当创建并某个“类的散列表”(关于“散列表”见下面说明)时，该类的hashCode() 才有用(作用是：确定该类的每一个对象在散列表中的位置；其它情况下(例如，创建类的单个对象，或者创建类的对象数组等等)，类的hashCode() 没有作用。<br>    上面的散列表，指的是：Java集合中本质是散列表的类，如HashMap，Hashtable，HashSet。</p>
-<p>​    也就是说：<strong>hashCode() 在散列表中才有用，在其它情况下没用。</strong>在散列表中hashCode() 的作用是获取对象的散列码，进而确定该对象在散列表中的位置。</p>
-<p>下面，我们以HashSet为例，来深入说明hashCode()的作用。</p>
-<p>​    假设，HashSet中已经有1000个元素。当插入第1001个元素时，需要怎么处理？因为HashSet是Set集合，它允许有重复元素。<br>​    “将第1001个元素逐个的和前面1000个元素进行比较”？显然，这个效率是相等低下的。散列表很好的解决了这个问题，它根据元素的散列码计算出元素在散列表中的位置，然后将元素插入该位置即可。对于相同的元素，自然是只保存了一个。<br>​    由此可知，若两个元素相等，它们的散列码一定相等；但反过来确不一定。在散列表中，<br>​              1、如果两个对象相等，那么它们的hashCode()值一定要相同；<br>​              2、如果两个对象hashCode()相等，它们并不一定相等。<br>​              注意：这是在散列表中的情况。在非散列表中一定如此！</p>
-<h1 id="2-hashCode-和-equals-的关系"><a href="#2-hashCode-和-equals-的关系" class="headerlink" title="2.hashCode() 和 equals() 的关系"></a>2.hashCode() 和 equals() 的关系</h1><p> 这里所说的“会创建类对应的散列表”是说：我们会在HashSet, Hashtable, HashMap等等这些本质是散列表的数据结构中，用到该类。例如，会创建该类的HashSet集合。</p>
-<p>​    在这种情况下，该类的“hashCode() 和 equals() ”是有关系的：<br>​    1)、如果两个对象相等，那么它们的hashCode()值一定相同。<br>​       这里的相等是指，通过equals()比较两个对象时返回true。<br>​    2)、如果两个对象hashCode()相等，它们并不一定相等。<br>​        因为在散列表中，hashCode()相等，即两个键值对的哈希值相等。然而哈希值相等，并不一定能得出键值对相等。补充说一句：“两个不同的键值对，哈希值相等”，这就是哈希冲突。</p>
-<p>​    此外，在这种情况下。若要判断两个对象是否相等，除了要覆盖equals()之外，也要覆盖hashCode()函数。否则，equals()无效。<br>例如，创建Person类的HashSet集合，必须同时覆盖Person类的equals() 和 hashCode()方法。<br>​    如果单单只是覆盖equals()方法。我们会发现，equals()方法没有达到我们想要的效果。</p>
+<h1 id="ThreadLocal使用与原理"><a href="#ThreadLocal使用与原理" class="headerlink" title="ThreadLocal使用与原理"></a>ThreadLocal使用与原理</h1><p>在处理多线程并发安全的方法中，最常用的方法，就是使用锁，通过锁来控制多个不同线程对临界区的访问。</p>
+<p>但是，无论是什么样的锁，乐观锁或者悲观锁，都会在并发冲突的时候对性能产生一定的影响。</p>
+<p>那有没有一种方法，可以彻底避免竞争呢？</p>
+<p>答案是肯定的，这就是ThreadLocal。</p>
+<p>从字面意思上看，ThreadLocal可以解释成线程的局部变量，也就是说一个ThreadLocal的变量只有当前自身线程可以访问，别的线程都访问不了，那么自然就避免了线程竞争。</p>
+<p>因此，ThreadLocal提供了一种与众不同的线程安全方式，它不是在发生线程冲突时想办法解决冲突，而是彻底的避免了冲突的发生。</p>
+<h2 id="ThreadLocal的基本使用"><a href="#ThreadLocal的基本使用" class="headerlink" title="ThreadLocal的基本使用"></a>ThreadLocal的基本使用</h2><p>创建一个ThreadLocal对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ThreadLocal&lt;Integer&gt; localInt = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<p>上述代码创建一个localInt变量，由于ThreadLocal是一个泛型类，这里指定了localInt的类型为整数。</p>
+<p>下面展示了如果设置和获取这个变量的值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">setAndGet</span><span class="params">()</span></span>&#123;</span><br><span class="line">    localInt.set(<span class="number">8</span>);</span><br><span class="line">    <span class="keyword">return</span> localInt.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码设置变量的值为8，接着取得这个值。</p>
+<p>由于ThreadLocal里设置的值，只有当前线程自己看得见，这意味着你不可能通过其他线程为它初始化值。为了弥补这一点，ThreadLocal提供了一个withInitial()方法统一初始化所有线程的ThreadLocal的值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ThreadLocal&lt;Integer&gt; localInt = ThreadLocal.withInitial(() -&gt; <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="ThreadLocal的实现原理"><a href="#ThreadLocal的实现原理" class="headerlink" title="ThreadLocal的实现原理"></a>ThreadLocal的实现原理</h2><p>ThreadLocal变量只在单个线程内可见，那它是如何做到的呢？我们先从最基本的get()方法说起：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获得当前线程</span></span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    <span class="comment">//每个线程 都有一个自己的ThreadLocalMap，</span></span><br><span class="line">    <span class="comment">//ThreadLocalMap里就保存着所有的ThreadLocal变量</span></span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">//ThreadLocalMap的key就是当前ThreadLocal对象实例，</span></span><br><span class="line">        <span class="comment">//多个ThreadLocal变量都是放在这个map中的</span></span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">            <span class="comment">//从map里取出来的值就是我们需要的这个ThreadLocal变量</span></span><br><span class="line">            T result = (T)e.value;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果map没有初始化，那么在这里初始化一下</span></span><br><span class="line">    <span class="keyword">return</span> setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，所谓的ThreadLocal变量就是保存在每个线程的map中的。这个map就是Thread对象中的threadLocals字段。如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ThreadLocal.ThreadLocalMap threadLocals = <span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
+
+<p>ThreadLocal.ThreadLocalMap是一个比较特殊的Map，它的每个Entry的key都是一个弱引用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/** The value associated with this ThreadLocal. */</span></span><br><span class="line">    Object value;</span><br><span class="line">    <span class="comment">//key就是一个弱引用</span></span><br><span class="line">    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">        <span class="keyword">super</span>(k);</span><br><span class="line">        value = v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样设计的好处是，如果这个变量不再被其他对象使用时，可以自动回收这个ThreadLocal对象，避免可能的内存泄露（注意，Entry中的value，依然是强引用，如何回收，见下文分解）。</p>
+<h3 id="ThreadLocal-结构小结"><a href="#ThreadLocal-结构小结" class="headerlink" title="ThreadLocal 结构小结"></a>ThreadLocal 结构小结</h3><p>通过上面的内容，我们基本已经知道 ThreadLocal 的大致工作原理。我们知道每个线程都有一个 ThreadLocalMap 结构，其中就保存着当前线程所持有的所有 ThreadLocal。ThreadLocal 本身只是一个引用，没有直接保存值，值是保存在 ThreadLocalMap 中，ThreadLocal 作为 key，值作为 value。可以用下面的图来概括：</p>
+<p><img src="/images/local1.png" alt="local"></p>
+<p><img src="E:\blog\source\images\local1.png" alt="local"></p>
+<h3 id="ThreadLocalMap-结构小结"><a href="#ThreadLocalMap-结构小结" class="headerlink" title="ThreadLocalMap 结构小结"></a>ThreadLocalMap 结构小结</h3><p>以上是 ThreadLocalMap 的结构与相关方法。最后总结一下：</p>
+<ul>
+<li>ThreadLocalMap 类似 HashMap，key 为 ThreadLocal，value 为 ThreadLocal 的值。ThreadLocal 只是一个引用，它本身并不保存值；</li>
+<li>当发生哈希冲突时，ThreadLocalMap 采用的是开放寻址法，这与 HashMap 的拉链式寻址法不同；</li>
+<li>ThreadLocalMap 本身的操作时，因为是线程私有变量，所以不存在并发操作；但是需要考虑 GC 因素，因为其 key 是弱引用，随时可能被 GC，导致开放寻址法中，出现一个个“坑”，因此在查找、新增、删除等操作时，需要进行 rehash 操作，也就是把元素重新进行哈希映射，放置到正确的位置，填平这些“坑”；</li>
+<li>ThreadLocaMap 也会进行扩容，扩容之前会进行全量的 rehash 操作。</li>
+</ul>
+<h2 id="理解ThreadLocal中的内存泄漏问题"><a href="#理解ThreadLocal中的内存泄漏问题" class="headerlink" title="理解ThreadLocal中的内存泄漏问题"></a>理解ThreadLocal中的内存泄漏问题</h2><p>虽然ThreadLocalMap中的key是弱引用，当不存在外部强引用的时候，就会自动被回收，但是Entry中的value依然是强引用。这个value的引用链条如下：</p>
+<p><img src="/images/local2.png" alt="local"></p>
+<p>存在着一条从 currentThread 到 ThreadLocal value 的强引用链，即使 ThreadLocal 本身已经被回收了，value 因为强引用链的缘故，是依旧存活在内存中的。所以如果后续一直没有经过主动的 remove 或者被动的 rehash 操作的话，value 就会持续占用内存空间，造成泄露。</p>
+<p>前面 ThreadLocalMap 中，因为 ThreadLocal 为弱引用，加上开放寻址法，所以查询、插入、删除操作都非常复杂，那么现在知道为什么 ThreadLocal 是弱引用了，原因就是为了尽量去避免内存泄漏问题。只要 ThreadLocal 本身不再用到了，即没有强引用了，ThreadLocalMap 中的弱引用就会被自动 GC 回收。后面 ThreadLocalMap 会不断的进行懒式扫描，剔除掉 key 为 null 的元素，释放在这部分内存。</p>
+<p>某种意义上，ThreadLocal 本身已经最大化的去解决内存泄露问题了。不过凡事总有万一，万一这个元素在后续的 rehash 操作中一直没有被扫描到，那就会一直存在于内存。所以最好的方式就是，对于不再使用的 ThreadLocal，主动进行 remove，就像用完锁要解锁一样。</p>
+<p>因此，一个良好的习惯依然是：<strong>当你不需要这个ThreadLocal变量时，主动调用remove()，这样对整个系统是有好处的</strong>。</p>
 
     
 
@@ -322,7 +361,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/04/13/hashcode/" title="hashcode()方法和equals()方法的一些说明" target="_blank">http://example.com/2021/04/13/hashcode/</a>
+          <a href="http://example.com/2021/04/13/2021-04-13-ThreadLocal使用与原理/" title="ThreadLocal使用与原理" target="_blank">http://example.com/2021/04/13/2021-04-13-ThreadLocal使用与原理/</a>
         </li>
         
         <li>
@@ -356,7 +395,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/hashcode-、equals//" class="article-tag-list-link color5">hashcode()、equals()</a>
+        			<a href="/categories/ThreadLocal//" class="article-tag-list-link color2">ThreadLocal</a>
         		</li>
       		
 		</ul>
@@ -411,7 +450,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/04/13/hashcode/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -426,20 +465,15 @@
 
 <nav id="article-nav">
   
-    <a href="/2021/04/13/ssm/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/04/13/hashcode/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          ssm框架相关知识
+          hashcode()方法和equals()方法的一些说明
         
       </div>
     </a>
   
-  
-    <a href="/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ThreadLocal使用与原理</div>
-      <i class="icon-circle-right"></i>
-    </a>
   
 </nav>
 
@@ -464,7 +498,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-hashcode-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">1.hashcode()介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-hashCode-%E5%92%8C-equals-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">2.hashCode() 和 equals() 的关系</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">ThreadLocal使用与原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ThreadLocal%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">ThreadLocal的基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ThreadLocal%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">ThreadLocal的实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-%E7%BB%93%E6%9E%84%E5%B0%8F%E7%BB%93"><span class="toc-number">1.2.1.</span> <span class="toc-text">ThreadLocal 结构小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocalMap-%E7%BB%93%E6%9E%84%E5%B0%8F%E7%BB%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">ThreadLocalMap 结构小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%90%86%E8%A7%A3ThreadLocal%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">理解ThreadLocal中的内存泄漏问题</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
