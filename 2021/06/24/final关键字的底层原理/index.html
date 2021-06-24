@@ -18,10 +18,10 @@
 <meta property="og:description" content="final关键字的底层原理">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/final1.png">
-<meta property="og:image" content="http://example.com/images/final2.png">
+<meta property="og:image" content="http://example.com/images/fianl2.png">
 <meta property="og:image" content="http://example.com/images/final3.png">
 <meta property="article:published_time" content="2021-06-24T12:07:30.154Z">
-<meta property="article:modified_time" content="2021-06-24T12:07:30.154Z">
+<meta property="article:modified_time" content="2021-06-24T12:10:59.932Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -323,7 +323,7 @@
 <h3 id="第二种情况"><a href="#第二种情况" class="headerlink" title="第二种情况"></a>第二种情况</h3><p>读对象的普通域的操作被处理器重排序到读对象引用之前</p>
 <p>而读 final 域的重排序规则会把读对象 final 域的操作“限定”在读对象引用之后，此时该 final 域已经被 A 线程初始化过了，这是一个正确的读取操作。</p>
 <p>读 final 域的重排序规则可以确保：在读一个对象的 final 域之前，一定会先读包含这个 final 域的对象的引用。</p>
-<p><img src="/images/final2.png"></p>
+<p><img src="/images/fianl2.png"></p>
 <p>示例2</p>
 <p>示例2：如果 final 域是引用类型</p>
 <p>对于引用类型，写 final 域的重排序规则对编译器和处理器增加了如下约束：</p>
@@ -414,6 +414,17 @@
 	</div>
 
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/final//" class="article-tag-list-link color1">final</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
 
@@ -477,6 +488,15 @@
 
 
 <nav id="article-nav">
+  
+    <a href="/2021/06/24/%E8%AF%A6%E8%A7%A3%E7%BA%BF%E7%A8%8B%E6%B1%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          详解线程池
+        
+      </div>
+    </a>
   
   
     <a href="/2021/06/24/%E7%9F%A5%E8%AF%86%E7%82%B9%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA0624/" id="article-nav-older" class="article-nav-link-wrap">
@@ -668,6 +688,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Java、JUC</a>
               </li>
             
             <div class="clearfix"></div>
