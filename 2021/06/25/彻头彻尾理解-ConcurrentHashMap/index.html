@@ -18,10 +18,10 @@
 <meta property="og:description" content="彻头彻尾理解 ConcurrentHashMap">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/con1.png">
-<meta property="og:image" content="http://example.com/con2.png">
-<meta property="og:image" content="http://example.com/con3.png">
+<meta property="og:image" content="http://example.com/images/con2.png">
+<meta property="og:image" content="http://example.com/images/con3.png">
 <meta property="article:published_time" content="2021-06-25T07:41:55.025Z">
-<meta property="article:modified_time" content="2021-06-25T07:41:55.025Z">
+<meta property="article:modified_time" content="2021-06-28T06:15:24.345Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -303,14 +303,14 @@
 <p>跟HashMap很像，也把之前的HashEntry改成了Node，但是作用不变，把值和next采用了volatile去修饰，保证了可见性，并且也引入了红黑树，在链表大于一定值的时候会转换（默认是8）。</p>
 <p>ConcurrentHashMap在进行put操作的还是比较复杂的，大致可以分为以下步骤：</p>
 <p>1.根据 key 计算出 hashcode 。<br>2.判断是否需要进行初始化。<br>3.即为当前 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功。<br>4.如果当前位置的 hashcode == MOVED == -1,则需要进行扩容。<br>5.如果都不满足，则利用 synchronized 锁写入数据。<br>6.如果数量大于 TREEIFY_THRESHOLD 则要转换为红黑树。</p>
-<p><img src="/con2.png"></p>
+<p><img src="/images/con2.png"></p>
 <p><strong>ConcurrentHashMap的get操作又是怎么样子的呢？</strong></p>
 <ul>
 <li>根据计算出来的 hashcode 寻址，如果就在桶上那么直接返回值。</li>
 <li>如果是红黑树那就按照树的方式获取值。</li>
 <li>就不满足那就按照链表的方式遍历获取值。</li>
 </ul>
-<p><img src="/con3.png"></p>
+<p><img src="/images/con3.png"></p>
 <p>小结：1.8 在 1.7 的数据结构上做了大的改动，采用红黑树之后可以保证查询效率（<code>O(logn)</code>），甚至取消了 ReentrantLock 改为了 synchronized，这样可以看出在新版的 JDK 中对 synchronized 优化是很到位的。</p>
 
     
