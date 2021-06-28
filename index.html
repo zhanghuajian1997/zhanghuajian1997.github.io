@@ -216,35 +216,37 @@
             
 
   
-    <article id="post-CopyOnWriteArrayList" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-类加载机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/06/28/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" target="_blank">类加载机制</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/06/28/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/" class="archive-article-date">
+        <time datetime="2021-06-28T14:31:10.805Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-28</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="CopyOnWriteArrayList"><a href="#CopyOnWriteArrayList" class="headerlink" title="CopyOnWriteArrayList"></a>CopyOnWriteArrayList</h1><p>在 ArrayList 的类注释上，JDK 就提醒了我们，如果要把 ArrayList 作为共享变量的话，是线程不安全的，推荐我们自己加锁或者使用 Collections.synchronizedList 方法，其实 JDK 还提供了另外一种线程安全的 List，叫做 CopyOnWriteArrayList，这个 List 具有以下特征：</p>
-<p>线程安全的，多线程环境下可以直接使用，无需加锁；<br>通过锁 + 数组拷贝 + volatile 关键字保证了线程安全；<br>每次数组操作，都会把数组拷贝一份出来，在新数组上进行操作，操作成功之后再赋值回去。</p>
-<h2 id="1-整体架构"><a href="#1-整体架构" class="headerlink" title="1.整体架构"></a>1.整体架构</h2><p>从整体架构上来说，CopyOnWriteArrayList 数据结构和 ArrayList 是一致的，底层是个数组，只不过 CopyOnWriteArrayList 在对数组进行操作的时候，基本会分四步走：</p>
-<p>1.加锁；<br>2.从原数组中拷贝出新数组；<br>3.在新数组上进行操作，并把新数组赋值给数组容器；<br>4.解锁<br>除了加锁之外，CopyOnWriteArrayList 的底层数组还被 volatile 关键字修饰，意思是一旦数组被修改，其它线程立马能够感知到，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Object[] array;</span><br></pre></td></tr></table></figure>
-
-<p>整体上来说，CopyOnWriteArrayList 就是利用锁 + 数组拷贝 + volatile 关键字保证了 List 的线程安全。</p>
-<h2 id="2-add方法"><a href="#2-add方法" class="headerlink" title="2.add方法"></a>2.add方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//添加元素到数组尾部</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</span><br><span class="line">    	<span class="comment">//加锁</span></span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//得到所有的原数组</span></span><br><span class="line">            Object[] elements = getArray();</span><br><span class="line">            <span class="keyword">int</span> len = elements.length;</span><br><span class="line">            <span class="comment">//拷贝到新数组里面，新数组的长度是+1的，因为会新增一个元素</span></span><br><span class="line">            Object[] newElements = Arrays.copyOf(elements, len + <span class="number">1</span>);</span><br><span class="line">            <span class="comment">//在新数组中进行赋值，新元素直接放在数组的尾部</span></span><br><span class="line">            newElements[len] = e;</span><br><span class="line">            <span class="comment">//替换掉原来的数组</span></span><br><span class="line">            setArray(newElements);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">// finally 里面释放锁，保证即使 try 发生了异常，仍然能够释放锁   </span></span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>从源码中，我们发现整个 add 过程都是在持有锁的状态下进行的，通过加锁，来保证同一时刻只能有一个线程能够对同一个数组进行 add 操作。</p>
-<p>除了加锁之外，还会从老数组中创建出一个新数组，然后把老数组的值拷贝到新数组上，这时候就有一个问题：都已经加锁了，为什么需要拷贝数组，而不是在原来数组上面进行操作呢，原因主要为：</p>
-<p>1.volatile 关键字修饰的是数组，如果我们简单的在原来数组上修改其中某几个元素的值，是无法触发可见性的，我们必须通过修改数组的内存地址才行，也就说要对数组进行重新赋值才行。<br>2.在新的数组上进行拷贝，对老数组没有任何影响，只有新数组完全拷贝完成之后，外部才能访问到，降低了在赋值过程中，老数组数据变动的影响</p>
-<p>简单 add 操作是直接添加到数组的尾部，接着我们来看下指定位置添加元素的关键源码（部分源码）：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</span><br><span class="line">    	<span class="comment">//上锁</span></span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//获取原数组</span></span><br><span class="line">            Object[] elements = getArray();      </span><br><span class="line">            <span class="keyword">int</span> len = elements.length;</span><br><span class="line">            <span class="keyword">if</span> (index &gt; len || index &lt; <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException(<span class="string">&quot;Index: &quot;</span>+index+</span><br><span class="line">                                                    <span class="string">&quot;, Size: &quot;</span>+len);</span><br><span class="line">            Object[] newElements;</span><br><span class="line">            <span class="comment">// len：数组的长度、index：插入的位置</span></span><br><span class="line">            <span class="keyword">int</span> numMoved = len - index;</span><br><span class="line">            <span class="comment">// 如果要插入的位置正好等于数组的末尾，直接拷贝数组即可</span></span><br><span class="line">            <span class="keyword">if</span> (numMoved == <span class="number">0</span>)</span><br><span class="line">                newElements = Arrays.copyOf(elements, len + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果要插入的位置在数组的中间，就需要拷贝 2 次</span></span><br><span class="line">				<span class="comment">// 第一次从 0 拷贝到 index。</span></span><br><span class="line">				<span class="comment">// 第二次从 index+1 拷贝到末尾。</span></span><br><span class="line">                newElements = <span class="keyword">new</span> Object[len + <span class="number">1</span>];</span><br><span class="line">                System.arraycopy(elements, <span class="number">0</span>, newElements, <span class="number">0</span>, index);</span><br><span class="line">                System.arraycopy(elements, index, newElements, index + <span class="number">1</span>,</span><br><span class="line">                                 numMoved);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// index 索引位置的值是空的，直接赋值即可。</span></span><br><span class="line">            newElements[index] = element;</span><br><span class="line">            <span class="comment">// 把新数组的值赋值给数组的容器中</span></span><br><span class="line">            setArray(newElements);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>从源码中可以看到，当插入的位置正好处于末尾时，只需要拷贝一次，当插入的位置处于中间时，此时我们会把原数组一分为二，进行两次拷贝操作。</p>
-<p>小结：<br>从 add 系列方法可以看出，CopyOnWriteArrayList 通过加锁 + 数组拷贝+ volatile 来保证了线程安全，每一个要素都有着其独特的含义：</p>
-<p>加锁：保证同一时刻数组只能被一个线程操作；<br>数组拷贝：保证数组的内存地址被修改，修改后触发 volatile 的可见性，其它线程可以立马知道数组已经被修改；<br>volatile：值被修改后，其它线程能够立马感知最新值。</p>
-<h2 id="3-remove方法"><a href="#3-remove方法" class="headerlink" title="3.remove方法"></a>3.remove方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 删除某个索引位置的数据</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</span><br><span class="line">        <span class="comment">// 加锁</span></span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Object[] elements = getArray();</span><br><span class="line">            <span class="keyword">int</span> len = elements.length;</span><br><span class="line">            <span class="comment">// 先得到老值</span></span><br><span class="line">            E oldValue = get(elements, index);</span><br><span class="line">            <span class="keyword">int</span> numMoved = len - index - <span class="number">1</span>;</span><br><span class="line">            <span class="comment">// 如果要删除的数据正好是数组的尾部，直接删除</span></span><br><span class="line">            <span class="keyword">if</span> (numMoved == <span class="number">0</span>)</span><br><span class="line">                setArray(Arrays.copyOf(elements, len - <span class="number">1</span>));</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 如果删除的数据在数组的中间，分三步走</span></span><br><span class="line">            <span class="comment">// 1. 设置新数组的长度减一，因为是减少一个元素</span></span><br><span class="line">            <span class="comment">// 2. 从 0 拷贝到数组新位置</span></span><br><span class="line">            <span class="comment">// 3. 从新位置拷贝到数组尾部</span></span><br><span class="line">                Object[] newElements = <span class="keyword">new</span> Object[len - <span class="number">1</span>];</span><br><span class="line">                System.arraycopy(elements, <span class="number">0</span>, newElements, <span class="number">0</span>, index);</span><br><span class="line">                System.arraycopy(elements, index + <span class="number">1</span>, newElements, index,</span><br><span class="line">                                 numMoved);</span><br><span class="line">                setArray(newElements);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> oldValue;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-批量删除方法"><a href="#4-批量删除方法" class="headerlink" title="4.批量删除方法"></a>4.批量删除方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 批量删除包含在 c 中的元素</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">removeAll</span><span class="params">(Collection&lt;?&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (c == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="keyword">final</span> ReentrantLock lock = <span class="keyword">this</span>.lock;</span><br><span class="line">    lock.lock();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Object[] elements = getArray();</span><br><span class="line">        <span class="keyword">int</span> len = elements.length;</span><br><span class="line">        <span class="comment">// 说明数组有值，数组无值直接返回 false</span></span><br><span class="line">        <span class="keyword">if</span> (len != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// newlen 表示新数组的索引位置，新数组中存在不包含在 c 中的元素</span></span><br><span class="line">            <span class="keyword">int</span> newlen = <span class="number">0</span>;</span><br><span class="line">            Object[] temp = <span class="keyword">new</span> Object[len];</span><br><span class="line">            <span class="comment">// 循环，把不包含在 c 里面的元素，放到新数组中</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"> i &lt; len;</span><br><span class="line"> ++i) &#123;</span><br><span class="line">                Object element = elements[i];</span><br><span class="line">                <span class="comment">// 不包含在 c 中的元素，从 0 开始放到新数组中</span></span><br><span class="line">                <span class="keyword">if</span> (!c.contains(element))</span><br><span class="line">                    temp[newlen++] = element;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 拷贝新数组，变相的删除了不包含在 c 中的元素</span></span><br><span class="line">            <span class="keyword">if</span> (newlen != len) &#123;</span><br><span class="line">                setArray(Arrays.copyOf(temp, newlen));</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        lock.unlock();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>从源码中，我们可以看到，我们并不会直接对数组中的元素进行挨个删除，而是先对数组中的值进行循环判断，把我们不需要删除的数据放到临时数组中，最后临时数组中的数据就是我们不需要删除的数据。</p>
-
+    <p>类加载机制</p>
+    
     
 
     
@@ -255,11 +257,421 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/类加载机制//" class="article-tag-list-link color1">类加载机制</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/28/CopyOnWriteArrayList/">展开全文 >></a>
+      <a class="article-more-a" href="/2021/06/28/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-长连接与短链接" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/06/28/%E9%95%BF%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%9F%AD%E9%93%BE%E6%8E%A5/" target="_blank">长连接与短链接</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/06/28/%E9%95%BF%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%9F%AD%E9%93%BE%E6%8E%A5/" class="archive-article-date">
+        <time datetime="2021-06-28T13:46:33.889Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-28</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>长连接与短链接</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/长连接与短链接//" class="article-tag-list-link color3">长连接与短链接</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/06/28/%E9%95%BF%E8%BF%9E%E6%8E%A5%E4%B8%8E%E7%9F%AD%E9%93%BE%E6%8E%A5/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-IP,TCP,UDP,HTTP,Socket有什么区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/06/28/IP,TCP,UDP,HTTP,Socket%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/" target="_blank">IP,TCP,UDP,HTTP,Socket有什么区别</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/06/28/IP,TCP,UDP,HTTP,Socket%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/" class="archive-article-date">
+        <time datetime="2021-06-28T13:37:17.304Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-28</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>IP,TCP,UDP,HTTP,Socket有什么区别</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/IP-TCP-UDP-HTTP-Socket有什么区别//" class="article-tag-list-link color3">IP,TCP,UDP,HTTP,Socket有什么区别</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/06/28/IP,TCP,UDP,HTTP,Socket%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-线程通信的方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/06/28/%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E6%96%B9%E5%BC%8F/" target="_blank">线程通信的方式</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/06/28/%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E6%96%B9%E5%BC%8F/" class="archive-article-date">
+        <time datetime="2021-06-28T13:26:25.005Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-28</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>线程通信的方式</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/线程通信的方式//" class="article-tag-list-link color3">线程通信的方式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/06/28/%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%E7%9A%84%E6%96%B9%E5%BC%8F/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-HTTP状态码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/06/28/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/" target="_blank">HTTP状态码</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/06/28/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/" class="archive-article-date">
+        <time datetime="2021-06-28T11:50:40.022Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-28</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>HTTP状态码</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/HTTP状态码//" class="article-tag-list-link color3">HTTP状态码</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/06/28/HTTP%E7%8A%B6%E6%80%81%E7%A0%81/">展开全文 >></a>
     </p>
     
 
@@ -292,44 +704,34 @@
     <article id="post-第一章 并发编程的挑战" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/06/27/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E6%8C%91%E6%88%98/" target="_blank">java并发编程的挑战前两章学习笔记</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/06/27/%E7%AC%AC%E4%B8%80%E7%AB%A0%20%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E7%9A%84%E6%8C%91%E6%88%98/" class="archive-article-date">
+        <time datetime="2021-06-27T12:14:21.241Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-27</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="第一章-并发编程的挑战"><a href="#第一章-并发编程的挑战" class="headerlink" title="第一章 并发编程的挑战"></a>第一章 并发编程的挑战</h1><h2 id="1-1上下文切换"><a href="#1-1上下文切换" class="headerlink" title="1.1上下文切换"></a>1.1上下文切换</h2><p>  Cpu通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下次切换回这个任务的时候，可以再加载这个任务的状态。所以从任务保存到在加载的过程就是一次上下文切换</p>
-<h3 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h3><p>无锁并发编程：多线程竞争锁的时候，会引起上下文切换，所以多线程处理数据的时候，可以用一些方法来避免使用锁，比如将数据的ID按照Hash算法取模分段，不同的线程处理不同段的数据。</p>
-<p>CAS算法：Java的Atomic包使用CAS算法来更新数据，而不需要加锁。</p>
-<p>使用最少线程：避免创建不需要的线程。</p>
-<p>协程：在单线程里实现多任务的调度，并在单线程里维持多个任务之间的切换</p>
-<h2 id="1-2死锁"><a href="#1-2死锁" class="headerlink" title="1.2死锁"></a>1.2死锁</h2><h3 id="产生死锁的四个必要条件"><a href="#产生死锁的四个必要条件" class="headerlink" title="产生死锁的四个必要条件"></a>产生死锁的四个必要条件</h3><p>（1） 互斥条件：一个资源每次只能被一个进程使用。<br>（2） 请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。<br>（3） 不剥夺条件:进程已获得的资源，在末使用完之前，不能强行剥夺。<br>（4） 循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。<br>这四个条件是死锁的必要条件，只要系统发生死锁，这些条件必然成立，而只要上述条件之一不满足，就不会发生死锁。</p>
-<h3 id="避免死锁的几个常见方法"><a href="#避免死锁的几个常见方法" class="headerlink" title="避免死锁的几个常见方法"></a>避免死锁的几个常见方法</h3><p>避免一个线程同时获取多个锁</p>
-<p>避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源</p>
-<p>尝试使用定时锁，使用Lock.tryLock（timeout）来代替使用内部锁机制</p>
-<p>对于数据库锁，加锁和解锁必须在一个数据库连接里，否则就会出现解锁失败的情况。</p>
-<h1 id="第二章-Java机制的底层原理"><a href="#第二章-Java机制的底层原理" class="headerlink" title="第二章 Java机制的底层原理"></a>第二章 Java机制的底层原理</h1><h2 id="2-1volatile的应用"><a href="#2-1volatile的应用" class="headerlink" title="2.1volatile的应用"></a>2.1volatile的应用</h2><p>在多线程并发编程中synchronized和volatile都扮演着重要的角色，volatile是轻量级的synchronized，它在多处理器开发中保证了共享变量的“可见性”。可见性的意思是当一个线程修改一个共享变量时，另外一个线程能读到这个修改的值。如果volatile变量修饰符使用恰当</p>
-<p>的话，它比synchronized的使用和执行成本更低，因为它不会引起线程上下文的切换和调度。</p>
-<h3 id="volatile的定义与实现原理"><a href="#volatile的定义与实现原理" class="headerlink" title="volatile的定义与实现原理"></a>volatile的定义与实现原理</h3><p>Java语言规范第3版中对volatile的定义如下：Java编程语言允许线程访问共享变量，为了确保共享变量能被准确和一致地更新，线程应该确保通过排他锁单独获得这个变量。Java语言提供了volatile，在某些情况下比锁要更加方便。如果一个字段被声明成volatile，Java线程内存模型确保所有线程看到这个变量的值是一致的。</p>
-<p>在了解volatile实现原理之前，我们先来看下与其实现原理相关的CPU术语与说明。</p>
-<p><img src="/images/fang1.png"></p>
-<p>volatile是如何来保证可见性的呢？让我们在X86处理器下通过工具获取JIT编译器生成的汇编指令来查看对volatile进行写操作时，CPU会做什么事情。</p>
-<p>Java代码如下。</p>
-<p><code>instance = new Singleton(); </code>// instance是volatile变量</p>
-<p>转变成汇编代码，如下。</p>
-<p><code>0x01a3de1d: movb $0×0,0×1104800(%esi);0x01a3de24: lock addl $0×0,(%esp);</code></p>
-<p>有volatile变量修饰的共享变量进行写操作的时候会多出第二行汇编代码，通过查IA-32架构软件开发者手册可知，Lock前缀的指令在多核处理器下会引发了两件事情.</p>
-<p><strong>1）将当前处理器缓存行的数据写回到系统内存。</strong></p>
-<p><strong>2）这个写回内存的操作会使在其他CPU里缓存了该内存地址的数据无效。</strong></p>
-<p>​        为了提高处理速度，处理器不直接和内存进行通信，而是先将系统内存的数据读到内部缓存（L1，L2或其他）后再进行操作，但操作完不知道何时会写到内存。如果对声明了volatile的变量进行写操作，JVM就会向处理器发送一条Lock前缀的指令，将这个变量所在缓存行的数据写回到系统内存。但是，就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题。所以，在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器对这个数据进行修改操作的时候，会重新从系统内存中把数据读到处理器缓存里。</p>
-<h2 id="2-2synchronized的实现原理与应用"><a href="#2-2synchronized的实现原理与应用" class="headerlink" title="2.2synchronized的实现原理与应用"></a>2.2synchronized的实现原理与应用</h2><p>先来看下利用synchronized实现同步的基础：Java中的每一个对象都可以作为锁。具体表现为以下3种形式。</p>
-<p>对于普通同步方法，锁是当前实例对象。</p>
-<p>对于静态同步方法，锁是当前类的Class对象。</p>
-<p>对于同步方法块，锁是Synchonized括号里配置的对象。</p>
-<p>当一个线程试图访问同步代码块时，它首先必须得到锁，退出或抛出异常时必须释放锁。那么锁到底存在哪里呢？锁里面会存储什么信息呢？</p>
-<p>从JVM规范中可以看到Synchonized在JVM里的实现原理，JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现的，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明。但是，方法的同步同样可以使用这两个指令来实现。</p>
-<p>monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到方法结束处和异常处，JVM要保证每个monitorenter必须有对应的monitorexit与之配对。任何对象都有一个monitor与之关联，当且一个monitor被持有后，它将处于锁定状态。线程执行到monitorenter指令时，将会尝试获取对象所对应的monitor的所有权，即尝试获得对象的锁。</p>
-<h3 id="锁的升级与对比"><a href="#锁的升级与对比" class="headerlink" title="锁的升级与对比"></a>锁的升级与对比</h3><p>Java SE 1.6为了减少获得锁和释放锁带来的性能消耗，引入了“偏向锁”和“轻量级锁”，在Java SE 1.6中，锁一共有4种状态，级别从低到高依次是：无锁状态、偏向锁状态、轻量级锁状态和重量级锁状态，这几个状态会随着竞争情况逐渐升级。锁可以升级但不能降级，意味着偏向锁升级成轻量级锁后不能降级成偏向锁。这种锁升级却不能降级的策略，目的是为了提高获得锁和释放锁的效率，下文会详细分析。</p>
-<h4 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h4><p>HotSpot经过研究发现，大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，为了让线程获得锁的代价更低而引入了偏向锁。当一个线程访问同步块并获取锁时，会在对象头和栈帧中的锁记录里存储锁偏向的线程ID，以后该线程在进入和退出同步块时不需要进行CAS操作来加锁和解锁，只需简单地测试一下对象头的Mark Word里是否存储着指向当前线程的偏向锁。如果测试成功，表示线程已经获得了锁。如果测试失败，则需要再测试一下Mark Word中偏向锁的标识是否设置成1（表示当前是偏向锁）：如果没有设置，则使用CAS竞争锁；如果设置了，则尝试使用CAS将对象头的偏向锁指向当前线程。</p>
-<h4 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h4><h5 id="（1）轻量级锁加锁"><a href="#（1）轻量级锁加锁" class="headerlink" title="（1）轻量级锁加锁"></a>（1）轻量级锁加锁</h5><p>线程在执行同步块之前，JVM会先在当前线程的栈桢中创建用于存储锁记录的空间，并将对象头中的Mark Word复制到锁记录中，官方称为Displaced Mark Word。然后线程尝试使用CAS将对象头中的Mark Word替换为指向锁记录的指针。如果成功，当前线程获得锁，如果失败，表示其他线程竞争锁，当前线程便尝试使用自旋来获取锁。</p>
-<h5 id="（2）轻量级锁解锁"><a href="#（2）轻量级锁解锁" class="headerlink" title="（2）轻量级锁解锁"></a>（2）轻量级锁解锁</h5><p>轻量级解锁时，会使用原子的CAS操作将Displaced Mark Word替换回到对象头，如果成功，则表示没有竞争发生。如果失败，表示当前锁存在竞争，锁就会膨胀成重量级锁。</p>
-
+    <p>java并发编程的挑战前两章学习笔记</p>
+    
     
 
     
@@ -340,7 +742,29 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java并发编程的挑战前两章学习笔记//" class="article-tag-list-link color4">java并发编程的挑战前两章学习笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -751,397 +1175,9 @@
 
 
   
-    <article id="post-彻头彻尾理解-ConcurrentHashMap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/25/%E5%BD%BB%E5%A4%B4%E5%BD%BB%E5%B0%BE%E7%90%86%E8%A7%A3-ConcurrentHashMap/" target="_blank">彻头彻尾理解 ConcurrentHashMap</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/25/%E5%BD%BB%E5%A4%B4%E5%BD%BB%E5%B0%BE%E7%90%86%E8%A7%A3-ConcurrentHashMap/" class="archive-article-date">
-        <time datetime="2021-06-25T07:41:55.025Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-25</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>彻头彻尾理解 ConcurrentHashMap</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/ConcurrentHashMap//" class="article-tag-list-link color3">ConcurrentHashMap</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/25/%E5%BD%BB%E5%A4%B4%E5%BD%BB%E5%B0%BE%E7%90%86%E8%A7%A3-ConcurrentHashMap/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Synchronized实现原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/25/Synchronized%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" target="_blank">Synchronized实现原理</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/25/Synchronized%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="archive-article-date">
-        <time datetime="2021-06-25T06:42:37.462Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-25</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Synchronized实现原理</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/多线程-synchronized//" class="article-tag-list-link color2">多线程 synchronized</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/25/Synchronized%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-详解线程池" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/24/%E8%AF%A6%E8%A7%A3%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_blank">详解线程池</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/24/%E8%AF%A6%E8%A7%A3%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="archive-article-date">
-        <time datetime="2021-06-24T12:44:12.826Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-24</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>详解线程池</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Java、JUC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/详解线程池//" class="article-tag-list-link color1">详解线程池</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/24/%E8%AF%A6%E8%A7%A3%E7%BA%BF%E7%A8%8B%E6%B1%A0/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-final关键字的底层原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/24/final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" target="_blank">final关键字的底层原理</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/24/final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" class="archive-article-date">
-        <time datetime="2021-06-24T12:07:30.154Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-24</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>final关键字的底层原理</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/final//" class="article-tag-list-link color1">final</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/24/final%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
