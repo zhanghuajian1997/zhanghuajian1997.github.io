@@ -6,26 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>ThreadLocal使用与原理 | Hexo</title>
+  <title>Category: JUC强大的辅助类讲解 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="ThreadLocal使用与原理">
-<meta property="og:type" content="article">
-<meta property="og:title" content="ThreadLocal使用与原理">
-<meta property="og:url" content="http://example.com/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/index.html">
+  <meta name="description" content="疯狂输出">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/categories/JUC%E5%BC%BA%E5%A4%A7%E7%9A%84%E8%BE%85%E5%8A%A9%E7%B1%BB%E8%AE%B2%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="ThreadLocal使用与原理">
+<meta property="og:description" content="疯狂输出">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/local1.png">
-<meta property="og:image" content="e:/blog/source/images/local1.png">
-<meta property="og:image" content="http://example.com/images/local2.png">
-<meta property="article:published_time" content="2021-04-13T07:27:26.000Z">
-<meta property="article:modified_time" content="2021-06-24T11:41:27.309Z">
 <meta property="article:author" content="ZHANG_JAVA">
-<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/local1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -216,313 +209,76 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2021-04-13-ThreadLocal使用与原理" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2021/06/30/JUC%E5%BC%BA%E5%A4%A7%E7%9A%84%E8%BE%85%E5%8A%A9%E7%B1%BB%E8%AE%B2%E8%A7%A3/" class="archive-article-date">
+        <time datetime="2021-06-30T11:22:02.417Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-30</time>
+</a>
+
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2021/06/30/JUC%E5%BC%BA%E5%A4%A7%E7%9A%84%E8%BE%85%E5%8A%A9%E7%B1%BB%E8%AE%B2%E8%A7%A3/" target="_blank">JUC强大的辅助类讲解</a>
   
-    <h1 class="article-title" itemprop="name">
-      ThreadLocal使用与原理
     </h1>
   
 
 
-  
-  
-        
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
-<a href="/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/" class="archive-article-date">
-        <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.5k字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">5分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>ThreadLocal使用与原理</p>
-<span id="more"></span>
-
-<h1 id="ThreadLocal使用与原理"><a href="#ThreadLocal使用与原理" class="headerlink" title="ThreadLocal使用与原理"></a>ThreadLocal使用与原理</h1><p>在处理多线程并发安全的方法中，最常用的方法，就是使用锁，通过锁来控制多个不同线程对临界区的访问。</p>
-<p>但是，无论是什么样的锁，乐观锁或者悲观锁，都会在并发冲突的时候对性能产生一定的影响。</p>
-<p>那有没有一种方法，可以彻底避免竞争呢？</p>
-<p>答案是肯定的，这就是ThreadLocal。</p>
-<p>从字面意思上看，ThreadLocal可以解释成线程的局部变量，也就是说一个ThreadLocal的变量只有当前自身线程可以访问，别的线程都访问不了，那么自然就避免了线程竞争。</p>
-<p>因此，ThreadLocal提供了一种与众不同的线程安全方式，它不是在发生线程冲突时想办法解决冲突，而是彻底的避免了冲突的发生。</p>
-<h2 id="ThreadLocal的基本使用"><a href="#ThreadLocal的基本使用" class="headerlink" title="ThreadLocal的基本使用"></a>ThreadLocal的基本使用</h2><p>创建一个ThreadLocal对象：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ThreadLocal&lt;Integer&gt; localInt = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br></pre></td></tr></table></figure>
-
-<p>上述代码创建一个localInt变量，由于ThreadLocal是一个泛型类，这里指定了localInt的类型为整数。</p>
-<p>下面展示了如果设置和获取这个变量的值：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">setAndGet</span><span class="params">()</span></span>&#123;</span><br><span class="line">    localInt.set(<span class="number">8</span>);</span><br><span class="line">    <span class="keyword">return</span> localInt.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上述代码设置变量的值为8，接着取得这个值。</p>
-<p>由于ThreadLocal里设置的值，只有当前线程自己看得见，这意味着你不可能通过其他线程为它初始化值。为了弥补这一点，ThreadLocal提供了一个withInitial()方法统一初始化所有线程的ThreadLocal的值：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ThreadLocal&lt;Integer&gt; localInt = ThreadLocal.withInitial(() -&gt; <span class="number">6</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="ThreadLocal的实现原理"><a href="#ThreadLocal的实现原理" class="headerlink" title="ThreadLocal的实现原理"></a>ThreadLocal的实现原理</h2><p>ThreadLocal变量只在单个线程内可见，那它是如何做到的呢？我们先从最基本的get()方法说起：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获得当前线程</span></span><br><span class="line">    Thread t = Thread.currentThread();</span><br><span class="line">    <span class="comment">//每个线程 都有一个自己的ThreadLocalMap，</span></span><br><span class="line">    <span class="comment">//ThreadLocalMap里就保存着所有的ThreadLocal变量</span></span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">//ThreadLocalMap的key就是当前ThreadLocal对象实例，</span></span><br><span class="line">        <span class="comment">//多个ThreadLocal变量都是放在这个map中的</span></span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">            <span class="comment">//从map里取出来的值就是我们需要的这个ThreadLocal变量</span></span><br><span class="line">            T result = (T)e.value;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 如果map没有初始化，那么在这里初始化一下</span></span><br><span class="line">    <span class="keyword">return</span> setInitialValue();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，所谓的ThreadLocal变量就是保存在每个线程的map中的。这个map就是Thread对象中的threadLocals字段。如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ThreadLocal.ThreadLocalMap threadLocals = <span class="keyword">null</span>;</span><br></pre></td></tr></table></figure>
-
-<p>ThreadLocal.ThreadLocalMap是一个比较特殊的Map，它的每个Entry的key都是一个弱引用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span> <span class="keyword">extends</span> <span class="title">WeakReference</span>&lt;<span class="title">ThreadLocal</span>&lt;?&gt;&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/** The value associated with this ThreadLocal. */</span></span><br><span class="line">    Object value;</span><br><span class="line">    <span class="comment">//key就是一个弱引用</span></span><br><span class="line">    Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</span><br><span class="line">        <span class="keyword">super</span>(k);</span><br><span class="line">        value = v;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样设计的好处是，如果这个变量不再被其他对象使用时，可以自动回收这个ThreadLocal对象，避免可能的内存泄露（注意，Entry中的value，依然是强引用，如何回收，见下文分解）。</p>
-<h3 id="ThreadLocal-结构小结"><a href="#ThreadLocal-结构小结" class="headerlink" title="ThreadLocal 结构小结"></a>ThreadLocal 结构小结</h3><p>通过上面的内容，我们基本已经知道 ThreadLocal 的大致工作原理。我们知道每个线程都有一个 ThreadLocalMap 结构，其中就保存着当前线程所持有的所有 ThreadLocal。ThreadLocal 本身只是一个引用，没有直接保存值，值是保存在 ThreadLocalMap 中，ThreadLocal 作为 key，值作为 value。可以用下面的图来概括：</p>
-<p><img src="/images/local1.png" alt="local"></p>
-<p><img src="E:\blog\source\images\local1.png" alt="local"></p>
-<h3 id="ThreadLocalMap-结构小结"><a href="#ThreadLocalMap-结构小结" class="headerlink" title="ThreadLocalMap 结构小结"></a>ThreadLocalMap 结构小结</h3><p>以上是 ThreadLocalMap 的结构与相关方法。最后总结一下：</p>
-<ul>
-<li>ThreadLocalMap 类似 HashMap，key 为 ThreadLocal，value 为 ThreadLocal 的值。ThreadLocal 只是一个引用，它本身并不保存值；</li>
-<li>当发生哈希冲突时，ThreadLocalMap 采用的是开放寻址法，这与 HashMap 的拉链式寻址法不同；</li>
-<li>ThreadLocalMap 本身的操作时，因为是线程私有变量，所以不存在并发操作；但是需要考虑 GC 因素，因为其 key 是弱引用，随时可能被 GC，导致开放寻址法中，出现一个个“坑”，因此在查找、新增、删除等操作时，需要进行 rehash 操作，也就是把元素重新进行哈希映射，放置到正确的位置，填平这些“坑”；</li>
-<li>ThreadLocaMap 也会进行扩容，扩容之前会进行全量的 rehash 操作。</li>
-</ul>
-<h2 id="理解ThreadLocal中的内存泄漏问题"><a href="#理解ThreadLocal中的内存泄漏问题" class="headerlink" title="理解ThreadLocal中的内存泄漏问题"></a>理解ThreadLocal中的内存泄漏问题</h2><p>虽然ThreadLocalMap中的key是弱引用，当不存在外部强引用的时候，就会自动被回收，但是Entry中的value依然是强引用。这个value的引用链条如下：</p>
-<p><img src="/images/local2.png" alt="local"></p>
-<p>存在着一条从 currentThread 到 ThreadLocal value 的强引用链，即使 ThreadLocal 本身已经被回收了，value 因为强引用链的缘故，是依旧存活在内存中的。所以如果后续一直没有经过主动的 remove 或者被动的 rehash 操作的话，value 就会持续占用内存空间，造成泄露。</p>
-<p>前面 ThreadLocalMap 中，因为 ThreadLocal 为弱引用，加上开放寻址法，所以查询、插入、删除操作都非常复杂，那么现在知道为什么 ThreadLocal 是弱引用了，原因就是为了尽量去避免内存泄漏问题。只要 ThreadLocal 本身不再用到了，即没有强引用了，ThreadLocalMap 中的弱引用就会被自动 GC 回收。后面 ThreadLocalMap 会不断的进行懒式扫描，剔除掉 key 为 null 的元素，释放在这部分内存。</p>
-<p>某种意义上，ThreadLocal 本身已经最大化的去解决内存泄露问题了。不过凡事总有万一，万一这个元素在后续的 rehash 操作中一直没有被扫描到，那就会一直存在于内存。所以最好的方式就是，对于不再使用的 ThreadLocal，主动进行 remove，就像用完锁要解锁一样。</p>
-<p>因此，一个良好的习惯依然是：<strong>当你不需要这个ThreadLocal变量时，主动调用remove()，这样对整个系统是有好处的</strong>。</p>
-
-    
-
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/alipay.jpg">
-                    <span class="reward-type">支付宝</span>
-                  </div>
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/weixin.png">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
-    
-
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          ZHANG_JAVA
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="http://example.com/2021/04/13/2021-04-13-ThreadLocal使用与原理/" title="ThreadLocal使用与原理" target="_blank">http://example.com/2021/04/13/2021-04-13-ThreadLocal使用与原理/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
+        <div class="article-info info-on-right">
           
-          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
-        </li>
-        
-      </ul>
-    </div>
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Java、JUC</a>
         		</li>
       		
 		</ul>
 	</div>
 
-    
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/ThreadLocal//" class="article-tag-list-link color2">ThreadLocal</a>
+        			<a href="/categories/JUC强大的辅助类讲解//" class="article-tag-list-link color2">JUC强大的辅助类讲解</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-    
-
-    
-    
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a> -->
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/04/13/2021-04-13-ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86/" alt="微信分享二维码"> -->
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-
-    
-    <div class="clearfix"></div>
-  </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
-  
-    <a href="/2021/04/13/javaweb/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          javaweb常见问题
-        
-      </div>
-    </a>
   
   
-    <a href="/2021/04/13/ssm/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">ssm框架相关知识</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
 
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ThreadLocal%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">ThreadLocal使用与原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ThreadLocal%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">ThreadLocal的基本使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ThreadLocal%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">ThreadLocal的实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal-%E7%BB%93%E6%9E%84%E5%B0%8F%E7%BB%93"><span class="toc-number">1.2.1.</span> <span class="toc-text">ThreadLocal 结构小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocalMap-%E7%BB%93%E6%9E%84%E5%B0%8F%E7%BB%93"><span class="toc-number">1.2.2.</span> <span class="toc-text">ThreadLocalMap 结构小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%90%86%E8%A7%A3ThreadLocal%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">理解ThreadLocal中的内存泄漏问题</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
           </div>
@@ -563,10 +319,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
-		isCategory: false,
+		isCategory: true,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
@@ -672,6 +428,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java、设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
             
             <div class="clearfix"></div>
