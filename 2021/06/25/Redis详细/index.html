@@ -18,7 +18,7 @@
 <meta property="og:description" content="Redis">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-25T12:40:12.708Z">
-<meta property="article:modified_time" content="2021-06-25T12:40:12.709Z">
+<meta property="article:modified_time" content="2021-07-01T02:50:06.225Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -245,7 +245,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.9k字</span>
+      <span class="post-count">4.8k字</span>
     </span>
   </span>
 
@@ -254,7 +254,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">13分</span>
+      <span class="post-count">16分</span>
     </span>
   </span>
 </div>
@@ -338,8 +338,8 @@
 <p>4.使用多路I/O复用模型，非阻塞IO；</p>
 <p>5.使用底层模型不同，它们之间底层实现方式以及与客户端之间通信的应用协议不一样，Redis直接自己构建了VM 机制 ，因为一般的系统调用系统函数的话，会浪费一定的时间去移动和请求；</p>
 <h2 id="Redis是怎么进行持久化的？"><a href="#Redis是怎么进行持久化的？" class="headerlink" title="Redis是怎么进行持久化的？"></a>Redis是怎么进行持久化的？</h2><p>是的，持久化的话是Redis高可用中比较重要的一个环节，因为Redis数据在内存的特性，持久化必须得有，我了解到的持久化是有两种方式的。</p>
-<p>RDB：RDB 持久化机制，是对 Redis 中的数据执行周期性的持久化。</p>
-<p>AOF：AOF 机制对每条写入命令作为日志，以 append-only 的模式写入一个日志文件中，因为这个模式是只追加的方式，所以没有任何磁盘寻址的开销，所以很快，有点像Mysql中的binlog。</p>
+<p>RDB：RDB 持久化机制，是对 Redis 中的数据执行周期性的持久化。其实就是根据我们自己配置的时间或者手动去执行BGSAVE或者SAVE命令，Redis就会生成RDB文件。这个RDB文件实际上就是一个经过压缩的二进制的文件，Redis可以通过这个文件在启动的时候来还原我们的数据。</p>
+<p>AOF：AOF 机制对每条写入命令作为日志，以 append-only 的模式写入一个日志文件中，因为这个模式是只追加的方式，所以没有任何磁盘寻址的开销，所以很快，有点像Mysql中的binlog。Redis重新跑这个记录下的日志文件，就相当于还原了数据。</p>
 <p>两种方式都可以把Redis内存中的数据持久化到磁盘上，然后再将这些数据备份到别的地方去，RDB更适合做冷备，AOF更适合做热备</p>
 <h3 id="那这两种机制各自优缺点是啥？"><a href="#那这两种机制各自优缺点是啥？" class="headerlink" title="那这两种机制各自优缺点是啥？"></a>那这两种机制各自优缺点是啥？</h3><p>我先说RDB吧</p>
 <p>优点：<br>他会生成多个数据文件，每个数据文件分别都代表了某一时刻Redis里面的数据，这种方式，有没有觉得很适合做冷备，完整的数据运维设置定时任务，定时同步到远端的服务器，比如阿里的云服务，这样一旦线上挂了，你想恢复多少分钟之前的数据，就去远端拷贝一份之前的数据就好了。</p>
@@ -353,6 +353,33 @@
 <p>tip：我说的命令你们别真去线上系统操作啊，想试去自己买的服务器上装个Redis试，别到时候来说，敖丙真是个渣男，害我把服务器搞崩了，Redis官网上的命令都去看看，不要乱试！！！</p>
 <p>缺点：<br>一样的数据，AOF文件比RDB还要大。</p>
 <p>AOF开启后，Redis支持写的QPS会比RDB支持写的要低，他不是每秒都要去异步刷新一次日志嘛fsync，当然即使这样性能还是很高，我记得ElasticSearch也是这样的，异步刷新缓存区的数据去持久化，为啥这么做呢，不直接来一条怼一条呢，那我会告诉你这样性能可能低到没办法用的，大家可以思考下为啥哟。</p>
+<h2 id="Redis持久化方式？"><a href="#Redis持久化方式？" class="headerlink" title="Redis持久化方式？"></a>Redis持久化方式？</h2><p>RDB持久化方式能够在指定的时间间隔能对你的数据进行快照存储。</p>
+<p>AOF持久化方式记录每次对服务器写的操作,当服务器重启的时候会重新执行这些命令来恢复原始的数据，AOF命令以redis协议追加保存每次写的操作到文件末尾.Redis还能对AOF文件进行后台重写,使得AOF文件的体积不至于过大。</p>
+<p>如果你只希望你的数据在服务器运行的时候存在，你也可以不使用任何持久化方式。</p>
+<p>你也可以同时开启两种持久化方式，在这种情况下，当redis重启的时候会优先载入AOF文件来恢复原始的数据,因为在通常情况下AOF文件保存的数据集要比RDB文件保存的数据集要完整。</p>
+<p><strong>（1）RDB持久化：</strong></p>
+<p>每隔一段时间，将内存中的数据集写到磁盘</p>
+<p>Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入到个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。整个过程中，主进程是不进行任何IO操作的，这就确保了极高的性能如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。</p>
+<p><strong>保存策略：</strong></p>
+<p>save 9  00 1  900 秒内如果至少有 1 个 key 的值变化，则保存</p>
+<p>save 300  10  300 秒内如果至少有 10 个 key 的值变化，则保存</p>
+<p>save 60 1 0000 60 秒内如果至10000 个 key 的值变化，则保存</p>
+<p><strong>（2）AOF 持久化: 以日志形式记录每个更新（(总结、改）操作</strong></p>
+<p>Redis重新启动时读取这个文件，重新执行新建、修改数据的命令恢复数据。</p>
+<p><strong>保存策略：</strong></p>
+<p>appendfsync always：每次产生一条新的修改数据的命令都执行保存操作；效率低，但是安全！</p>
+<p>appendfsync everysec：每秒执行一次保存操作。如果在未保存当前秒内操作时发生了断电，仍然会导致一部分数据丢失（即1秒钟的数据）。</p>
+<p>appendfsync no：从不保存，将数据交给操作系统来处理。更快，也更不安全的选择。</p>
+<p>推荐（并且也是默认）的措施为每秒 fsync 一次， 这种 fsync 策略可以兼顾速度和安全性。</p>
+<p><strong>缺点：</strong></p>
+<p>1 比起RDB占用更多的磁盘空间</p>
+<p>2 恢复备份速度要慢</p>
+<p>3 每次读写都同步的话，有一定的性能压力</p>
+<p>4 存在个别Bug，造成恢复不能</p>
+<p><strong>（3）选择策略：</strong></p>
+<p>可读的日志文本，通过操作AOF</p>
+<p>官方推荐：</p>
+<p>如果对数据不敏感，可以选单独用RDB；不建议单独用AOF，因为可能出现Bug;如果只是做纯内存缓存，可以都不用</p>
 
     
 
@@ -541,7 +568,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis"><span class="toc-number">1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E6%9C%89%E5%87%A0%E7%A7%8D%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">Redis有几种基础数据类型？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#String%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">String：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash%EF%BC%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">Hash：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List%EF%BC%9A"><span class="toc-number">1.1.3.</span> <span class="toc-text">List：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%EF%BC%9A"><span class="toc-number">1.1.4.</span> <span class="toc-text">Set：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sorted-Set%EF%BC%9A"><span class="toc-number">1.1.5.</span> <span class="toc-text">Sorted Set：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%9A%84%E2%BC%80%E8%87%B4%E6%80%A7%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">如何保证缓存和数据库数据的⼀致性？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么是删除缓存，而不是更新缓存？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E5%92%8C-Memcached-%E6%9C%89%E5%95%A5%E5%8C%BA%E5%88%AB%EF%BC%8C%E4%B8%BA%E5%95%A5%E9%80%89%E6%8B%A9%E7%94%A8Redis%E4%BD%9C%E4%B8%BA%E4%BD%A0%E4%BB%AC%E7%9A%84%E7%BC%93%E5%AD%98%E4%B8%AD%E9%97%B4%E4%BB%B6%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">Redis 和 Memcached 有啥区别，为啥选择用Redis作为你们的缓存中间件？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%E4%BA%86%E8%A7%A3%E4%B9%88%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">Redis 的线程模型了解么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E9%82%A3%E4%B9%88%E5%BF%AB%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">Redis为什么那么快？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%9B%E8%A1%8C%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">Redis是怎么进行持久化的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%9C%BA%E5%88%B6%E5%90%84%E8%87%AA%E4%BC%98%E7%BC%BA%E7%82%B9%E6%98%AF%E5%95%A5%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">那这两种机制各自优缺点是啥？</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis"><span class="toc-number">1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E6%9C%89%E5%87%A0%E7%A7%8D%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">Redis有几种基础数据类型？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#String%EF%BC%9A"><span class="toc-number">1.1.1.</span> <span class="toc-text">String：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hash%EF%BC%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">Hash：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List%EF%BC%9A"><span class="toc-number">1.1.3.</span> <span class="toc-text">List：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set%EF%BC%9A"><span class="toc-number">1.1.4.</span> <span class="toc-text">Set：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sorted-Set%EF%BC%9A"><span class="toc-number">1.1.5.</span> <span class="toc-text">Sorted Set：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%B0%E6%8D%AE%E7%9A%84%E2%BC%80%E8%87%B4%E6%80%A7%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">如何保证缓存和数据库数据的⼀致性？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么是删除缓存，而不是更新缓存？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E5%92%8C-Memcached-%E6%9C%89%E5%95%A5%E5%8C%BA%E5%88%AB%EF%BC%8C%E4%B8%BA%E5%95%A5%E9%80%89%E6%8B%A9%E7%94%A8Redis%E4%BD%9C%E4%B8%BA%E4%BD%A0%E4%BB%AC%E7%9A%84%E7%BC%93%E5%AD%98%E4%B8%AD%E9%97%B4%E4%BB%B6%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">Redis 和 Memcached 有啥区别，为啥选择用Redis作为你们的缓存中间件？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E7%9A%84%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%E4%BA%86%E8%A7%A3%E4%B9%88%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">Redis 的线程模型了解么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E4%B8%BA%E4%BB%80%E4%B9%88%E9%82%A3%E4%B9%88%E5%BF%AB%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">Redis为什么那么快？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E6%98%AF%E6%80%8E%E4%B9%88%E8%BF%9B%E8%A1%8C%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">Redis是怎么进行持久化的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%A3%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%9C%BA%E5%88%B6%E5%90%84%E8%87%AA%E4%BC%98%E7%BC%BA%E7%82%B9%E6%98%AF%E5%95%A5%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">那这两种机制各自优缺点是啥？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%B9%E5%BC%8F%EF%BC%9F"><span class="toc-number">1.7.</span> <span class="toc-text">Redis持久化方式？</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -714,6 +741,14 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">数据结构、算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
             
             <div class="clearfix"></div>
