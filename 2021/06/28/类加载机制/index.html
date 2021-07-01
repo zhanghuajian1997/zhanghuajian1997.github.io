@@ -23,8 +23,9 @@
 <meta property="og:image" content="http://example.com/images/jiazai4.png">
 <meta property="og:image" content="http://example.com/images/jiazai5.png">
 <meta property="og:image" content="http://example.com/images/jiazai6.png">
+<meta property="og:image" content="http://example.com/images/weipai1.png">
 <meta property="article:published_time" content="2021-06-28T14:31:10.805Z">
-<meta property="article:modified_time" content="2021-06-28T14:31:10.805Z">
+<meta property="article:modified_time" content="2021-07-01T02:12:16.978Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -252,7 +253,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.5k字</span>
+      <span class="post-count">2.9k字</span>
     </span>
   </span>
 
@@ -261,7 +262,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">8分</span>
+      <span class="post-count">10分</span>
     </span>
   </span>
 </div>
@@ -276,7 +277,7 @@
 <span id="more"></span>
 
 <h1 id="怎么理解Java是一门-跨平台-的语言，也就是一次编译，到处运行？"><a href="#怎么理解Java是一门-跨平台-的语言，也就是一次编译，到处运行？" class="headerlink" title="怎么理解Java是一门[跨平台]的语言，也就是一次编译，到处运行？"></a>怎么理解Java是一门[跨平台]的语言，也就是一次编译，到处运行？</h1><p>因为有JVM，Java源代码会被编译为class文件，class文件是运行在JVM上的。通俗的可以理解为JVM是面向操作系统的，它负责把字节码文件解析成系统所能识别的指令并且执行。</p>
-<p><img src="/images/jiazai1.png"></p>
+<p><img src="/images/jiazai1.png" alt="14"></p>
 <h1 id="从源文件【-java】到代码执行的过程"><a href="#从源文件【-java】到代码执行的过程" class="headerlink" title="从源文件【.java】到代码执行的过程"></a>从源文件【.java】到代码执行的过程</h1><p><img src="/images/jiazai2.png"></p>
 <p>简单总结为上图所示，总共就四个步骤：</p>
 <p><strong>编译—–&gt;加载—-&gt;解释——&gt;执行</strong></p>
@@ -361,6 +362,17 @@
 </ul>
 </li>
 </ul>
+<h2 id="打破双亲委派机制是什么意思"><a href="#打破双亲委派机制是什么意思" class="headerlink" title="打破双亲委派机制是什么意思"></a>打破双亲委派机制是什么意思</h2><p>意思就是：只要加载类的时候，不是从系统类加载器、扩展类加载器、引导类加载器这个顺序找，就算是打破了</p>
+<p>加载class的核心方法是在LoaderClass（双亲委派的核心实现），那么只要定义了ClassLoader，重写loadClass，就算打破了双亲委派机制了。</p>
+<h3 id="Tomcat是如何打破双亲委派机制的"><a href="#Tomcat是如何打破双亲委派机制的" class="headerlink" title="Tomcat是如何打破双亲委派机制的"></a>Tomcat是如何打破双亲委派机制的</h3><p>初学的时候部署项目的时候，是把war包放到tomcat的webapp下，这意味着一个tomcat可以运行多个web应用程序。假设有两个Web应用程序，都有一个类名字都是User。并且包的全限定名都是一样的，比如说是com.xxx.User.但是具体实现是不一样的。那么Tomcat是如何保证他们不会冲突的呢？</p>
+<p>答案就是：Tomcat给每个Web应用创建一个类加载器实例（WebAppClassLoader），该加载器重写了loadClass方法，优先加载当前应用目录下的类，如果当前找不到了，才会一层一层的向上找。这样就做到了Web应用层级的隔离</p>
+<ol>
+<li>为了Web应用程序类之间共享，把ShareClassLoader作为WebAppClassLoader的父类加载器，如果WebAppClassLoader加载器找不到，则尝试用ShareClassLoader进行加载</li>
+<li>为了Tomcat本身与Web应用程序类隔离，用CatalinaClassLoader类加载器进行隔离，CatalinaClassLoader加载Tomcat本身的类</li>
+<li>为了Tomcat与Web应用程序类共享，用CommonClassLoader作为CatalinaClassLoader和ShareClassLoader的父类加载器</li>
+<li>ShareClassLoader、CatalinaClassLoader、CommonClassLoader的目录可以在Tomcat的catalina.properties进行配置</li>
+</ol>
+<p><img src="/images/weipai1.png"></p>
 <h1 id="如何判断两个class对象是否相同"><a href="#如何判断两个class对象是否相同" class="headerlink" title="如何判断两个class对象是否相同"></a>如何判断两个class对象是否相同</h1><p>在JVM中表示两个class对象是否为同一个类存在两个必要条件：</p>
 <ul>
 <li>类的完整类名必须一致，包括包名。</li>
@@ -556,7 +568,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3Java%E6%98%AF%E4%B8%80%E9%97%A8-%E8%B7%A8%E5%B9%B3%E5%8F%B0-%E7%9A%84%E8%AF%AD%E8%A8%80%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E4%B8%80%E6%AC%A1%E7%BC%96%E8%AF%91%EF%BC%8C%E5%88%B0%E5%A4%84%E8%BF%90%E8%A1%8C%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">怎么理解Java是一门[跨平台]的语言，也就是一次编译，到处运行？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8E%E6%BA%90%E6%96%87%E4%BB%B6%E3%80%90-java%E3%80%91%E5%88%B0%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">从源文件【.java】到代码执行的过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">类加载器的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%87%AA%E5%B8%A6%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">虚拟机自带的加载器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%88%E5%BC%95%E5%AF%BC%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%8CBootstrap-ClassLoader%EF%BC%89"><span class="toc-number">3.1.1.</span> <span class="toc-text">启动类加载器（引导类加载器，Bootstrap ClassLoader）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%88Extension-ClassLoader%EF%BC%89"><span class="toc-number">3.1.2.</span> <span class="toc-text">扩展类加载器（Extension ClassLoader）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%88%E7%B3%BB%E7%BB%9F%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%8CAppClassLoader%EF%BC%89"><span class="toc-number">3.1.3.</span> <span class="toc-text">应用程序类加载器（系统类加载器，AppClassLoader）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-number">3.1.4.</span> <span class="toc-text">用户自定义类加载器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">双亲委派机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">4.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E4%B8%BE%E4%BE%8B"><span class="toc-number">4.2.</span> <span class="toc-text">双亲委派机制举例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="toc-number">4.3.</span> <span class="toc-text">沙箱安全机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">4.4.</span> <span class="toc-text">双亲委派机制的优势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AAclass%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C"><span class="toc-number">5.</span> <span class="toc-text">如何判断两个class对象是否相同</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3Java%E6%98%AF%E4%B8%80%E9%97%A8-%E8%B7%A8%E5%B9%B3%E5%8F%B0-%E7%9A%84%E8%AF%AD%E8%A8%80%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E4%B8%80%E6%AC%A1%E7%BC%96%E8%AF%91%EF%BC%8C%E5%88%B0%E5%A4%84%E8%BF%90%E8%A1%8C%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">怎么理解Java是一门[跨平台]的语言，也就是一次编译，到处运行？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8E%E6%BA%90%E6%96%87%E4%BB%B6%E3%80%90-java%E3%80%91%E5%88%B0%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">从源文件【.java】到代码执行的过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">类加载器的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%87%AA%E5%B8%A6%E7%9A%84%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">虚拟机自带的加载器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%88%E5%BC%95%E5%AF%BC%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%8CBootstrap-ClassLoader%EF%BC%89"><span class="toc-number">3.1.1.</span> <span class="toc-text">启动类加载器（引导类加载器，Bootstrap ClassLoader）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%88Extension-ClassLoader%EF%BC%89"><span class="toc-number">3.1.2.</span> <span class="toc-text">扩展类加载器（Extension ClassLoader）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%88%E7%B3%BB%E7%BB%9F%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%8CAppClassLoader%EF%BC%89"><span class="toc-number">3.1.3.</span> <span class="toc-text">应用程序类加载器（系统类加载器，AppClassLoader）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-number">3.1.4.</span> <span class="toc-text">用户自定义类加载器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-number">4.</span> <span class="toc-text">双亲委派机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number">4.1.</span> <span class="toc-text">工作原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E4%B8%BE%E4%BE%8B"><span class="toc-number">4.2.</span> <span class="toc-text">双亲委派机制举例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B2%99%E7%AE%B1%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6"><span class="toc-number">4.3.</span> <span class="toc-text">沙箱安全机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">4.4.</span> <span class="toc-text">双亲委派机制的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E7%A0%B4%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D"><span class="toc-number">4.5.</span> <span class="toc-text">打破双亲委派机制是什么意思</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%93%E7%A0%B4%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E7%9A%84"><span class="toc-number">4.5.1.</span> <span class="toc-text">Tomcat是如何打破双亲委派机制的</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AAclass%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C"><span class="toc-number">5.</span> <span class="toc-text">如何判断两个class对象是否相同</span></a></li></ol>
                     </div>
                 </span>
             </div>
