@@ -216,24 +216,37 @@
             
 
   
-    <article id="post-Spring中经典的设计模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-MySQL中binlog介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/06/MySQL%E4%B8%ADbinlog%E4%BB%8B%E7%BB%8D/" target="_blank">MySQL中binlog介绍</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/06/MySQL%E4%B8%ADbinlog%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
+        <time datetime="2021-07-06T13:48:50.675Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-06</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="Spring中经典的设计模式"><a href="#Spring中经典的设计模式" class="headerlink" title="Spring中经典的设计模式"></a>Spring中经典的设计模式</h1><h2 id="1-单例模式——在-spring-的配置文件中设置-bean-默认为单例模式。"><a href="#1-单例模式——在-spring-的配置文件中设置-bean-默认为单例模式。" class="headerlink" title="1.单例模式——在 spring 的配置文件中设置 bean 默认为单例模式。"></a>1.单例模式——在 spring 的配置文件中设置 bean 默认为单例模式。</h2><p>Spring依赖注入Bean实例默认是单例的。</p>
-<p>Spring的依赖注入（包括lazy-init方式）都是发生在AbstractBeanFactory的getBean里。getBean的doGetBean方法调用getSingleton进行bean的创建。</p>
-<p>分析getSingleton()方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getSingleton</span><span class="params">(String beanName)</span></span>&#123;</span><br><span class="line">    <span class="comment">//参数true设置标识允许早期依赖</span></span><br><span class="line">    <span class="keyword">return</span> getSingleton(beanName,<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">getSingleton</span><span class="params">(String beanName, <span class="keyword">boolean</span> allowEarlyReference)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//检查缓存中是否存在实例</span></span><br><span class="line">    Object singletonObject = <span class="keyword">this</span>.singletonObjects.get(beanName);</span><br><span class="line">    <span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; isSingletonCurrentlyInCreation(beanName)) &#123;</span><br><span class="line">        <span class="comment">//如果为空，则锁定全局变量并进行处理。</span></span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.singletonObjects) &#123;</span><br><span class="line">            <span class="comment">//如果此bean正在加载，则不处理</span></span><br><span class="line">            singletonObject = <span class="keyword">this</span>.earlySingletonObjects.get(beanName);</span><br><span class="line">            <span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; allowEarlyReference) &#123;</span><br><span class="line">                <span class="comment">//当某些方法需要提前初始化的时候则会调用addSingleFactory 方法将对应的ObjectFactory初始化策略存储在singletonFactories</span></span><br><span class="line">                ObjectFactory&lt;?&gt; singletonFactory = <span class="keyword">this</span>.singletonFactories.get(beanName);</span><br><span class="line">                <span class="keyword">if</span> (singletonFactory != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">//调用预先设定的getObject方法</span></span><br><span class="line">                    singletonObject = singletonFactory.getObject();</span><br><span class="line">                    <span class="comment">//记录在缓存中，earlysingletonObjects和singletonFactories互斥</span></span><br><span class="line">                    <span class="keyword">this</span>.earlySingletonObjects.put(beanName, singletonObject);</span><br><span class="line">                    <span class="keyword">this</span>.singletonFactories.remove(beanName);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (singletonObject != NULL_OBJECT ? singletonObject : <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>总结</strong></p>
-<p><strong>单例模式定义：</strong> 保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
-<p><strong>spring对单例的实现：</strong> spring中的单例模式完成了后半句话，即提供了全局的访问点BeanFactory。但没有从构造器级别去控制单例，这是因为spring管理的是任意的java对象。</p>
-<h2 id="2-模版方法模式"><a href="#2-模版方法模式" class="headerlink" title="2.模版方法模式"></a>2.模版方法模式</h2><p>模板方式模式——用来解决代码重复的问题。</p>
-<p>比如：RestTemplate、JmsTemplate、JpaTemplate</p>
-<h2 id="3-工厂模式"><a href="#3-工厂模式" class="headerlink" title="3.工厂模式"></a>3.工厂模式</h2><p>工厂模式——在工厂模式中，我们在创建对象时不会对客户端暴露创建逻辑，并且是通过使用同一个接口来指向新创建的对象。Spring 中使用 beanFactory 来创建对象的实例。</p>
-<h2 id="4-代理模式"><a href="#4-代理模式" class="headerlink" title="4.代理模式"></a>4.代理模式</h2><p>代理模式——spring 中两种代理方式，若目标对象实现了若干接口，spring 使用jdk 的java.lang.reflect.Proxy类代理。若目标兑现没有实现任何接口，spring 使用 CGLIB 库生成目标类的子类。</p>
-
+    <p>MySQL中binlog介绍</p>
+    
     
 
     
@@ -244,7 +257,514 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/MySQL中binlog介绍//" class="article-tag-list-link color5">MySQL中binlog介绍</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/06/MySQL%E4%B8%ADbinlog%E4%BB%8B%E7%BB%8D/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-一个完整的HTTP请求过程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/06/%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/" target="_blank">一个完整的HTTP请求过程</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/06/%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/" class="archive-article-date">
+        <time datetime="2021-07-06T13:34:53.713Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-06</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>一个完整的HTTP请求过程</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/一个完整的HTTP请求过程//" class="article-tag-list-link color4">一个完整的HTTP请求过程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/06/%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84HTTP%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringBoot自动装配原理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/06/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/" target="_blank">SpringBoot自动装配原理</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/06/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/" class="archive-article-date">
+        <time datetime="2021-07-06T07:58:09.153Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-06</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>SpringBoot自动装配原理</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringBoot自动装配原理//" class="article-tag-list-link color2">SpringBoot自动装配原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/06/SpringBoot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E5%8E%9F%E7%90%86/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-HTTP报文格式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/06/HTTP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/" target="_blank">HTTP报文格式</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/06/HTTP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/" class="archive-article-date">
+        <time datetime="2021-07-06T07:16:01.726Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-06</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>HTTP报文格式</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HTTP</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/多线程//" class="article-tag-list-link color4">多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/06/HTTP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-两个线程交替输出1到00" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/06/%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%A4%E6%9B%BF%E8%BE%93%E5%87%BA1%E5%88%B000/" target="_blank">两个线程交替输出1~100</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/06/%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%A4%E6%9B%BF%E8%BE%93%E5%87%BA1%E5%88%B000/" class="archive-article-date">
+        <time datetime="2021-07-06T02:14:06.032Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-06</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>两个线程交替输出1~100</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/多线程//" class="article-tag-list-link color4">多线程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/06/%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%A4%E6%9B%BF%E8%BE%93%E5%87%BA1%E5%88%B000/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Spring中经典的设计模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/05/Spring%E4%B8%AD%E7%BB%8F%E5%85%B8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" target="_blank">Spring中经典的设计模式</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/05/Spring%E4%B8%AD%E7%BB%8F%E5%85%B8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+        <time datetime="2021-07-05T07:19:41.001Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-05</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Spring中经典的设计模式</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring中经典的设计模式//" class="article-tag-list-link color5">Spring中经典的设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -281,116 +801,34 @@
     <article id="post-redis常用数据结构以及使用场景举例" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/05/redis%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B/" target="_blank">redis常用数据结构以及使用场景举例</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/05/redis%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B/" class="archive-article-date">
+        <time datetime="2021-07-05T02:16:16.417Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-05</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="redis常用数据结构以及使用场景举例"><a href="#redis常用数据结构以及使用场景举例" class="headerlink" title="redis常用数据结构以及使用场景举例"></a>redis常用数据结构以及使用场景举例</h1><p><img src="/images/redis0705.png"></p>
-<p><img src="/images/redis07051.png"></p>
-<h2 id="一-、字符串"><a href="#一-、字符串" class="headerlink" title="一 、字符串"></a>一 、字符串</h2><p>字符串类型是Redis最基础的数据结构，字符串类型可以是<code>JSON</code>、<code>XML</code>甚至是二进制的图片等数据，但是最大值不能超过512MB。</p>
-<h3 id="1-1-内部编码"><a href="#1-1-内部编码" class="headerlink" title="1.1 内部编码"></a>1.1 内部编码</h3><p>Redis会根据当前值的类型和长度决定使用哪种内部编码来实现。</p>
-<p>字符串类型的内部编码有3种：</p>
-<ol>
-<li>int：8个字节的长整型。</li>
-<li>embstr：小于等于39个字节的字符串。</li>
-<li>raw：大于39个字节的字符串。</li>
-</ol>
-<h3 id="1-2-使用场景"><a href="#1-2-使用场景" class="headerlink" title="1.2 使用场景"></a>1.2 使用场景</h3><h4 id="1-2-1-缓存"><a href="#1-2-1-缓存" class="headerlink" title="1.2.1 缓存"></a>1.2.1 缓存</h4><p>在web服务中，使用MySQL作为数据库，Redis作为缓存。由于Redis具有支撑高并发的特性，通常能起到加速读写和降低后端压力的作用。web端的大多数请求都是从Redis中获取的数据，如果Redis中没有需要的数据，则会从MySQL中去获取，并将获取到的数据写入redis。</p>
-<h4 id="1-2-2-计数"><a href="#1-2-2-计数" class="headerlink" title="1.2.2 计数"></a>1.2.2 计数</h4><p>Redis中有一个字符串相关的命令<code>incr key</code>，<code>incr</code>命令对值做自增操作，返回结果分为以下三种情况：</p>
-<ul>
-<li>值不是整数，返回错误</li>
-<li>值是整数，返回自增后的结果</li>
-<li>key不存在，默认键为<code>0</code>，返回<code>1</code></li>
-</ul>
-<p>比如文章的阅读量，视频的播放量等等都会使用redis来计数，每播放一次，对应的播放量就会加1，同时将这些数据异步存储到数据库中达到持久化的目的。</p>
-<h4 id="1-2-3-共享Session"><a href="#1-2-3-共享Session" class="headerlink" title="1.2.3 共享Session"></a>1.2.3 共享Session</h4><p>在分布式系统中，用户的每次请求会访问到不同的服务器，这就会导致session不同步的问题，假如一个用来获取用户信息的请求落在A服务器上，获取到用户信息后存入session。下一个请求落在B服务器上，想要从session中获取用户信息就不能正常获取了，因为用户信息的session在服务器A上，为了解决这个问题，使用redis集中管理这些session，将session存入redis，使用的时候直接从redis中获取就可以了。</p>
-<h4 id="1-2-4-限速"><a href="#1-2-4-限速" class="headerlink" title="1.2.4 限速"></a>1.2.4 限速</h4><p>为了安全考虑，有些网站会对IP进行限制，限制同一IP在一定时间内访问次数不能超过n次。</p>
-<h2 id="二-哈希"><a href="#二-哈希" class="headerlink" title="二 哈希"></a>二 哈希</h2><p>Redis中，哈希类型是指一个键值对的存储结构。</p>
-<h3 id="2-1-内部编码"><a href="#2-1-内部编码" class="headerlink" title="2.1 内部编码"></a>2.1 内部编码</h3><p>哈希类型的内部编码有两种：</p>
-<ul>
-<li>ziplist（压缩列表）：当哈希类型元素个数小于<code>hash-max-ziplist-entries</code>配置（默认512个）同时所有值都小于<code>hash-max-ziplist-value</code>配置（默认64字节）时使用。ziplist使用更加紧凑的结构实现多个元素的连续存储，所以比hashtable更加节省内存。</li>
-<li>hashtable（哈希表）：当ziplist不能满足要求时，会使用hashtable。</li>
-</ul>
-<h3 id="2-2-使用场景"><a href="#2-2-使用场景" class="headerlink" title="2.2 使用场景"></a>2.2 使用场景</h3><p>由于hash类型存储的是一个键值对，比如数据库有以下一个用户表结构</p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>name</th>
-<th>age</th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>将以上信息存入redis，用表明:id作为key，用户属性作为值：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hset user:1 name Java age 18</span><br></pre></td></tr></table></figure>
-
-<p>使用哈希存储会比字符串更加方便直观</p>
-<h2 id="三-列表"><a href="#三-列表" class="headerlink" title="三 列表"></a>三 列表</h2><p>列表类型用来存储多个<strong>有序</strong>的字符串，一个列表最多可以存储<code>2^32-1</code>个元素，列表的两端都可以插入和弹出元素。</p>
-<h3 id="3-1-内部编码"><a href="#3-1-内部编码" class="headerlink" title="3.1 内部编码"></a>3.1 内部编码</h3><p>列表的内部编码有两种：</p>
-<ul>
-<li>ziplist（压缩列表）：当哈希类型元素个数小于<code>list-max-ziplist-entries</code>配置（默认512个）同时所有值都小于<code>list-max-ziplist-value</code>配置（默认64字节）时使用。ziplist使用更加紧凑的结构实现多个元素的连续存储，所以比hashtable更加节省内存。</li>
-<li>linkedlist（链表）：当ziplist不能满足要求时，会使用linkedlist。</li>
-</ul>
-<h3 id="3-2-使用场景"><a href="#3-2-使用场景" class="headerlink" title="3.2 使用场景"></a>3.2 使用场景</h3><h4 id="3-2-1-消息队列"><a href="#3-2-1-消息队列" class="headerlink" title="3.2.1 消息队列"></a>3.2.1 消息队列</h4><p>列表用来存储多个有序的字符串，既然是有序的，那么就满足消息队列的特点。使用<code>lpush</code>+<code>rpop</code>或者<code>rpush</code>+<code>lpop</code>实现消息队列。除此之外，redis支持阻塞操作，在弹出元素的时候使用阻塞命令来实现阻塞队列。</p>
-<h4 id="3-2-2-栈"><a href="#3-2-2-栈" class="headerlink" title="3.2.2 栈"></a>3.2.2 栈</h4><p>由于列表存储的是有序字符串，满足队列的特点，也就能满足栈先进后出的特点，使用<code>lpush</code>+<code>lpop</code>或者<code>rpush</code>+<code>rpop</code>实现栈。</p>
-<h4 id="3-2-3-文章列表"><a href="#3-2-3-文章列表" class="headerlink" title="3.2.3 文章列表"></a>3.2.3 文章列表</h4><p>因为列表的元素不但是有序的，而且还支持按照索引范围获取元素。因此我们可以使用命令<code>lrange key 0 9</code>分页获取文章列表</p>
-<h2 id="四-集合"><a href="#四-集合" class="headerlink" title="四 集合"></a>四 集合</h2><p>集合类型也可以保存多个字符串元素，与列表不同的是，集合中不允许有重复元素并且集合中的元素是无序的。一个集合最多可以存储<code>2^32-1</code>个元素。</p>
-<h3 id="4-1-内部编码"><a href="#4-1-内部编码" class="headerlink" title="4.1 内部编码"></a>4.1 内部编码</h3><p>集合类型的内部编码有两种：</p>
-<ul>
-<li>intset（整数集合）：当集合中的元素都是整数且元素个数小于<code>set-max-intset-entries</code>配置（默认512个）时，redis会选用intset来作为集合的内部实现，从而减少内存的使用。</li>
-<li>hashtable（哈希表）：当intset不能满足要求时，会使用hashtable。</li>
-</ul>
-<h3 id="4-2-使用场景"><a href="#4-2-使用场景" class="headerlink" title="4.2 使用场景"></a>4.2 使用场景</h3><h4 id="4-2-1-用户标签"><a href="#4-2-1-用户标签" class="headerlink" title="4.2.1 用户标签"></a>4.2.1 用户标签</h4><p>例如一个用户对篮球、足球感兴趣，另一个用户对橄榄球、乒乓球感兴趣，这些兴趣点就是一个标签。有了这些数据就可以得到喜欢同一个标签的人，以及用户的共同感兴趣的标签。给用户打标签的时候需要①给用户打标签，②给标签加用户，需要给这两个操作增加事务。</p>
-<ul>
-<li>给用户打标签</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sadd user:1:tags tag1 tag2</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>给标签添加用户</li>
-</ul>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sadd tag1:users user:1</span><br><span class="line"></span><br><span class="line">sadd tag2:users user:1</span><br></pre></td></tr></table></figure>
-
-<p>使用交集（sinter）求两个user的共同标签</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sinter user:1:tags user:2:tags</span><br></pre></td></tr></table></figure>
-
-<h4 id="4-2-2-抽奖功能"><a href="#4-2-2-抽奖功能" class="headerlink" title="4.2.2 抽奖功能"></a>4.2.2 抽奖功能</h4><p>集合有两个命令支持获取随机数，分别是：</p>
-<ul>
-<li>随机获取count个元素，集合元素个数不变</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">srandmember key [count]</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>随机弹出count个元素，元素从集合弹出，集合元素个数改变</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spop key [count]</span><br></pre></td></tr></table></figure>
-
-<p>用户点击抽奖按钮，参数抽奖，将用户编号放入集合，然后抽奖，分别抽一等奖、二等奖，如果已经抽中一等奖的用户不能参数抽二等奖则使用<code>spop</code>，反之使用<code>srandmember</code>。</p>
-<h2 id="五-有序集合"><a href="#五-有序集合" class="headerlink" title="五 有序集合"></a>五 有序集合</h2><p>有序集合和集合一样，不能有重复元素。但是可以排序，它给每个元素设置一个score作为排序的依据。最多可以存储<code>2^32-1</code>个元素。</p>
-<h3 id="5-1-内部编码"><a href="#5-1-内部编码" class="headerlink" title="5.1 内部编码"></a>5.1 内部编码</h3><p>有序集合类型的内部编码有两种：</p>
-<ul>
-<li>ziplist（压缩列表）：当有序集合的元素个数小于<code>list-max-ziplist-entries</code>配置（默认128个）同时所有值都小于<code>list-max-ziplist-value</code>配置（默认64字节）时使用。ziplist使用更加紧凑的结构实现多个元素的连续存储，更加节省内存。</li>
-<li>skiplist（跳跃表）：当不满足ziplist的要求时，会使用skiplist。</li>
-</ul>
-<h3 id="5-2-使用场景"><a href="#5-2-使用场景" class="headerlink" title="5.2 使用场景"></a>5.2 使用场景</h3><h4 id="5-2-1-排行榜"><a href="#5-2-1-排行榜" class="headerlink" title="5.2.1 排行榜"></a>5.2.1 排行榜</h4><p>用户发布了n篇文章，其他人看到文章后给喜欢的文章点赞，使用score来记录点赞数，有序集合会根据score排行。流程如下</p>
-<p>用户发布一篇文章，初始点赞数为0，即score为0</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zadd user:article 0 a</span><br></pre></td></tr></table></figure>
-
-<p>有人给文章a点赞，递增<code>1</code></p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zincrby user:article 1 a</span><br></pre></td></tr></table></figure>
-
-<p>查询点赞前三篇文章</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zrevrange user:article 0 2</span><br></pre></td></tr></table></figure>
-
-<p>查询点赞后三篇文章</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zrange user:article 0 2</span><br></pre></td></tr></table></figure>
-
-<h4 id="5-2-2-延迟消息队列"><a href="#5-2-2-延迟消息队列" class="headerlink" title="5.2.2 延迟消息队列"></a>5.2.2 延迟消息队列</h4><p>下单系统，下单后需要在15分钟内进行支付，如果15分钟未支付则自动取消订单。将下单后的十五分钟后时间作为score，订单作为value存入redis，消费者轮询去消费，如果消费的大于等于这笔记录的score，则将这笔记录移除队列，取消订单。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在开发中，字符串类型是用的最多的数据类型，导致我们忽视了redis的其他四种数据类型，在具体场景下选择具体的数据类型对提升redis性能有非常大的帮助。redis虽然支持消息队列的实现，但是并不支持ack。所以redis实现的消息队列不能保证消息的可靠性，除非自己实现消息确认机制，不过这非常麻烦，所以如果是重要的消息还是推荐使用专门的消息队列去做。</p>
-
+    <p>redis常用数据结构以及使用场景举例</p>
+    
     
 
     
@@ -401,7 +839,29 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/redis常用数据结构以及使用场景举例//" class="article-tag-list-link color5">redis常用数据结构以及使用场景举例</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
     <p class="article-more-link">
@@ -726,494 +1186,9 @@
 
 
   
-    <article id="post-死锁编码及定位分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/07/01/%E6%AD%BB%E9%94%81%E7%BC%96%E7%A0%81%E5%8F%8A%E5%AE%9A%E4%BD%8D%E5%88%86%E6%9E%90/" target="_blank">死锁编码及定位分析</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/07/01/%E6%AD%BB%E9%94%81%E7%BC%96%E7%A0%81%E5%8F%8A%E5%AE%9A%E4%BD%8D%E5%88%86%E6%9E%90/" class="archive-article-date">
-        <time datetime="2021-07-01T02:12:28.249Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-01</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>死锁编码及定位分析</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/死锁编码及定位分析//" class="article-tag-list-link color5">死锁编码及定位分析</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/07/01/%E6%AD%BB%E9%94%81%E7%BC%96%E7%A0%81%E5%8F%8A%E5%AE%9A%E4%BD%8D%E5%88%86%E6%9E%90/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL-事务&amp;&amp;锁机制&amp;&amp;MVCC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/30/MySQL-%E4%BA%8B%E5%8A%A1&&%E9%94%81%E6%9C%BA%E5%88%B6&&MVCC/" target="_blank">MySQL 事务&amp;&amp;锁机制&amp;&amp;MVCC</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/30/MySQL-%E4%BA%8B%E5%8A%A1&&%E9%94%81%E6%9C%BA%E5%88%B6&&MVCC/" class="archive-article-date">
-        <time datetime="2021-06-30T13:31:57.841Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-30</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>MySQL 事务&amp;&amp;锁机制&amp;&amp;MVCC</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/MySQL-事务-锁机制-MVCC//" class="article-tag-list-link color5">MySQL 事务&&锁机制&&MVCC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/30/MySQL-%E4%BA%8B%E5%8A%A1&&%E9%94%81%E6%9C%BA%E5%88%B6&&MVCC/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JUC强大的辅助类讲解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/30/JUC%E5%BC%BA%E5%A4%A7%E7%9A%84%E8%BE%85%E5%8A%A9%E7%B1%BB%E8%AE%B2%E8%A7%A3/" target="_blank">JUC强大的辅助类讲解</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/30/JUC%E5%BC%BA%E5%A4%A7%E7%9A%84%E8%BE%85%E5%8A%A9%E7%B1%BB%E8%AE%B2%E8%A7%A3/" class="archive-article-date">
-        <time datetime="2021-06-30T11:22:02.417Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-30</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>JUC强大的辅助类讲解</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Java、JUC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JUC强大的辅助类讲解//" class="article-tag-list-link color2">JUC强大的辅助类讲解</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/30/JUC%E5%BC%BA%E5%A4%A7%E7%9A%84%E8%BE%85%E5%8A%A9%E7%B1%BB%E8%AE%B2%E8%A7%A3/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CAS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/29/CAS/" target="_blank">CAS深入理解</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/29/CAS/" class="archive-article-date">
-        <time datetime="2021-06-29T14:17:46.071Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-29</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>CAS深度解析</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/多线程-CAS//" class="article-tag-list-link color3">多线程 CAS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/29/CAS/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-java中的锁" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/06/29/java%E4%B8%AD%E7%9A%84%E9%94%81/" target="_blank">java中的锁</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/06/29/java%E4%B8%AD%E7%9A%84%E9%94%81/" class="archive-article-date">
-        <time datetime="2021-06-29T13:18:00.773Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-29</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>java中的锁</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/java中的锁//" class="article-tag-list-link color3">java中的锁</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/06/29/java%E4%B8%AD%E7%9A%84%E9%94%81/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1377,6 +1352,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
               </li>
             
             <div class="clearfix"></div>

@@ -6,20 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>Spring中经典的设计模式 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="Spring中经典的设计模式1.单例模式——在 spring 的配置文件中设置 bean 默认为单例模式。Spring依赖注入Bean实例默认是单例的。 Spring的依赖注入（包括lazy-init方式）都是发生在AbstractBeanFactory的getBean里。getBean的doGetBean方法调用getSingleton进行bean的创建。 分析getSingleton()方法">
+  <meta name="description" content="Spring中经典的设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Spring中经典的设计模式">
 <meta property="og:url" content="http://example.com/2021/07/05/Spring%E4%B8%AD%E7%BB%8F%E5%85%B8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Spring中经典的设计模式1.单例模式——在 spring 的配置文件中设置 bean 默认为单例模式。Spring依赖注入Bean实例默认是单例的。 Spring的依赖注入（包括lazy-init方式）都是发生在AbstractBeanFactory的getBean里。getBean的doGetBean方法调用getSingleton进行bean的创建。 分析getSingleton()方法">
+<meta property="og:description" content="Spring中经典的设计模式">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-05T07:19:41.001Z">
-<meta property="article:modified_time" content="2021-07-05T07:19:41.001Z">
+<meta property="article:modified_time" content="2021-07-05T11:38:43.729Z">
 <meta property="article:author" content="ZHANG_JAVA">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -214,9 +215,60 @@
             <article id="post-Spring中经典的设计模式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      Spring中经典的设计模式
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2021/07/05/Spring%E4%B8%AD%E7%BB%8F%E5%85%B8%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+        <time datetime="2021-07-05T07:19:41.001Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-05</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">537字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">2分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="Spring中经典的设计模式"><a href="#Spring中经典的设计模式" class="headerlink" title="Spring中经典的设计模式"></a>Spring中经典的设计模式</h1><h2 id="1-单例模式——在-spring-的配置文件中设置-bean-默认为单例模式。"><a href="#1-单例模式——在-spring-的配置文件中设置-bean-默认为单例模式。" class="headerlink" title="1.单例模式——在 spring 的配置文件中设置 bean 默认为单例模式。"></a>1.单例模式——在 spring 的配置文件中设置 bean 默认为单例模式。</h2><p>Spring依赖注入Bean实例默认是单例的。</p>
+    <p>Spring中经典的设计模式</p>
+<span id="more"></span>
+
+<h1 id="Spring中经典的设计模式"><a href="#Spring中经典的设计模式" class="headerlink" title="Spring中经典的设计模式"></a>Spring中经典的设计模式</h1><h2 id="1-单例模式——在-spring-的配置文件中设置-bean-默认为单例模式。"><a href="#1-单例模式——在-spring-的配置文件中设置-bean-默认为单例模式。" class="headerlink" title="1.单例模式——在 spring 的配置文件中设置 bean 默认为单例模式。"></a>1.单例模式——在 spring 的配置文件中设置 bean 默认为单例模式。</h2><p>Spring依赖注入Bean实例默认是单例的。</p>
 <p>Spring的依赖注入（包括lazy-init方式）都是发生在AbstractBeanFactory的getBean里。getBean的doGetBean方法调用getSingleton进行bean的创建。</p>
 <p>分析getSingleton()方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getSingleton</span><span class="params">(String beanName)</span></span>&#123;</span><br><span class="line">    <span class="comment">//参数true设置标识允许早期依赖</span></span><br><span class="line">    <span class="keyword">return</span> getSingleton(beanName,<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">protected</span> Object <span class="title">getSingleton</span><span class="params">(String beanName, <span class="keyword">boolean</span> allowEarlyReference)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//检查缓存中是否存在实例</span></span><br><span class="line">    Object singletonObject = <span class="keyword">this</span>.singletonObjects.get(beanName);</span><br><span class="line">    <span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; isSingletonCurrentlyInCreation(beanName)) &#123;</span><br><span class="line">        <span class="comment">//如果为空，则锁定全局变量并进行处理。</span></span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.singletonObjects) &#123;</span><br><span class="line">            <span class="comment">//如果此bean正在加载，则不处理</span></span><br><span class="line">            singletonObject = <span class="keyword">this</span>.earlySingletonObjects.get(beanName);</span><br><span class="line">            <span class="keyword">if</span> (singletonObject == <span class="keyword">null</span> &amp;&amp; allowEarlyReference) &#123;</span><br><span class="line">                <span class="comment">//当某些方法需要提前初始化的时候则会调用addSingleFactory 方法将对应的ObjectFactory初始化策略存储在singletonFactories</span></span><br><span class="line">                ObjectFactory&lt;?&gt; singletonFactory = <span class="keyword">this</span>.singletonFactories.get(beanName);</span><br><span class="line">                <span class="keyword">if</span> (singletonFactory != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">//调用预先设定的getObject方法</span></span><br><span class="line">                    singletonObject = singletonFactory.getObject();</span><br><span class="line">                    <span class="comment">//记录在缓存中，earlysingletonObjects和singletonFactories互斥</span></span><br><span class="line">                    <span class="keyword">this</span>.earlySingletonObjects.put(beanName, singletonObject);</span><br><span class="line">                    <span class="keyword">this</span>.singletonFactories.remove(beanName);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (singletonObject != NULL_OBJECT ? singletonObject : <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -274,7 +326,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/07/05/Spring中经典的设计模式/" title="" target="_blank">http://example.com/2021/07/05/Spring中经典的设计模式/</a>
+          <a href="http://example.com/2021/07/05/Spring中经典的设计模式/" title="Spring中经典的设计模式" target="_blank">http://example.com/2021/07/05/Spring中经典的设计模式/</a>
         </li>
         
         <li>
@@ -291,7 +343,29 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring中经典的设计模式//" class="article-tag-list-link color5">Spring中经典的设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
 
@@ -356,9 +430,18 @@
 
 <nav id="article-nav">
   
+    <a href="/2021/07/06/%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E4%BA%A4%E6%9B%BF%E8%BE%93%E5%87%BA1%E5%88%B000/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          两个线程交替输出1~100
+        
+      </div>
+    </a>
+  
   
     <a href="/2021/07/05/redis%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title"></div>
+      <div class="article-nav-title">redis常用数据结构以及使用场景举例</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -566,6 +649,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
               </li>
             
             <div class="clearfix"></div>
