@@ -216,6 +216,379 @@
             
 
   
+    <article id="post-HTTP请求方式以及区别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="HTTP请求方式以及区别"><a href="#HTTP请求方式以及区别" class="headerlink" title="HTTP请求方式以及区别"></a>HTTP请求方式以及区别</h1><h2 id="平时开发过程中，你们常用的HTTP请求方法都有哪些啊？"><a href="#平时开发过程中，你们常用的HTTP请求方法都有哪些啊？" class="headerlink" title="平时开发过程中，你们常用的HTTP请求方法都有哪些啊？"></a>平时开发过程中，你们常用的<code>HTTP请求方法</code>都有哪些啊？</h2><p>是这样的，<code>HTTP/1.1协议</code>中共定义了<code>八种方法</code>，有时也叫<code>动作</code>，来表明<code>Request-URL</code>指定的资源不同的操作方式</p>
+<ol>
+<li>在HTTP1.0中，定义了三种请求方法：<code>GET, POST 和 HEAD</code>方法。</li>
+<li>在HTTP1.1中，新增了五种请求方法：<code>OPTIONS, PUT, DELETE, TRACE 和 CONNECT</code>方法 但我们常用的一般就是<code>GET和POST</code>请求。</li>
+</ol>
+<h2 id="GET和POST请求都有哪些区别呢？"><a href="#GET和POST请求都有哪些区别呢？" class="headerlink" title="GET和POST请求都有哪些区别呢？"></a>GET和POST请求都有哪些<code>区别</code>呢？</h2><ol>
+<li>GET请求在URL中传送的参数是有长度限制的，而POST没有。</li>
+<li>GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息。而POST数据不会显示在URL中。是放在Request body中。</li>
+<li>对参数的数据类型，GET只接受ASCII字符，而POST没有限制。</li>
+<li>GET请求参数会被完整保留在浏览器历史记录里；相反，POST请求参数也不会被浏览器保留。</li>
+<li>GET请求只能进行url编码（ application/x-www-form-urlencoded），而POST支持多种编码方式。</li>
+<li>GET请求会被浏览器主动缓存，而POST不会，除非手动设置。</li>
+<li>GET在浏览器回退时是无害的，而POST会再次提交请求。</li>
+</ol>
+<p>其实吧，GET和POST在本质上没有区别，都是HTTP协议中的两种发送请求的方法。而HTTP呢，是基于TCP/IP的关于数据如何在万维网中如何通信的协议。</p>
+<p>HTTP的底层是TCP/IP。所以GET和POST的底层也是TCP/IP，也就是说，GET/POST都是TCP链接。</p>
+<p>TCP就像汽车，我们用TCP来运输数据，它很<code>可靠</code>，从来<code>不会发生丢件少件</code>的现象。</p>
+<p>但是如果路上跑的全是看起来一模一样的汽车，那这个世界看起来是一团混乱，送急件的汽车可能被前面满载货物的汽车拦堵在路上，整个交通系统一定会<code>瘫痪</code>。</p>
+<p>为了避免这种情况发生，<code>交通规则HTTP</code>诞生了。HTTP给汽车运输设定了好几个服务类别，包括<code>GET, POST, PUT</code>等等，</p>
+<p>HTTP规定，当执行GET请求的时候，要给汽车贴上GET的标签（设置method为GET），而且要求把传送的数据放在车顶上（url中）以方便记录。</p>
+<p>如果是POST请求，就要在车上贴上POST的标签，并把货物放在<code>车厢</code>里（request body中）。</p>
+<p>HTTP只是个<code>行为准则</code>，而GET和POST本质上就是TCP链接，并无差别。但是由于HTTP的规定和浏览器/服务器的限制，导致他们在应用过程中体现出一些不同。</p>
+<h2 id="URL中传送参数的长度限制在Get和Post中都是怎么样的呢？"><a href="#URL中传送参数的长度限制在Get和Post中都是怎么样的呢？" class="headerlink" title="URL中传送参数的长度限制在Get和Post中都是怎么样的呢？"></a>URL中传送参数的长度限制在Get和Post中都是怎么样的呢？</h2><p>业界不成文的规定是，（大多数）浏览器通常都会限制url长度在<code>2K</code>个字节，而（大多数）服务器最多处理<code>64K</code>大小的url。</p>
+<h2 id="是不是POST-方法比-GET-方法更安全呢？"><a href="#是不是POST-方法比-GET-方法更安全呢？" class="headerlink" title="是不是POST 方法比 GET 方法更安全呢？"></a>是不是POST 方法比 GET 方法更安全呢？</h2><p>有人说POST 比 GET 安全，因为数据在地址栏上<code>不可见</code>。</p>
+<p>然而，从传输的角度来说，他们都是不安全的，因为 HTTP 在网络上是<code>明文传输</code>的，只要在网络节点上捉包，就能完整地获取数据报文。</p>
+<p>其实，要想安全传输，就只有加密，也就是 <code>HTTPS</code>。</p>
+<h2 id="Get、Post请求发送的数据包有什么不同吗？"><a href="#Get、Post请求发送的数据包有什么不同吗？" class="headerlink" title="Get、Post请求发送的数据包有什么不同吗？"></a>Get、Post请求发送的数据包有什么不同吗？</h2><p>GET请求时产生<code>一个</code>TCP数据包；POST请求时产生<code>两个</code>TCP数据包。</p>
+<ol>
+<li>GET：浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；</li>
+<li>POST：浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 OK（返回数据）。</li>
+</ol>
+<p>就像是GET只需要汽车跑一趟就把货送到了，而POST得跑两趟，第一趟，先去和服务器打个招呼<code>老铁，我等下要送一批货来，你们准备接收一下哈</code>，然后再回头把货送过去。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/08/HTTP%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F%E4%BB%A5%E5%8F%8A%E5%8C%BA%E5%88%AB/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-lc1711-大餐计数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/07/lc1711-%E5%A4%A7%E9%A4%90%E8%AE%A1%E6%95%B0/" target="_blank">lc1711  大餐计数</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/07/lc1711-%E5%A4%A7%E9%A4%90%E8%AE%A1%E6%95%B0/" class="archive-article-date">
+        <time datetime="2021-07-07T14:38:06.452Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-07</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p> 每日一题</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Leecode每日一题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/07/lc1711-%E5%A4%A7%E9%A4%90%E8%AE%A1%E6%95%B0/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-lc859-亲密字符串" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/07/lc859-%E4%BA%B2%E5%AF%86%E5%AD%97%E7%AC%A6%E4%B8%B2/" target="_blank">lc859 亲密字符串</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/07/lc859-%E4%BA%B2%E5%AF%86%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="archive-article-date">
+        <time datetime="2021-07-07T14:27:12.183Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-07</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p> 每日一题</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Leecode每日一题</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/算法//" class="article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/07/lc859-%E4%BA%B2%E5%AF%86%E5%AD%97%E7%AC%A6%E4%B8%B2/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-泛型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/07/07/%E6%B3%9B%E5%9E%8B/" target="_blank">泛型</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2021/07/07/%E6%B3%9B%E5%9E%8B/" class="archive-article-date">
+        <time datetime="2021-07-07T01:53:48.399Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-07</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>泛型</p>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/泛型//" class="article-tag-list-link color3">泛型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/07/07/%E6%B3%9B%E5%9E%8B/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MySQL中binlog介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -798,394 +1171,6 @@
 
 
   
-    <article id="post-redis常用数据结构以及使用场景举例" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/07/05/redis%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B/" target="_blank">redis常用数据结构以及使用场景举例</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/07/05/redis%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B/" class="archive-article-date">
-        <time datetime="2021-07-05T02:16:16.417Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-05</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>redis常用数据结构以及使用场景举例</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/redis常用数据结构以及使用场景举例//" class="article-tag-list-link color5">redis常用数据结构以及使用场景举例</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/07/05/redis%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%BE%E4%BE%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-彻头彻尾理解-ConcurrentHashMap（掘金）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/07/04/%E5%BD%BB%E5%A4%B4%E5%BD%BB%E5%B0%BE%E7%90%86%E8%A7%A3-ConcurrentHashMap%EF%BC%88%E6%8E%98%E9%87%91%EF%BC%89/" target="_blank">ConcurrentHashMap源码分析</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/07/04/%E5%BD%BB%E5%A4%B4%E5%BD%BB%E5%B0%BE%E7%90%86%E8%A7%A3-ConcurrentHashMap%EF%BC%88%E6%8E%98%E9%87%91%EF%BC%89/" class="archive-article-date">
-        <time datetime="2021-07-04T07:28:33.514Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-04</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>彻头彻尾理解 ConcurrentHashMap</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/ConcurrentHashMap//" class="article-tag-list-link color3">ConcurrentHashMap</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/07/04/%E5%BD%BB%E5%A4%B4%E5%BD%BB%E5%B0%BE%E7%90%86%E8%A7%A3-ConcurrentHashMap%EF%BC%88%E6%8E%98%E9%87%91%EF%BC%89/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-LRU算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/07/01/LRU%E7%AE%97%E6%B3%95/" target="_blank">LRU算法</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/07/01/LRU%E7%AE%97%E6%B3%95/" class="archive-article-date">
-        <time datetime="2021-07-01T06:48:37.059Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-01</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>LRU算法</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构、算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/LRU算法//" class="article-tag-list-link color1">LRU算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/07/01/LRU%E7%AE%97%E6%B3%95/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Redis的内存淘汰策略" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/07/01/Redis%E7%9A%84%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/" target="_blank">Redis的内存淘汰策略</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2021/07/01/Redis%E7%9A%84%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/" class="archive-article-date">
-        <time datetime="2021-07-01T05:47:49.398Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-01</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Redis的内存淘汰策略</p>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Redis的内存淘汰策略//" class="article-tag-list-link color3">Redis的内存淘汰策略</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/07/01/Redis%E7%9A%84%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1356,6 +1341,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HTTP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Leecode每日一题</a>
               </li>
             
             <div class="clearfix"></div>
