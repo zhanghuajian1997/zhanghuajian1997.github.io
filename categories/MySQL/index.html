@@ -6,30 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>索引详解（Bli） | Hexo</title>
+  <title>Category: MySQL | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="索引">
-<meta property="og:type" content="article">
-<meta property="og:title" content="索引详解（Bli）">
-<meta property="og:url" content="http://example.com/2021/07/13/%E7%B4%A2%E5%BC%95%E8%AF%A6%E8%A7%A3%EF%BC%88Bli%EF%BC%89/index.html">
+  <meta name="description" content="疯狂输出">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/categories/MySQL/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="索引">
+<meta property="og:description" content="疯狂输出">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/images/suoyin2.png">
-<meta property="og:image" content="http://example.com/images/suoyin3.png">
-<meta property="og:image" content="http://example.com/images/suoyin4.png">
-<meta property="og:image" content="http://example.com/images/suoyin5.png">
-<meta property="og:image" content="http://example.com/images/suoyin6.png">
-<meta property="og:image" content="http://example.com/images/suoyin7.png">
-<meta property="og:image" content="http://example.com/images/suoyin8.png">
-<meta property="article:published_time" content="2021-07-13T06:31:23.952Z">
-<meta property="article:modified_time" content="2021-07-13T06:31:23.952Z">
 <meta property="article:author" content="ZHANG_JAVA">
-<meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/suoyin2.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -220,178 +209,41 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-索引详解（Bli）" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2021/07/13/MySQL%E7%B2%BE%E5%8D%8E%E6%80%BB%E7%BB%93/" class="archive-article-date">
+        <time datetime="2021-07-13T14:42:04.958Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-13</time>
+</a>
+
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2021/07/13/MySQL%E7%B2%BE%E5%8D%8E%E6%80%BB%E7%BB%93/" target="_blank">MySQL精华总结</a>
   
-    <h1 class="article-title" itemprop="name">
-      索引详解（Bli）
     </h1>
   
 
 
-  
-  
-        
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
-<a href="/2021/07/13/%E7%B4%A2%E5%BC%95%E8%AF%A6%E8%A7%A3%EF%BC%88Bli%EF%BC%89/" class="archive-article-date">
-        <time datetime="2021-07-13T06:31:23.952Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-13</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">927字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">3分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>索引</p>
-<span id="more"></span>
-
-<h1 id="1-什么是索引"><a href="#1-什么是索引" class="headerlink" title="1.什么是索引"></a>1.什么是索引</h1><p>一种帮助mysql提高查询效率的数据结构</p>
-<h2 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h2><p>大大加快数据查询速度</p>
-<h2 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h2><p>维护索引需要耗费数据库资源、</p>
-<p>索引需要占用磁盘空间、</p>
-<p>当对表的数据进行增删改的时候，因为要维护索引，速度会收到影响</p>
-<h1 id="2-索引分类"><a href="#2-索引分类" class="headerlink" title="2.索引分类"></a>2.索引分类</h1><h2 id="1-主键索引"><a href="#1-主键索引" class="headerlink" title="1.主键索引"></a>1.主键索引</h2><p>设置主键后数据库自动建立索引，innoDB为聚簇索引，索引列的值不可以为空</p>
-<h2 id="2-单值索引-单列索引-普通索引"><a href="#2-单值索引-单列索引-普通索引" class="headerlink" title="2.单值索引 单列索引  普通索引"></a>2.单值索引 单列索引  普通索引</h2><p>一个索引只包含单个列，一个表可以有多个单列索引</p>
-<h2 id="3-唯一索引"><a href="#3-唯一索引" class="headerlink" title="3.唯一索引"></a>3.唯一索引</h2><p>索引列的值必须唯一，但是允许有空值，但是只有存在一个null</p>
-<h2 id="4-复合索引"><a href="#4-复合索引" class="headerlink" title="4.复合索引"></a>4.复合索引</h2><p>一个索引中包含多个列</p>
-<h2 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h2><h2 id="Full-Text-全文索引"><a href="#Full-Text-全文索引" class="headerlink" title="Full Text 全文索引"></a>Full Text 全文索引</h2><p>在定义的索引的列上支持值的全文查找。全文索引可以在CHAR、VARCHAR、TEXT类型列上创建</p>
-<h1 id="3-索引的基本操作"><a href="#3-索引的基本操作" class="headerlink" title="3.索引的基本操作"></a>3.索引的基本操作</h1><h2 id="3-1查看索引"><a href="#3-1查看索引" class="headerlink" title="3.1查看索引"></a>3.1查看索引</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> index <span class="keyword">from</span> 表名;</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-2建立单值索引"><a href="#3-2建立单值索引" class="headerlink" title="3.2建立单值索引"></a>3.2建立单值索引</h2><h3 id="建表的时候创建："><a href="#建表的时候创建：" class="headerlink" title="建表的时候创建："></a>建表的时候创建：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_user(id <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">primary</span> key,name <span class="type">varchar</span>(<span class="number">20</span>),key(列名));</span><br></pre></td></tr></table></figure>
-
-<p>tip：随表一起建立的索引 索引名同列名一致</p>
-<h3 id="建表之后创建："><a href="#建表之后创建：" class="headerlink" title="建表之后创建："></a>建表之后创建：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> index name_index <span class="keyword">on</span> 表名(列名);</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-3建立唯一索引"><a href="#3-3建立唯一索引" class="headerlink" title="3.3建立唯一索引"></a>3.3建立唯一索引</h2><h3 id="建表的时候创建：-1"><a href="#建表的时候创建：-1" class="headerlink" title="建表的时候创建："></a>建表的时候创建：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_user(id <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">primary</span> key,name <span class="type">varchar</span>(<span class="number">20</span>),<span class="keyword">unique</span>(列名));</span><br></pre></td></tr></table></figure>
-
-<h3 id="建表之后创建：-1"><a href="#建表之后创建：-1" class="headerlink" title="建表之后创建："></a>建表之后创建：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">unique</span> index name_index <span class="keyword">on</span> 表名(列名);</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-4建立复合索引"><a href="#3-4建立复合索引" class="headerlink" title="3.4建立复合索引"></a>3.4建立复合索引</h2><h3 id="建表的时候创建：-2"><a href="#建表的时候创建：-2" class="headerlink" title="建表的时候创建："></a>建表的时候创建：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_user(id <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">primary</span> key,name <span class="type">varchar</span>(<span class="number">20</span>),age <span class="type">int</span>， key(列名，列名);</span><br></pre></td></tr></table></figure>
-
-<h3 id="建表之后创建：-2"><a href="#建表之后创建：-2" class="headerlink" title="建表之后创建："></a>建表之后创建：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span>  index name_age_index <span class="keyword">on</span> 表名(列名,列名);</span><br></pre></td></tr></table></figure>
-
-<h3 id="复合索引面试题：（1）最左前缀原则、（2）引擎在查询的时候为了更好的利用索引，会动态调整字段顺序一边利用索引"><a href="#复合索引面试题：（1）最左前缀原则、（2）引擎在查询的时候为了更好的利用索引，会动态调整字段顺序一边利用索引" class="headerlink" title="复合索引面试题：（1）最左前缀原则、（2）引擎在查询的时候为了更好的利用索引，会动态调整字段顺序一边利用索引"></a>复合索引面试题：（1）最左前缀原则、（2）引擎在查询的时候为了更好的利用索引，会动态调整字段顺序一边利用索引</h3><p>基于A,B,C建立的复合索引，</p>
-<p>查询的时候，A,B,C能否利用索引   可以</p>
-<p>​                        A,C,B能否利用索引  可以</p>
-<p>​                        B,C能否利用索引    不可以 </p>
-<p>​                        C,B,A能否利用索引  可以</p>
-<p>​                        C,B 能否利用索引  不可以</p>
-<h1 id="4-索引的底层原理"><a href="#4-索引的底层原理" class="headerlink" title="4.索引的底层原理"></a>4.索引的底层原理</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> t_user(id <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">primary</span> key,name <span class="type">varchar</span>(<span class="number">20</span>),age <span class="type">int</span>;</span><br></pre></td></tr></table></figure>
-
-<p>插入数据：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">5</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">6</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">7</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">1</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">2</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">3</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">4</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">8</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_user <span class="keyword">values</span>(<span class="number">9</span>,<span class="string">&#x27;d&#x27;</span>,<span class="number">22</span>);</span><br></pre></td></tr></table></figure>
-
-<p>查询数据：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t_user;</span><br></pre></td></tr></table></figure>
-
-<p>插入无序的数据，查询结果会变为有序的。</p>
-<p>主键索引会进行排序。</p>
-<p>innoDB引擎 一页 默认存储16KB</p>
-<p><img src="/images/suoyin2.png"></p>
-<h3 id="B-树：最顶层根节点常驻内存，不动I-O"><a href="#B-树：最顶层根节点常驻内存，不动I-O" class="headerlink" title="B+树：最顶层根节点常驻内存，不动I/O"></a>B+树：最顶层根节点常驻内存，不动I/O</h3><p><img src="/images/suoyin3.png"></p>
-<p><img src="/images/suoyin4.png"></p>
-<h1 id="5-聚簇索引和非聚簇索引"><a href="#5-聚簇索引和非聚簇索引" class="headerlink" title="5.聚簇索引和非聚簇索引"></a>5.聚簇索引和非聚簇索引</h1><p>聚簇索引：将数据存储和索引放在一起，索引结构的叶子节点保存了行数据，</p>
-<p>非聚簇索引：将数据与索引分开存储，索引结构的叶子节点指向了数据对应的位置。</p>
-<p>tip：在InnoDB中，在聚簇索引之上创建的索引称之为辅助索引，非聚簇索引都是辅助索引，像复合索引，前缀索引，唯一索引。辅助辅助索引叶子节点存储的不再是行的物理位置，而是主键值，辅助索引访问数据总是需要二次查找。</p>
-<p><img src="/images/suoyin5.png"></p>
-<h2 id="为什么非聚簇索引存储的主键值，而不是数据地址？"><a href="#为什么非聚簇索引存储的主键值，而不是数据地址？" class="headerlink" title="为什么非聚簇索引存储的主键值，而不是数据地址？"></a>为什么非聚簇索引存储的主键值，而不是数据地址？</h2><p>  增删改的时候，会修改地址值。主键不会变</p>
-<p><img src="/images/suoyin6.png"></p>
-<h1 id="6-聚簇索引的优势"><a href="#6-聚簇索引的优势" class="headerlink" title="6.聚簇索引的优势"></a>6.聚簇索引的优势</h1><p><img src="/images/suoyin7.png"></p>
-<h1 id="7-聚簇索引需要注意什么"><a href="#7-聚簇索引需要注意什么" class="headerlink" title="7.聚簇索引需要注意什么"></a>7.聚簇索引需要注意什么</h1><p><img src="/images/suoyin8.png"></p>
-
-    
-
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/alipay.jpg">
-                    <span class="reward-type">支付宝</span>
-                  </div>
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/weixin.png">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
-    
-
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          ZHANG_JAVA
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="http://example.com/2021/07/13/索引详解（Bli）/" title="索引详解（Bli）" target="_blank">http://example.com/2021/07/13/索引详解（Bli）/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
+        <div class="article-info info-on-right">
           
-          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
-        </li>
-        
-      </ul>
-    </div>
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -403,140 +255,30 @@
 		</ul>
 	</div>
 
-    
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/索引//" class="article-tag-list-link color3">索引</a>
+        			<a href="/categories/MySQL//" class="article-tag-list-link color1">MySQL</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-    
-
-    
-    
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a> -->
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/13/%E7%B4%A2%E5%BC%95%E8%AF%A6%E8%A7%A3%EF%BC%88Bli%EF%BC%89/" alt="微信分享二维码"> -->
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-
-    
-    <div class="clearfix"></div>
-  </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
-  
-    <a href="/2021/07/13/HashMap-%E8%AF%A6%E7%BB%86%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E7%AC%AC%E4%BA%8C%E7%89%88/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          HashMap 详细源码阅读第二版
-        
-      </div>
-    </a>
   
   
-    <a href="/2021/07/12/JVM%E5%A0%86%E5%88%86%E4%BB%A3%E6%80%9D%E6%83%B3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM堆分代思想</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
 
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%B4%A2%E5%BC%95"><span class="toc-number">1.</span> <span class="toc-text">1.什么是索引</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">缺点：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">2.索引分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95"><span class="toc-number">2.1.</span> <span class="toc-text">1.主键索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8D%95%E5%80%BC%E7%B4%A2%E5%BC%95-%E5%8D%95%E5%88%97%E7%B4%A2%E5%BC%95-%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95"><span class="toc-number">2.2.</span> <span class="toc-text">2.单值索引 单列索引  普通索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95"><span class="toc-number">2.3.</span> <span class="toc-text">3.唯一索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-number">2.4.</span> <span class="toc-text">4.复合索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MyISAM"><span class="toc-number">2.5.</span> <span class="toc-text">MyISAM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Full-Text-%E5%85%A8%E6%96%87%E7%B4%A2%E5%BC%95"><span class="toc-number">2.6.</span> <span class="toc-text">Full Text 全文索引</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E7%B4%A2%E5%BC%95%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">3.索引的基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95"><span class="toc-number">3.1.</span> <span class="toc-text">3.1查看索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2%E5%BB%BA%E7%AB%8B%E5%8D%95%E5%80%BC%E7%B4%A2%E5%BC%95"><span class="toc-number">3.2.</span> <span class="toc-text">3.2建立单值索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9B%E5%BB%BA%EF%BC%9A"><span class="toc-number">3.2.1.</span> <span class="toc-text">建表的时候创建：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E4%B9%8B%E5%90%8E%E5%88%9B%E5%BB%BA%EF%BC%9A"><span class="toc-number">3.2.2.</span> <span class="toc-text">建表之后创建：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3%E5%BB%BA%E7%AB%8B%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95"><span class="toc-number">3.3.</span> <span class="toc-text">3.3建立唯一索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9B%E5%BB%BA%EF%BC%9A-1"><span class="toc-number">3.3.1.</span> <span class="toc-text">建表的时候创建：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E4%B9%8B%E5%90%8E%E5%88%9B%E5%BB%BA%EF%BC%9A-1"><span class="toc-number">3.3.2.</span> <span class="toc-text">建表之后创建：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4%E5%BB%BA%E7%AB%8B%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95"><span class="toc-number">3.4.</span> <span class="toc-text">3.4建立复合索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9B%E5%BB%BA%EF%BC%9A-2"><span class="toc-number">3.4.1.</span> <span class="toc-text">建表的时候创建：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E8%A1%A8%E4%B9%8B%E5%90%8E%E5%88%9B%E5%BB%BA%EF%BC%9A-2"><span class="toc-number">3.4.2.</span> <span class="toc-text">建表之后创建：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A%EF%BC%881%EF%BC%89%E6%9C%80%E5%B7%A6%E5%89%8D%E7%BC%80%E5%8E%9F%E5%88%99%E3%80%81%EF%BC%882%EF%BC%89%E5%BC%95%E6%93%8E%E5%9C%A8%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%BA%E4%BA%86%E6%9B%B4%E5%A5%BD%E7%9A%84%E5%88%A9%E7%94%A8%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%BC%9A%E5%8A%A8%E6%80%81%E8%B0%83%E6%95%B4%E5%AD%97%E6%AE%B5%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%BE%B9%E5%88%A9%E7%94%A8%E7%B4%A2%E5%BC%95"><span class="toc-number">3.4.3.</span> <span class="toc-text">复合索引面试题：（1）最左前缀原则、（2）引擎在查询的时候为了更好的利用索引，会动态调整字段顺序一边利用索引</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E7%B4%A2%E5%BC%95%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">4.索引的底层原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#B-%E6%A0%91%EF%BC%9A%E6%9C%80%E9%A1%B6%E5%B1%82%E6%A0%B9%E8%8A%82%E7%82%B9%E5%B8%B8%E9%A9%BB%E5%86%85%E5%AD%98%EF%BC%8C%E4%B8%8D%E5%8A%A8I-O"><span class="toc-number">4.0.1.</span> <span class="toc-text">B+树：最顶层根节点常驻内存，不动I&#x2F;O</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E5%92%8C%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95"><span class="toc-number">5.</span> <span class="toc-text">5.聚簇索引和非聚簇索引</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E5%AD%98%E5%82%A8%E7%9A%84%E4%B8%BB%E9%94%AE%E5%80%BC%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%95%B0%E6%8D%AE%E5%9C%B0%E5%9D%80%EF%BC%9F"><span class="toc-number">5.1.</span> <span class="toc-text">为什么非聚簇索引存储的主键值，而不是数据地址？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">6.</span> <span class="toc-text">6.聚簇索引的优势</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="toc-number">7.</span> <span class="toc-text">7.聚簇索引需要注意什么</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
           </div>
@@ -577,10 +319,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
-		isCategory: false,
+		isCategory: true,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
