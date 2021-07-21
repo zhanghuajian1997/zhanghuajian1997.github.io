@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>为什么 HashMap 链表长度超过8才转为红黑树？ | Hexo</title>
+  <title>为什么 HashMap 链表长度超过8才转为红黑树？HahMap加载因子为什么是0.75 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="description" content="为什么 HashMap 链表长度超过8才转为红黑树？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="为什么 HashMap 链表长度超过8才转为红黑树？">
+<meta property="og:title" content="为什么 HashMap 链表长度超过8才转为红黑树？HahMap加载因子为什么是0.75">
 <meta property="og:url" content="http://example.com/2021/07/19/%E4%B8%BA%E4%BB%80%E4%B9%88%20HashMap%20%E9%93%BE%E8%A1%A8%E9%95%BF%E5%BA%A6%E8%B6%85%E8%BF%878%E6%89%8D%E8%BD%AC%E4%B8%BA%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="为什么 HashMap 链表长度超过8才转为红黑树？">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-19T12:18:24.051Z">
-<meta property="article:modified_time" content="2021-07-19T12:49:35.610Z">
+<meta property="article:modified_time" content="2021-07-20T14:02:28.016Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="Java集合">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
   
   
     <h1 class="article-title" itemprop="name">
-      为什么 HashMap 链表长度超过8才转为红黑树？
+      为什么 HashMap 链表长度超过8才转为红黑树？HahMap加载因子为什么是0.75
     </h1>
   
 
@@ -245,7 +245,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.2k字</span>
+      <span class="post-count">1.3k字</span>
     </span>
   </span>
 
@@ -281,6 +281,9 @@
 <p>事实上，链表长度超过 8 就转为红黑树的设计，更多的是为了防止用户自己实现了不好的哈希算法时导致链表过长，从而导致查询效率低，而此时转为红黑树更多的是一种保底策略，用来保证极端情况下查询的效率</p>
 <h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p>通常如果 hash 算法正常的话，那么链表的长度也不会很长，那么红黑树也不会带来明显的查询时间上的优势，反而会增加空间负担。所以通常情况下，并没有必要转为红黑树，所以就选择了概率非常小，小于千万分之一概率，也就是长度为 8 的概率，把长度 8 作为转化的默认阈值。</p>
 <p>所以如果平时开发中发现 HashMap 或是 ConcurrentHashMap 内部出现了红黑树的结构，这个时候往往就说明我们的哈希算法出了问题，需要留意是不是我们实现了效果不好的 hashCode 方法，并对此进行改进，以便减少冲突。</p>
+<h1 id="HahMap加载因子为什么是0-75"><a href="#HahMap加载因子为什么是0-75" class="headerlink" title="HahMap加载因子为什么是0.75"></a>HahMap加载因子为什么是0.75</h1><p>首先如果加载因子比较大，那么发生扩容的概率就比较低，但是浪费的空间比较小，不过发生hash冲突的几率就比较大。</p>
+<p>但是荡加载因子值比较小的时候，扩容概率就比较大，因此会浪费很多的空间。</p>
+<p>所以综合情况就选了一个0.5到1的平均数0.75作为加载因子</p>
 
     
 
@@ -327,7 +330,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/07/19/为什么 HashMap 链表长度超过8才转为红黑树？/" title="为什么 HashMap 链表长度超过8才转为红黑树？" target="_blank">http://example.com/2021/07/19/为什么 HashMap 链表长度超过8才转为红黑树？/</a>
+          <a href="http://example.com/2021/07/19/为什么 HashMap 链表长度超过8才转为红黑树？/" title="为什么 HashMap 链表长度超过8才转为红黑树？HahMap加载因子为什么是0.75" target="_blank">http://example.com/2021/07/19/为什么 HashMap 链表长度超过8才转为红黑树？/</a>
         </li>
         
         <li>
@@ -469,7 +472,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-HashMap-%E9%93%BE%E8%A1%A8%E9%95%BF%E5%BA%A6%E8%B6%85%E8%BF%878%E6%89%8D%E8%BD%AC%E4%B8%BA%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">为什么 HashMap 链表长度超过8才转为红黑树？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BD%AC%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1.为什么要转红黑树？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E4%B8%80%E5%BC%80%E5%A7%8B%E5%B0%B1%E7%94%A8%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">2.为什么不一开始就用红黑树？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%BD%AC%E6%8D%A2%E9%98%88%E5%80%BC-8-%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3.转换阈值 8 是怎么来的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">4.总结</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-HashMap-%E9%93%BE%E8%A1%A8%E9%95%BF%E5%BA%A6%E8%B6%85%E8%BF%878%E6%89%8D%E8%BD%AC%E4%B8%BA%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">为什么 HashMap 链表长度超过8才转为红黑树？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BD%AC%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1.为什么要转红黑树？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E4%B8%80%E5%BC%80%E5%A7%8B%E5%B0%B1%E7%94%A8%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">2.为什么不一开始就用红黑树？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%BD%AC%E6%8D%A2%E9%98%88%E5%80%BC-8-%E6%98%AF%E6%80%8E%E4%B9%88%E6%9D%A5%E7%9A%84%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">3.转换阈值 8 是怎么来的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">4.总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HahMap%E5%8A%A0%E8%BD%BD%E5%9B%A0%E5%AD%90%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF0-75"><span class="toc-number">2.</span> <span class="toc-text">HahMap加载因子为什么是0.75</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -670,10 +673,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">知识点查缺补漏</a>
               </li>
             
             <div class="clearfix"></div>
