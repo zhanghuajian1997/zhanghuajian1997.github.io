@@ -6,18 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2021 | Hexo</title>
+  <title>链表相关算法题 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="疯狂输出">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2021/page/8/index.html">
+  <meta name="description" content="每日一题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链表相关算法题">
+<meta property="og:url" content="http://example.com/2021/07/21/%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="疯狂输出">
+<meta property="og:description" content="每日一题">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-21T15:52:29.774Z">
+<meta property="article:modified_time" content="2021-07-23T10:33:13.973Z">
 <meta property="article:author" content="ZHANG_JAVA">
+<meta property="article:tag" content="数据结构、算法">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -209,41 +212,166 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-链表相关算法题" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2021/04/13/%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E6%A0%88/" class="archive-article-date">
-        <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2021/04/13/%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E6%A0%88/" target="_blank">使用数组实现栈</a>
   
+    <h1 class="article-title" itemprop="name">
+      链表相关算法题
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2021/07/21/%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95%E9%A2%98/" class="archive-article-date">
+        <time datetime="2021-07-21T15:52:29.774Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-21</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.3k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">10分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p> 每日一题</p>
+<span id="more"></span>
+
+<h1 id="链表相关算法题"><a href="#链表相关算法题" class="headerlink" title="链表相关算法题"></a>链表相关算法题</h1><h2 id="1-实现一个链表"><a href="#1-实现一个链表" class="headerlink" title="1.实现一个链表"></a>1.实现一个链表</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> val;</span><br><span class="line">    <span class="keyword">public</span> ListNode next;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List head = <span class="keyword">new</span> ListNode();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ListNode</span><span class="params">()</span></span>&#123;</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ListNode</span><span class="params">(<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">	  <span class="keyword">this</span>.val = val;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ListNode</span><span class="params">(<span class="keyword">int</span> val,ListNode next)</span></span>&#123;</span><br><span class="line">	  <span class="keyword">this</span>.val = val;</span><br><span class="line">	  <span class="keyword">this</span>.next = next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-获取链表的长度"><a href="#2-获取链表的长度" class="headerlink" title="2.获取链表的长度"></a>2.获取链表的长度</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">ListNodeLength</span><span class="params">(ListNode head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(head.next == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ListNode temp = head.next;</span><br><span class="line">    <span class="keyword">while</span>(temp != <span class="keyword">null</span>)&#123;</span><br><span class="line">        length++;</span><br><span class="line">        temp = temp.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-反转链表Ⅰ-LC206"><a href="#3-反转链表Ⅰ-LC206" class="headerlink" title="3.反转链表Ⅰ LC206"></a>3.反转链表Ⅰ LC206</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-linked-list/solution/dong-hua-yan-shi-206-fan-zhuan-lian-biao-by-user74/">https://leetcode-cn.com/problems/reverse-linked-list/solution/dong-hua-yan-shi-206-fan-zhuan-lian-biao-by-user74/</a></p>
+<h3 id="迭代方法"><a href="#迭代方法" class="headerlink" title="迭代方法"></a>迭代方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span></span>&#123;</span><br><span class="line">    <span class="comment">//如果链表为空或者只有一个结点，无需反转，直接返回</span></span><br><span class="line">	<span class="keyword">if</span>(head.next || head.next.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> head;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//pre结点在链表得最前方，指向null</span></span><br><span class="line">    ListNode pre = <span class="keyword">null</span>;</span><br><span class="line">    ListNode current = head;</span><br><span class="line">    <span class="keyword">while</span>(current != <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="comment">//定义一个临时结点，保存当前结点的下一个结点</span></span><br><span class="line">        ListNode temp = current.next;</span><br><span class="line">        <span class="comment">//当前结点指向pre结点</span></span><br><span class="line">        current.next = pre;</span><br><span class="line">        <span class="comment">//pre结点和当前结点都前进一位</span></span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pre;</span><br><span class="line">&#125;</span><br><span class="line">复杂度分析</span><br><span class="line">时间复杂度：O(n)O(n)，其中 nn 是链表的长度。需要遍历链表一次。</span><br><span class="line">空间复杂度：O(<span class="number">1</span>)O(<span class="number">1</span>)。</span><br></pre></td></tr></table></figure>
+
+<h3 id="递归方法"><a href="#递归方法" class="headerlink" title="递归方法"></a>递归方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span></span>&#123;</span><br><span class="line">    <span class="comment">//递归终止条件</span></span><br><span class="line">	<span class="keyword">if</span>(head.next || head.next.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> head;</span><br><span class="line">	&#125;</span><br><span class="line">     <span class="comment">//递归调用找到最后的节点</span></span><br><span class="line">    ListNode cur = reverseList(head.next);</span><br><span class="line">    head.next.next = head;</span><br><span class="line">    head.next = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">return</span> cur;</span><br><span class="line">&#125;</span><br><span class="line">复杂度分析</span><br><span class="line"></span><br><span class="line">时间复杂度：O(n)，其中 nn 是链表的长度。需要对链表的每个节点进行反转操作。</span><br><span class="line"></span><br><span class="line">空间复杂度：O(n)，其中 nn 是链表的长度。空间复杂度主要取决于递归调用的栈空间，最多为 nn 层</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-反转链表Ⅱ-LC92"><a href="#4-反转链表Ⅱ-LC92" class="headerlink" title="4.反转链表Ⅱ LC92"></a>4.反转链表Ⅱ LC92</h2><p>给你单链表的头指针 head 和两个整数 left 和 right ，其中 left &lt;= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。</p>
+<h3 id="迭代方法-1"><a href="#迭代方法-1" class="headerlink" title="迭代方法"></a>迭代方法</h3><p>​    1、我们定义两个指针，分别称之为 g(guard 守卫) 和 p(point)。<br>​    我们首先根据方法的参数 m 确定 g 和 p 的位置。将 g 移动到第一个要反转的节点的前面，将 p 移动到第一个要反转的节点的位置上。    我们以 m=2，n=4为例。<br>​    2、将 p 后面的元素删除，然后添加到 g 的后面。也即头插法。<br>​    3、根据 m 和 n 重复步骤（2）<br>​    4、返回 dummyHead.next</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">revseseBetween</span><span class="params">(ListNode head,<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 定义一个dummyHead, 方便处理</span></span><br><span class="line">    ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    dummy.next = head;</span><br><span class="line">    <span class="comment">// 初始化指针</span></span><br><span class="line">    Listnode g = dummy;</span><br><span class="line">    ListNode p = dummy.next;</span><br><span class="line">     <span class="comment">//将指针移到相应的位置</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; m - <span class="number">1</span>;i++)&#123;</span><br><span class="line">        g = g.next;</span><br><span class="line">        p = p.next;</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">// 头插法插入节点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n - m ;i++)&#123;</span><br><span class="line">        ListNode remove = p.next;</span><br><span class="line">        p.next = p.next.next;</span><br><span class="line">        remove.next = g.next;</span><br><span class="line">        g.next = remove;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dummy.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="递归方法-1"><a href="#递归方法-1" class="headerlink" title="递归方法"></a>递归方法</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/yi-bu-yi-bu-jiao-ni-ru-he-yong-di-gui-si-lowt/">https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/yi-bu-yi-bu-jiao-ni-ru-he-yong-di-gui-si-lowt/</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseBetween</span><span class="params">(ListNode head,<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(m == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> reverseN(head,n);</span><br><span class="line">    &#125;</span><br><span class="line">    head.next = reverseBetween(head.next,m-<span class="number">1</span>,n-<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//后驱节点</span></span><br><span class="line">ListNode successor = <span class="keyword">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseN</span><span class="params">(ListNode head,n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="comment">//记录n+1节点</span></span><br><span class="line">        successor = head.next;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//以head.next为起点，需要反转前n-1个节点</span></span><br><span class="line">    ListNode last = revserseN(head.next,n-<span class="number">1</span>);</span><br><span class="line">    head.next.next = head;</span><br><span class="line">    <span class="comment">//反转之后的head节点和 后面的节点连起来</span></span><br><span class="line">    head.next = successor;</span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="5-K个一组反转链表-LC25"><a href="#5-K个一组反转链表-LC25" class="headerlink" title="5.K个一组反转链表 LC25"></a>5.K个一组反转链表 LC25</h2><p>步骤分解:</p>
+<p>1.链表分区为已翻转部分+待翻转部分+未翻转部分<br>2.每次翻转前，要确定翻转链表的范围，这个必须通过 k 此循环来确定<br>3.需记录翻转链表前驱和后继，方便翻转完成后把已翻转部分和未翻转部分连接起来<br>4.初始需要两个变量 pre 和 end，pre 代表待翻转链表的前驱，end 代表待翻转链表的末尾<br>5.经过k此循环，end 到达末尾，记录待翻转链表的后继 next = end.next<br>6.翻转链表，然后将三部分链表连接起来，然后重置 pre 和 end 指针，然后进入下一次循环<br>7.特殊情况，当翻转部分长度不足 k 时，在定位 end 完成后，end==null，已经到达末尾，说明题目已完成，直接返回即可</p>
+<p>时间复杂度O（n*k），最好为O(n), 最坏为O（n^2） </p>
+<p>空间复杂度O(1)</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-nodes-in-k-group/solution/tu-jie-kge-yi-zu-fan-zhuan-lian-biao-by-user7208t/">https://leetcode-cn.com/problems/reverse-nodes-in-k-group/solution/tu-jie-kge-yi-zu-fan-zhuan-lian-biao-by-user7208t/</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseKGroup</span><span class="params">(ListNode head,<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> head;</span><br><span class="line">     &#125;</span><br><span class="line">    <span class="comment">//定义一个哑节点</span></span><br><span class="line">    ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    <span class="comment">//dummy-&gt;1-&gt;2-&gt;3-&gt;4-&gt;5</span></span><br><span class="line">    dummy.next = head;</span><br><span class="line">    <span class="comment">//初始化pre和end都指向dummy。pre指每次要翻转的链表的头结点的上一个节点。end指每次要翻转的链表的尾节点</span></span><br><span class="line">    ListNode pre = dummy;</span><br><span class="line">    ListNode end = dummy;</span><br><span class="line">    <span class="keyword">while</span>(end != <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="comment">//循环k次，找到需要翻转的链表的结尾,这里每次循环要判断end是否等于空,因为如果为空，end.next会报空指针异常。</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; k &amp;&amp; end != <span class="keyword">null</span>;i++)&#123;</span><br><span class="line">            end = end.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果end==null，即需要翻转的链表的节点数小于k，不执行翻转。</span></span><br><span class="line">        <span class="keyword">if</span>(end == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">         <span class="comment">//先记录下end.next,方便后面链接链表</span></span><br><span class="line">         <span class="comment">//dummy-&gt;1-&gt;2(end)-&gt;3-&gt;4-&gt;5   以K=2为例，3就是next节点</span></span><br><span class="line">        ListNode next = end.next;</span><br><span class="line">         <span class="comment">//然后断开链表   dummy-&gt;1-&gt;2(end)  3（next）-&gt;4-&gt;5 </span></span><br><span class="line">        end.next = <span class="keyword">null</span>;</span><br><span class="line">         <span class="comment">//记录下要翻转链表的头节点</span></span><br><span class="line">        <span class="comment">//dummy-&gt;1（start）-&gt;2(end)  3（next）-&gt;4-&gt;5 </span></span><br><span class="line">        ListNode start = pre.next;</span><br><span class="line">         <span class="comment">//翻转链表,pre.next指向翻转后的链表。</span></span><br><span class="line">        <span class="comment">//dummy-&gt;2(end)-&gt;1(start)  3（next）-&gt;4-&gt;5 </span></span><br><span class="line">        pre.next = reverse(start);</span><br><span class="line">         <span class="comment">//翻转后头节点变到最后。通过.next把断开的链表重新链接。</span></span><br><span class="line">         <span class="comment">//dummy-&gt;2(end)-&gt;1(start)-&gt;3（next）-&gt;4-&gt;5 </span></span><br><span class="line">        start.next = next;</span><br><span class="line">         <span class="comment">//将pre换成下次要翻转的链表的头结点的上一个节点。即start</span></span><br><span class="line">        pre = start;</span><br><span class="line">         <span class="comment">//翻转结束，将end置为下次要翻转的链表的头结点的上一个节点。即start</span></span><br><span class="line">        end =start;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">return</span> dummy.next;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverse</span><span class="params">(ListNode head)</span></span>&#123;</span><br><span class="line">     <span class="comment">//单链表为空或只有一个节点，直接返回原单链表</span></span><br><span class="line">    <span class="keyword">if</span> (head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">          <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    ListNode pre = <span class="keyword">null</span>;</span><br><span class="line">    ListNode cur = head;</span><br><span class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">        ListNode temp = cur.next;</span><br><span class="line">        cur.next = <span class="keyword">null</span>;</span><br><span class="line">        pre = cur;</span><br><span class="line">        cur = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pre</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-返回链表中倒数第k个节点-offer22"><a href="#6-返回链表中倒数第k个节点-offer22" class="headerlink" title="6.返回链表中倒数第k个节点 offer22"></a>6.返回链表中倒数第k个节点 offer22</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">getKthFromEnd</span><span class="params">(ListNode head,<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    ListNode p1 = head;</span><br><span class="line">    ListNode p2 = head;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; k;i++)&#123;</span><br><span class="line">        p2 = p2.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(p2 !== <span class="keyword">null</span>)&#123;</span><br><span class="line">        p1 = p1.next;</span><br><span class="line">        p2 = p2.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-删除链表中倒数第k个节点-LC19"><a href="#7-删除链表中倒数第k个节点-LC19" class="headerlink" title="7.删除链表中倒数第k个节点 LC19"></a>7.删除链表中倒数第k个节点 LC19</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">由于我们需要找到倒数第 n 个节点，因此我们可以使用快慢指针进行操作。我们定义个哑节点，指向头结点，方便最后的遍历返回。首先定义两个指针，快指针指向头结点，慢指针指向哑节点。然后将快指针向前移动n位，使得快指针超前慢指针n位，当快指针遍历到链表最后的时候，也就是fast&#x3D;&#x3D; null的时候，此时慢指针指向的结点就是要删除倒数第n个结点的前一个结点，然后再将slow.next &#x3D; slow.next.next，</span><br><span class="line">就完成了倒数第n个结点的删除操作。</span><br><span class="line">TIPS：删除问题，要找到待删除结点的前一个结点！因为是单链表，所以要考虑双指针的方式！</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">removeKthFromEnd</span><span class="params">(ListNode head,<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="comment">//定义哑节点</span></span><br><span class="line">    ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>,head);</span><br><span class="line">    <span class="comment">//快慢指针</span></span><br><span class="line">    ListNode slow = dummy;</span><br><span class="line">    ListNode fast = head;</span><br><span class="line">    <span class="comment">//快指针前进K步</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; k;i++)&#123;</span><br><span class="line">        fast = fast.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//快指针等于null的时候，slow指针在待删除节点的前一个节点</span></span><br><span class="line">    <span class="keyword">while</span>(fast != <span class="keyword">null</span>)&#123;</span><br><span class="line">        slow = slow.next;</span><br><span class="line">        fast = fast.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//删除待删除节点</span></span><br><span class="line">    slow.next = slow.next.next;</span><br><span class="line">    ListNode ans = dummy.next;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line">时间复杂度 O(N)：N 为链表长度；总体看， fast走了 N 步， slow走了 (N−k)步。</span><br><span class="line">空间复杂度 O(<span class="number">1</span>)：双指针使用常数大小的额外空间</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-两个链表的第一个公共节点-Offer52"><a href="#8-两个链表的第一个公共节点-Offer52" class="headerlink" title="8.两个链表的第一个公共节点 Offer52"></a>8.两个链表的第一个公共节点 Offer52</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">getIntersertionNode</span><span class="params">(ListNode headA,ListNode headB)</span></span>&#123;</span><br><span class="line">    ListNode a = headA;</span><br><span class="line">    ListNode b = headB;</span><br><span class="line">    <span class="keyword">while</span>(a != b)&#123;</span><br><span class="line">        a = a != <span class="keyword">null</span>?a.next:headB;</span><br><span class="line">        b = b != <span class="keyword">null</span>?b.next:headA;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="9-判断链表是否有环-LC141"><a href="#9-判断链表是否有环-LC141" class="headerlink" title="9.判断链表是否有环 LC141"></a>9.判断链表是否有环 LC141</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasCycle</span><span class="params">(ListNode head)</span></span>&#123;</span><br><span class="line">    ListNode slow = head;</span><br><span class="line">    ListNode fast = head;</span><br><span class="line">    <span class="keyword">while</span>(fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span>)&#123;</span><br><span class="line">        slow = slow.next;</span><br><span class="line">        fast = fast.next.next;</span><br><span class="line">        <span class="keyword">if</span>(fast == slow)&#123;</span><br><span class="line">            <span class="keyword">return</span> ture;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="10-环形链表Ⅱ-LC142"><a href="#10-环形链表Ⅱ-LC142" class="headerlink" title="10.环形链表Ⅱ LC142"></a>10.环形链表Ⅱ LC142</h2><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/linked-list-cycle-ii-kuai-man-zhi-zhen-shuang-zhi-/">https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/linked-list-cycle-ii-kuai-man-zhi-zhen-shuang-zhi-/</a></p>
+<p>给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 <code>null</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ListNode</span><span class="params">(listNode head)</span></span>&#123;</span><br><span class="line">    ListNode slow = head;</span><br><span class="line">    ListNode fast = head;</span><br><span class="line">      <span class="comment">//获取首次相遇时候，slow的位置</span></span><br><span class="line">    <span class="keyword">while</span>(fast != <span class="keyword">null</span> &amp;&amp; fast.next != <span class="keyword">null</span>)&#123;</span><br><span class="line">        fast = fast.next.next;</span><br><span class="line">        slow = slow.next;</span><br><span class="line">        <span class="keyword">if</span>(fast == slow)&#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">           <span class="comment">//如果快指针走到尽头，没环</span></span><br><span class="line">    <span class="keyword">if</span>(fast == <span class="keyword">null</span> &amp;&amp; fast.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">      <span class="comment">//快指针重新出发，相遇位置就是入口位置</span></span><br><span class="line">    fast = head</span><br><span class="line">    <span class="keyword">while</span>(fast != slow)&#123;</span><br><span class="line">        fast = fast.next;</span><br><span class="line">        slow = slow.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> slow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/alipay.jpg">
+                    <span class="reward-type">支付宝</span>
+                  </div>
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/weixin.png">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          ZHANG_JAVA
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2021/07/21/链表相关算法题/" title="链表相关算法题" target="_blank">http://example.com/2021/07/21/链表相关算法题/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -255,196 +383,131 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构：栈//" class="article-tag-list-link color2">数据结构：栈</a>
+        			<a href="/categories/链表//" class="article-tag-list-link color3">链表</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/21/%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95%E9%A2%98/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2021/04/13/synchronized%E5%92%8Clock%E7%9A%84%E5%8C%BA%E5%88%AB/" class="archive-article-date">
-        <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2021/07/21/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E8%AE%AF%E7%9A%84%E6%96%B9%E5%BC%8F%E4%B8%AD%E5%93%AA%E7%A7%8D%E7%9A%84%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6%E6%9C%80%E5%BF%AB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">进程间通讯的方式中哪种的访问速度最快</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2021/04/13/synchronized%E5%92%8Clock%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_blank">synchronized和lock的区别</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Java多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/多线程-JUC//" class="article-tag-list-link color3">多线程 JUC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%85%B3%E7%AE%97%E6%B3%95%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">链表相关算法题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1.实现一个链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%8E%B7%E5%8F%96%E9%93%BE%E8%A1%A8%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="toc-number">1.2.</span> <span class="toc-text">2.获取链表的长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8%E2%85%A0-LC206"><span class="toc-number">1.3.</span> <span class="toc-text">3.反转链表Ⅰ LC206</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">迭代方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.2.</span> <span class="toc-text">递归方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8%E2%85%A1-LC92"><span class="toc-number">1.4.</span> <span class="toc-text">4.反转链表Ⅱ LC92</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E6%96%B9%E6%B3%95-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">迭代方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E6%96%B9%E6%B3%95-1"><span class="toc-number">1.4.2.</span> <span class="toc-text">递归方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-K%E4%B8%AA%E4%B8%80%E7%BB%84%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8-LC25"><span class="toc-number">1.5.</span> <span class="toc-text">5.K个一组反转链表 LC25</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E8%BF%94%E5%9B%9E%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9-offer22"><span class="toc-number">1.6.</span> <span class="toc-text">6.返回链表中倒数第k个节点 offer22</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9-LC19"><span class="toc-number">1.7.</span> <span class="toc-text">7.删除链表中倒数第k个节点 LC19</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E8%8A%82%E7%82%B9-Offer52"><span class="toc-number">1.8.</span> <span class="toc-text">8.两个链表的第一个公共节点 Offer52</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF-LC141"><span class="toc-number">1.9.</span> <span class="toc-text">9.判断链表是否有环 LC141</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8%E2%85%A1-LC142"><span class="toc-number">1.10.</span> <span class="toc-text">10.环形链表Ⅱ LC142</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2021/04/13/Spring/" class="archive-article-date">
-        <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2021/04/13/Spring/" target="_blank">Spring的aop顺序和循环依赖</a>
-  
-    </h1>
-  
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java框架</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2021/03/23/%E5%8D%81%E5%A4%A7%E7%BB%8F%E5%85%B8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8A%A8%E7%94%BB%E4%B8%8E%E8%A7%A3%E6%9E%90/" class="archive-article-date">
-        <time datetime="2021-03-23T08:10:14.436Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2021/03/23/%E5%8D%81%E5%A4%A7%E7%BB%8F%E5%85%B8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E5%8A%A8%E7%94%BB%E4%B8%8E%E8%A7%A3%E6%9E%90/" target="_blank">经典排序算法</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构、算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/经典排序算法//" class="article-tag-list-link color2">经典排序算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2021/page/7/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2021/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2021/page/6/">6</a><a class="page-number" href="/archives/2021/page/7/">7</a><span class="page-number current">8</span>
-    </nav>
-  
+
+
+
 
 
           </div>
@@ -485,8 +548,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
