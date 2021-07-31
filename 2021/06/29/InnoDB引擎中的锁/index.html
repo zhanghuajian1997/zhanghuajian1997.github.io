@@ -18,7 +18,7 @@
 <meta property="og:description" content="InnoDB引擎中的锁">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-29T06:54:24.373Z">
-<meta property="article:modified_time" content="2021-06-29T06:54:24.373Z">
+<meta property="article:modified_time" content="2021-07-28T15:52:42.384Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
@@ -245,7 +245,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">535字</span>
+      <span class="post-count">575字</span>
     </span>
   </span>
 
@@ -254,7 +254,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -276,6 +276,7 @@
 <p>InnoDB存储引擎支持意向锁设计比较简练，其意向锁即为表级别的锁。设计的主要目的为要是在下一个事务中揭示下一行将被请求的锁类型。其支持两种意向锁：</p>
 <p>1）意向排他锁（IX Lock）：事务想要获得一张表中某几行的排他锁</p>
 <p>2）意向共享锁（IS Lock）：事务想要获得一张表中某几行的共享锁</p>
+<p><strong>IS、IX的作用就是在上表级锁的时候，可以快速判断是否可以上锁，而不需要遍历表中的所有记录</strong></p>
 <h2 id="1-2锁的算法"><a href="#1-2锁的算法" class="headerlink" title="1.2锁的算法"></a>1.2锁的算法</h2><h3 id="行锁的三种算法"><a href="#行锁的三种算法" class="headerlink" title="行锁的三种算法"></a>行锁的三种算法</h3><p>Record Lock：单个行记录上的锁</p>
 <p>Gap Lock：间隙锁，锁定一个范围，但不包含记录本身</p>
 <p>Next-key Lock：Gap Lock + Record Lock，锁定一个范围，并且包含记录本身</p>
