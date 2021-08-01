@@ -6,21 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>使用gateway网关 完成对微服务的权限鉴定 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/2021/07/31/%E6%9C%AA%E5%91%BD%E5%90%8D/index.html">
+  <meta name="description" content="使用gateway网关 完成对微服务的权限鉴定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用gateway网关 完成对微服务的权限鉴定">
+<meta property="og:url" content="http://example.com/2021/07/31/gateway%E5%81%9A%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用gateway网关 完成对微服务的权限鉴定">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://z3.ax1x.com/2021/07/31/Wj8yPf.jpg">
+<meta property="og:image" content="https://z3.ax1x.com/2021/07/31/WvUwBF.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/07/31/WvUDAJ.png">
 <meta property="article:published_time" content="2021-07-31T04:42:43.103Z">
-<meta property="article:modified_time" content="2021-07-31T04:42:43.103Z">
+<meta property="article:modified_time" content="2021-07-31T12:21:15.817Z">
 <meta property="article:author" content="ZHANG_JAVA">
+<meta property="article:tag" content="Java项目">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://z3.ax1x.com/2021/07/31/Wj8yPf.jpg">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/07/31/WvUwBF.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -211,12 +215,68 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-未命名" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-gateway做权限验证" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      使用gateway网关 完成对微服务的权限鉴定
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2021/07/31/gateway%E5%81%9A%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81/" class="archive-article-date">
+        <time datetime="2021-07-31T04:42:43.103Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-31</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">424字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">2分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <p><a target="_blank" rel="noopener" href="https://imgtu.com/i/Wj8yPf"><img src="https://z3.ax1x.com/2021/07/31/Wj8yPf.jpg" alt="Wj8yPf.jpg"></a></p>
+    <p>使用gateway网关 完成对微服务的权限鉴定</p>
+<span id="more"></span>
+
+<h1 id="使用gateway网关-完成对微服务的权限鉴定"><a href="#使用gateway网关-完成对微服务的权限鉴定" class="headerlink" title="使用gateway网关 完成对微服务的权限鉴定"></a>使用gateway网关 完成对微服务的权限鉴定</h1><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WvUwBF"><img src="https://z3.ax1x.com/2021/07/31/WvUwBF.png" alt="WvUwBF.png"></a></p>
+<h2 id="整个流程"><a href="#整个流程" class="headerlink" title="整个流程"></a>整个流程</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/WvUDAJ"><img src="https://z3.ax1x.com/2021/07/31/WvUDAJ.png" alt="WvUDAJ.png"></a></p>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义token工厂</span></span><br><span class="line"><span class="meta">@Component</span>  <span class="comment">//代表在工厂中创建对象   @configuration 配置     @Component  在工厂中创建对象   使用 filtes -Token</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TokenGatewayFilterFactory</span> <span class="keyword">extends</span> <span class="title">AbstractGatewayFilterFactory</span>&lt;<span class="title">TokenGatewayFilterFactory</span>.<span class="title">Config</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger log = LoggerFactory.getLogger(TokenGatewayFilterFactory.class);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TokenGatewayFilterFactory</span><span class="params">(RedisTemplate redisTemplate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(Config.class);</span><br><span class="line">        <span class="keyword">this</span>.redisTemplate = redisTemplate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Config 参数就是基于当前中Config创建对象</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> GatewayFilter <span class="title">apply</span><span class="params">(Config config)</span> </span>&#123; <span class="comment">//去redis取一下 有token进入</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> GatewayFilter() &#123;    <span class="comment">// servlet service httpServletRequest  httpServletResponse 传统web springmvc   springwebflux new web模型</span></span><br><span class="line">            <span class="comment">// filter   request response filterChain.dofilter(request,response)</span></span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="comment">//参数1: exchange 交换机  参数二 放行</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Mono&lt;Void&gt; <span class="title">filter</span><span class="params">(ServerWebExchange exchange, GatewayFilterChain chain)</span> </span>&#123;</span><br><span class="line">                log.info(<span class="string">&quot;进入过滤器&quot;</span>);</span><br><span class="line">                log.info(<span class="string">&quot;config required token: &#123;&#125;&quot;</span>, config.requiredToken);</span><br><span class="line"><span class="comment">//                log.info(&quot;config name: &#123;&#125;&quot;, config.name);</span></span><br><span class="line">                 <span class="keyword">if</span> (config.requiredToken) &#123;</span><br><span class="line">                    <span class="comment">//1.获取token信息</span></span><br><span class="line">                    <span class="keyword">if</span> (exchange.getRequest().getQueryParams().get(<span class="string">&quot;token&quot;</span>) == <span class="keyword">null</span>)</span><br><span class="line">                          <span class="keyword">throw</span> <span class="keyword">new</span> IllegalTokenException(<span class="string">&quot;非法令牌!&quot;</span>);</span><br><span class="line">                      String token = exchange.getRequest().getQueryParams().get(<span class="string">&quot;token&quot;</span>).get(<span class="number">0</span>);</span><br><span class="line">                      log.info(<span class="string">&quot;token:&#123;&#125;&quot;</span>, token);</span><br><span class="line">                    <span class="comment">//2.根据token信息去redis获取</span></span><br><span class="line">                    <span class="keyword">if</span> (!redisTemplate.hasKey(RedisPrefix.TOKEN_KEY + token))</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalTokenException(<span class="string">&quot;不合法的令牌!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">                <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//用来配置将使用filter时指定值赋值给Config中哪个属性</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">shortcutFieldOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Arrays.asList(<span class="string">&quot;requiredToken&quot;</span>);</span><br><span class="line"><span class="comment">//        return super.shortcutFieldOrder();</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//自定义配置类 用来定义传递多个参数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Config</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">boolean</span> requiredToken;  <span class="comment">//false</span></span><br><span class="line">   <span class="comment">//     private String name;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//        public String getName() &#123;</span></span><br><span class="line"><span class="comment">//            return name;</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//        public void setName(String name) &#123;</span></span><br><span class="line"><span class="comment">//            this.name = name;</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isRequiredToken</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> requiredToken;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRequiredToken</span><span class="params">(<span class="keyword">boolean</span> requiredToken)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.requiredToken = requiredToken;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- id: users_router</span><br><span class="line">      uri: lb:&#x2F;&#x2F;API-USERS</span><br><span class="line">      predicates:</span><br><span class="line">        - Path&#x3D;&#x2F;admin&#x2F;users&#x2F;**</span><br><span class="line">      filters:</span><br><span class="line">        - StripPrefix&#x3D;1</span><br><span class="line">        - Token&#x3D;true</span><br></pre></td></tr></table></figure>
+
 
     
 
@@ -263,7 +323,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/07/31/未命名/" title="" target="_blank">http://example.com/2021/07/31/未命名/</a>
+          <a href="http://example.com/2021/07/31/gateway做权限验证/" title="使用gateway网关 完成对微服务的权限鉴定" target="_blank">http://example.com/2021/07/31/gateway做权限验证/</a>
         </li>
         
         <li>
@@ -280,7 +340,29 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java项目</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/gateway//" class="article-tag-list-link color3">gateway</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
 
@@ -330,7 +412,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/31/%E6%9C%AA%E5%91%BD%E5%90%8D/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/31/gateway%E5%81%9A%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -374,7 +456,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8gateway%E7%BD%91%E5%85%B3-%E5%AE%8C%E6%88%90%E5%AF%B9%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%9D%83%E9%99%90%E9%89%B4%E5%AE%9A"><span class="toc-number">1.</span> <span class="toc-text">使用gateway网关 完成对微服务的权限鉴定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%B8%AA%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">整个流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">示例代码</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
