@@ -19,7 +19,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/https1.png">
 <meta property="article:published_time" content="2021-07-19T11:35:20.894Z">
-<meta property="article:modified_time" content="2021-07-25T15:15:42.432Z">
+<meta property="article:modified_time" content="2021-08-05T12:47:15.129Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="计算机原理">
 <meta name="twitter:card" content="summary">
@@ -247,7 +247,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2k字</span>
+      <span class="post-count">2.4k字</span>
     </span>
   </span>
 
@@ -256,7 +256,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
+      <span class="post-count">8分</span>
     </span>
   </span>
 </div>
@@ -293,6 +293,15 @@
 <h2 id="HTTPS采用的加密"><a href="#HTTPS采用的加密" class="headerlink" title="HTTPS采用的加密"></a>HTTPS采用的加密</h2><p>HTTPS采用的是处理信息的方式是：结合对称加密+非对称加密这两种方式，我们可以用非对称加密的方式来传输对称加密过程中的密钥，之后我们就可以采取对称加密的方式来传输数据了。具体是这样子的：</p>
 <p>服务器用明文的方式给客户端发送自己的公钥，客户端收到公钥之后，会生成一把密钥(对称加密用的)，然后用服务器的公钥对这把密钥进行加密，之后再把密钥传输给服务器，服务器收到之后进行解密，最后服务器就可以安全得到这把密钥了，而客户端也有同样一把密钥，他们就可以进行对称加密了。</p>
 <p>HTTPS 加密传输过程中需要传输公开密钥，那么公开密钥又是如何保证其正确性呢，当然是数字认证机构颁发的公开密钥证书。</p>
+<p>具体的通信流程？</p>
+<p>1.服务器端 首先把自己的公钥发送给证书颁发机构，向证书颁发机构申请证书</p>
+<p>2.证书颁发机构自己也有一对公钥私钥。机构利用自己的私钥来加密【服务器端发送过来的公钥】，并且通过服务端网址等信息生成一个证书签名，证书签名同样经过机构的私钥加密。证书制作完成后，机构把证书发送给了服务端</p>
+<p>3当客户端向服务器请求通信的时候，服务器不再直接返回自己的公钥，而是把自己申请的证书返回给客户端。</p>
+<p>4.收到证书以后，要做的第一件事情是验证证书的真伪。需要说明的是，<strong>各大浏览器和操作系统已经维护了所有权威证书机构的名称和公钥</strong>。所以客户端只需要知道是哪个机构颁布的证书，就可以从本地找到对应的机构公钥，解密出证书签名。</p>
+<p>5.接下来，客户端按照同样的签名规则，自己也生成一个证书签名，如果两个签名一致，说明证书是有效的。</p>
+<p>6.验证成功后，客户端就可以放心地再次利用机构公钥，解密出服务端的公钥</p>
+<p>7.像之前一样，客户端生成自己的对称加密密钥Key2，并且用服务端公钥Key1加密Key2，发送给小红。</p>
+<p>8.最后，服务器用自己的私钥解开加密，得到对称加密密钥Key2。于是两人开始用Key2进行对称加密的通信。</p>
 
     
 
