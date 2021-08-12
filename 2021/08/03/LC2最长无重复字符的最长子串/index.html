@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>队列、栈相互实现 | Hexo</title>
+  <title>最长无重复字符的最长子串 LC3 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="LC225 LC232">
+  <meta name="description" content="高频算法题目">
 <meta property="og:type" content="article">
-<meta property="og:title" content="队列、栈相互实现">
-<meta property="og:url" content="http://example.com/2021/07/27/%E7%94%A8%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88%20LC225/index.html">
+<meta property="og:title" content="最长无重复字符的最长子串 LC3">
+<meta property="og:url" content="http://example.com/2021/08/03/LC2%E6%9C%80%E9%95%BF%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="LC225 LC232">
+<meta property="og:description" content="高频算法题目">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-27T14:48:45.642Z">
-<meta property="article:modified_time" content="2021-07-29T14:31:40.546Z">
+<meta property="article:published_time" content="2021-08-03T13:16:10.543Z">
+<meta property="article:modified_time" content="2021-08-03T13:16:37.139Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="数据结构、算法">
 <meta name="twitter:card" content="summary">
@@ -212,14 +212,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-用队列实现栈 LC225" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-LC2最长无重复字符的最长子串" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      队列、栈相互实现
+      最长无重复字符的最长子串 LC3
     </h1>
   
 
@@ -231,8 +231,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/07/27/%E7%94%A8%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88%20LC225/" class="archive-article-date">
-        <time datetime="2021-07-27T14:48:45.642Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-27</time>
+<a href="/2021/08/03/LC2%E6%9C%80%E9%95%BF%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/" class="archive-article-date">
+        <time datetime="2021-08-03T13:16:10.543Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-03</time>
 </a>
 
   
@@ -245,7 +245,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">488字</span>
+      <span class="post-count">240字</span>
     </span>
   </span>
 
@@ -254,7 +254,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">2分</span>
+      <span class="post-count">1分</span>
     </span>
   </span>
 </div>
@@ -265,12 +265,16 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p> LC225 LC232</p>
+    <p> 高频算法题目</p>
 <span id="more"></span>
 
-<h1 id="用队列实现栈-LC225"><a href="#用队列实现栈-LC225" class="headerlink" title="用队列实现栈 LC225"></a>用队列实现栈 LC225</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyStack</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*** 两个队列实现 */</span> </span><br><span class="line">    Queue&lt;Integer&gt; queue1;</span><br><span class="line">    Queue&lt;Integer&gt; queue2;</span><br><span class="line">    <span class="comment">/*** 在这里初始化数据结构。可以看到LinkedList实现了Deque接口，Deque又继承了Queue。 </span></span><br><span class="line"><span class="comment">    * public class LinkedList&lt;E&gt; </span></span><br><span class="line"><span class="comment">    * extends AbstractSequentialList&lt;E&gt; </span></span><br><span class="line"><span class="comment">    * implements List&lt;E&gt;, Deque&lt;E&gt;, Cloneable, java.io.Serializable </span></span><br><span class="line"><span class="comment">    * public interface Deque&lt;E&gt; extends Queue&lt;E&gt; */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyStack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        queue1 = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">        queue2 = <span class="keyword">new</span> LinkedList&lt;Integer&gt;(); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*** 将元素x推入堆栈。 栈：先进后出 队列：先进先出 </span></span><br><span class="line"><span class="comment">    * 当我们使用Q2的添加方法后，要判断Q1是否有数据，如果有就再将Q1的数据添加进Q2中，然后将Q1 Q2互换，模拟先进后出。 </span></span><br><span class="line"><span class="comment">    */</span> </span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; </span><br><span class="line">        queue2.offer(x); </span><br><span class="line">        <span class="keyword">while</span> (!queue1.isEmpty()) &#123; </span><br><span class="line">            queue2.offer(queue1.poll());</span><br><span class="line">        &#125;</span><br><span class="line">        Queue&lt;Integer&gt; temp = queue1; </span><br><span class="line">        queue1 = queue2; </span><br><span class="line">        queue2 = temp; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 使用一个队列实现 </span></span><br><span class="line">    <span class="comment">// public void push(int x) &#123; </span></span><br><span class="line">    <span class="comment">// 		int n = queue.size(); </span></span><br><span class="line">    <span class="comment">// 		queue.offer(x); </span></span><br><span class="line">    <span class="comment">// 		for (int i = 0; i &lt; n; i++) &#123; </span></span><br><span class="line">    <span class="comment">// 			queue.offer(queue.poll()); </span></span><br><span class="line">    <span class="comment">//		&#125; </span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*** 删除堆栈顶部的元素并返回该元素。 </span></span><br><span class="line"><span class="comment">    */</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> queue1.poll(); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*** 获取顶部元素。 </span></span><br><span class="line"><span class="comment">    */</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> queue1.peek(); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/*** 返回堆栈是否为空。 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">empty</span><span class="params">()</span> </span>&#123; </span><br><span class="line">        <span class="keyword">return</span> queue1.isEmpty(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<h1 id="最长无重复字符的最长子串-LC3"><a href="#最长无重复字符的最长子串-LC3" class="headerlink" title="最长无重复字符的最长子串 LC3"></a>最长无重复字符的最长子串 LC3</h1><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/hua-jie-suan-fa-3-wu-zhong-fu-zi-fu-de-zui-chang-z/">https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/solution/hua-jie-suan-fa-3-wu-zhong-fu-zi-fu-de-zui-chang-z/</a></p>
+<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s &#x3D; &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span><br></pre></td></tr></table></figure>
 
-<h1 id="用栈实现队列-LC232"><a href="#用栈实现队列-LC232" class="headerlink" title="用栈实现队列 LC232"></a>用栈实现队列 LC232</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">将一个栈当作输入栈，用于压入 push 传入的数据；另一个栈当作输出栈，用于 pop 和 peek 操作。</span><br><span class="line"></span><br><span class="line">每次 pop 或 peek 时，若输出栈为空则将输入栈的全部数据依次弹出并压入输出栈，这样输出栈从栈顶往栈底的顺序就是队列从队首往队尾的顺序。</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyQueue</span> </span>&#123;</span><br><span class="line">    Deque&lt;Integer&gt; inStack;</span><br><span class="line">    Deque&lt;Integer&gt; outStack;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        inStack = <span class="keyword">new</span> ArrayDeque&lt;Integer&gt;();</span><br><span class="line">        outStack = <span class="keyword">new</span> ArrayDeque&lt;Integer&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        inStack.addLast(x);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (outStack.isEmpty()) &#123;</span><br><span class="line">            in2out();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> outStack.isEmpty()? -<span class="number">1</span>:outStack.removeLast();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (outStack.isEmpty()) &#123;</span><br><span class="line">            in2out();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> outStack.peek();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> inStack.isEmpty() &amp;&amp; outStack.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">in2out</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (!inStack.isEmpty()) &#123;</span><br><span class="line">            outStack.addLast(inStack.removeLast());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s &#x3D; &quot;bbbbb&quot;</span><br><span class="line">输出: 1</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;<span class="comment">//用于记录最大不重复子串的长度</span></span><br><span class="line">       <span class="comment">// i是左指针 j是右指针，用来遍历字符串</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span> ;j &lt; s.length() ; j++)&#123;</span><br><span class="line">            <span class="keyword">char</span> element = s.charAt(j);</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(element))&#123;</span><br><span class="line">                i = Math.max(i,map.get(element));</span><br><span class="line">            &#125;</span><br><span class="line">            max = Math.max(max,j - i + <span class="number">1</span>);</span><br><span class="line">            map.put(element,j + <span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 
     
@@ -318,7 +322,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/07/27/用队列实现栈 LC225/" title="队列、栈相互实现" target="_blank">http://example.com/2021/07/27/用队列实现栈 LC225/</a>
+          <a href="http://example.com/2021/08/03/LC2最长无重复字符的最长子串/" title="最长无重复字符的最长子串 LC3" target="_blank">http://example.com/2021/08/03/LC2最长无重复字符的最长子串/</a>
         </li>
         
         <li>
@@ -352,7 +356,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/队列、栈//" class="article-tag-list-link color5">队列、栈</a>
+        			<a href="/categories/滑动窗口//" class="article-tag-list-link color5">滑动窗口</a>
         		</li>
       		
 		</ul>
@@ -407,7 +411,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/27/%E7%94%A8%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88%20LC225/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/03/LC2%E6%9C%80%E9%95%BF%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -422,18 +426,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2021/07/31/gateway%E5%81%9A%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/08/03/LC20%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%20/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          使用gateway网关 完成对微服务的权限鉴定
+          有效的括号 LC20
         
       </div>
     </a>
   
   
-    <a href="/2021/07/25/sleep()%E3%80%81yeild()%E3%80%81wait()/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">sleep()、yeild()、wait()</div>
+    <a href="/2021/07/31/gateway%E5%81%9A%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用gateway网关 完成对微服务的权限鉴定</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -460,7 +464,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%A0%88-LC225"><span class="toc-number">1.</span> <span class="toc-text">用队列实现栈 LC225</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97-LC232"><span class="toc-number">2.</span> <span class="toc-text">用栈实现队列 LC232</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E9%95%BF%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2-LC3"><span class="toc-number">1.</span> <span class="toc-text">最长无重复字符的最长子串 LC3</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -665,6 +669,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MQ</a>
               </li>
             
             <div class="clearfix"></div>

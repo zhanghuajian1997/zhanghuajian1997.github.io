@@ -6,23 +6,41 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>Spring的aop顺序和循环依赖 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="1 MQ引言1.1 什么是MQ1MQ(Message Quene) :  翻译为消息队列,通过典型的生产者和消费者模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 消息中间件通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。  1">
+  <meta name="description" content="Spring的aop顺序和循环依赖">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/2021/08/03/RabbitMQ/index.html">
+<meta property="og:title" content="Spring的aop顺序和循环依赖">
+<meta property="og:url" content="http://example.com/2021/04/13/Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1 MQ引言1.1 什么是MQ1MQ(Message Quene) :  翻译为消息队列,通过典型的生产者和消费者模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 消息中间件通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。  1">
+<meta property="og:description" content="Spring的aop顺序和循环依赖">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://z3.ax1x.com/2021/08/03/fizfYQ.png">
-<meta property="article:published_time" content="2021-08-03T12:36:13.519Z">
-<meta property="article:modified_time" content="2021-08-03T12:36:13.519Z">
+<meta property="og:image" content="http://example.com/images/aop1.png">
+<meta property="og:image" content="http://example.com/images/aop2.png">
+<meta property="og:image" content="http://example.com/images/aop3.png">
+<meta property="og:image" content="http://example.com/images/aop4.png">
+<meta property="og:image" content="http://example.com/images/aop5.png">
+<meta property="og:image" content="http://example.com/images/aop6.png">
+<meta property="og:image" content="http://example.com/images/aop7.png">
+<meta property="og:image" content="http://example.com/images/aop8.png">
+<meta property="og:image" content="http://example.com/images/aop9.png">
+<meta property="og:image" content="http://example.com/images/aop10.png">
+<meta property="og:image" content="http://example.com/images/aop11.png">
+<meta property="og:image" content="http://example.com/images/aop12.png">
+<meta property="og:image" content="http://example.com/images/aop13.png">
+<meta property="og:image" content="http://example.com/images/aop14.png">
+<meta property="og:image" content="http://example.com/images/aop15.png">
+<meta property="og:image" content="http://example.com/images/aop16.png">
+<meta property="og:image" content="http://example.com/images/aop17.png">
+<meta property="og:image" content="http://example.com/images/aop18.png">
+<meta property="article:published_time" content="2021-04-13T07:27:26.000Z">
+<meta property="article:modified_time" content="2021-07-12T13:36:27.855Z">
 <meta property="article:author" content="ZHANG_JAVA">
+<meta property="article:tag" content="Java框架">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/03/fizfYQ.png">
+<meta name="twitter:image" content="http://example.com/images/aop1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -213,24 +231,107 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-RabbitMQ" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Spring循环依赖" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      Spring的aop顺序和循环依赖
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2021/04/13/Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/" class="archive-article-date">
+        <time datetime="2021-04-13T07:27:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-13</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">395字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">1分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="1-MQ引言"><a href="#1-MQ引言" class="headerlink" title="1 MQ引言"></a>1 MQ引言</h2><h3 id="1-1-什么是MQ"><a href="#1-1-什么是MQ" class="headerlink" title="1.1 什么是MQ"></a>1.1 什么是MQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MQ(Message Quene) :  翻译为消息队列,通过典型的生产者和消费者模型,生产者不断向消息队列中生产消息，消费者不断的从队列中获取消息。因为消息的生产和消费都是异步的，而且只关心消息的发送和接收，没有业务逻辑的侵入,轻松的实现系统间解耦。别名为 消息中间件通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统的集成。</span><br></pre></td></tr></table></figure>
+    <p>Spring的aop顺序和循环依赖</p>
+<span id="more"></span>
 
-<h3 id="1-2-MQ有哪些"><a href="#1-2-MQ有哪些" class="headerlink" title="1.2 MQ有哪些"></a>1.2 MQ有哪些</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当今市面上有很多主流的消息中间件，如老牌的ActiveMQ、RabbitMQ，炙手可热的Kafka，阿里巴巴自主开发RocketMQ等。</span><br></pre></td></tr></table></figure>
 
-<h3 id="1-3-不同MQ特点"><a href="#1-3-不同MQ特点" class="headerlink" title="1.3 不同MQ特点"></a>1.3 不同MQ特点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">1.ActiveMQ</span><br><span class="line">		ActiveMQ 是Apache出品，最流行的，能力强劲的开源</span><br><span class="line">	   消息总线。它是一个完全支持JMS规范的的消息中间件。</span><br><span class="line">		丰富的API,多种集群架构模式让ActiveMQ在业界成为老</span><br><span class="line">		牌的消息中间件,在中小型企业 颇受欢迎!</span><br><span class="line"></span><br><span class="line">2.Kafka(追求效率，大数据，高并发)</span><br><span class="line">		Kafka是LinkedIn开源的分布式发布-订阅消息系统，目</span><br><span class="line">		前归属于Apache顶级项目。Kafka主要特点是基于Pull</span><br><span class="line">		的模式来处理消息消费，追求高吞吐量，一开始的目的</span><br><span class="line">		就是用于日志收集和传输。0.8版本开始支持复制，不支</span><br><span class="line">		持事务，对消息的重复、丢失、错误没有严格要求，</span><br><span class="line">		适合产生大量数据的互联网服务的数据收集业务。</span><br><span class="line"></span><br><span class="line">3.RocketMQ</span><br><span class="line">		RocketMQ是阿里开源的消息中间件，它是纯Java开发，</span><br><span class="line">		具有高吞吐量、高可用性、适合大规模分布式系统应用</span><br><span class="line">		的特点。RocketMQ思路起源于Kafka，但并不是Kafka</span><br><span class="line">		的一个Copy，它对消息的可靠传输及事务性做了优化，</span><br><span class="line">		目前在阿里集团被广泛应用于交   易、充值、流计算、</span><br><span class="line">		消息推送、日志流式处理、binglog分发等场景。</span><br><span class="line"></span><br><span class="line">4.RabbitMQ</span><br><span class="line">		RabbitMQ是使用Erlang语言开发的开源消息队列系统，</span><br><span class="line">		基于AMQP协议来实现。AMQP的主要特征是面向消息、</span><br><span class="line">		队列、路由（包括点对点和发布&#x2F;订阅）、可靠性、安全。</span><br><span class="line">		AMQP协议更多用在企业系统内对数据一致性、稳定性和</span><br><span class="line">		可靠性要求很高的场景，对性能和吞吐量的要求还在</span><br><span class="line">		其次。</span><br><span class="line"></span><br><span class="line">RabbitMQ比Kafka可靠，Kafka更适合IO高吞吐的处理，一般应用</span><br><span class="line">在大数据日志处理或对实时性（少量延迟），可靠性（少量丢数据）</span><br><span class="line">要求稍低的场景使用，比如ELK日志收集。	</span><br></pre></td></tr></table></figure>
 
-<h2 id="2-RabbitMQ-的引言"><a href="#2-RabbitMQ-的引言" class="headerlink" title="2 RabbitMQ 的引言"></a>2 RabbitMQ 的引言</h2><h3 id="2-1-RabbitMQ"><a href="#2-1-RabbitMQ" class="headerlink" title="2.1 RabbitMQ"></a>2.1 RabbitMQ</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">基于AMQP协议，erlang语言开发，是部署最广泛的开源消息中间件,是最受欢迎的开源消息中间件之一。可以无缝与Spring框架整合，不容易丢失数据。</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">AMQP 协议</span><br><span class="line"> 	AMQP（advanced message queuing protocol）在2003年</span><br><span class="line"> 	时被提出，最早用于解决金融领不同平台之间的消息传递</span><br><span class="line"> 	交互问题。顾名思义，AMQP是一种协议，更准确的说是</span><br><span class="line"> 	一种binary wire-level protocol（链接协议）。这是其和</span><br><span class="line"> 	JMS的本质差别，AMQP不从API层进行限定，而是直接</span><br><span class="line"> 	定义网络交换的数据格式。这使得实现了AMQP的</span><br><span class="line"> 	provider天然性就是跨平台的。以下是AMQP协议模型:</span><br></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/fizfYQ"><img src="https://z3.ax1x.com/2021/08/03/fizfYQ.png" alt="fizfYQ.png"></a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/unique_perfect/article/details/109380996">https://blog.csdn.net/unique_perfect/article/details/109380996</a></p>
+<h2 id="Spring的aop顺序"><a href="#Spring的aop顺序" class="headerlink" title="Spring的aop顺序"></a>Spring的aop顺序</h2><p>Spring 4/5 对于AOP的执行顺序是不同的</p>
+<h3 id="AOP的前置注解"><a href="#AOP的前置注解" class="headerlink" title="AOP的前置注解"></a>AOP的前置注解</h3><p><img src="/images/aop1.png"></p>
+<p>Spring 4 </p>
+<p><img src="/images/aop2.png"></p>
+<p>出异常情况下</p>
+<p><img src="/images/aop3.png"></p>
+<p><img src="/images/aop4.png"></p>
+<p>Spring 5</p>
+<p><img src="/images/aop5.png"></p>
+<p>出异常情况下</p>
+<p><img src="/images/aop6.png"></p>
+<p>总结：</p>
+<p><img src="/images/aop7.png"></p>
+<h2 id="Spring的循环依赖"><a href="#Spring的循环依赖" class="headerlink" title="Spring的循环依赖"></a>Spring的循环依赖</h2><h3 id="面试题："><a href="#面试题：" class="headerlink" title="面试题："></a>面试题：</h3><p><img src="/images/aop8.png"></p>
+<h3 id="什么是循环依赖："><a href="#什么是循环依赖：" class="headerlink" title="什么是循环依赖："></a>什么是循环依赖：</h3><p>多个Bean之间相互依赖，形成了一个闭环。比如，A依赖B，B依赖C，C依赖A。</p>
+<p><img src="/images/aop9.png"></p>
+<h3 id="两种注入方式对循环依赖的影响："><a href="#两种注入方式对循环依赖的影响：" class="headerlink" title="两种注入方式对循环依赖的影响："></a>两种注入方式对循环依赖的影响：</h3><p>构造注入：创建一个循环依赖无法解决的问题,无法解决</p>
+<p>我们AB循环依赖问题只要A的注入方式是setter注入并且<strong>Singketon</strong>就不会有循环依赖问题</p>
+<p><img src="/images/aop10.png"></p>
+<h3 id="循环依赖Java代码验证："><a href="#循环依赖Java代码验证：" class="headerlink" title="循环依赖Java代码验证："></a>循环依赖Java代码验证：</h3><h4 id="构造方式注入依赖："><a href="#构造方式注入依赖：" class="headerlink" title="构造方式注入依赖："></a>构造方式注入依赖：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceB</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ServiceA serviceA;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServiceB</span><span class="params">(ServiceA serviceA)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serviceA = serviceA;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceA</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ServiceB serviceB;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ServiceA</span><span class="params">(ServiceB serviceB)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.serviceB = serviceB;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientConstructor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">new</span> ServicrA(<span class="keyword">new</span> ServiceB());  <span class="comment">//报错！！</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Setter方式注入依赖："><a href="#Setter方式注入依赖：" class="headerlink" title="Setter方式注入依赖："></a>Setter方式注入依赖：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceA</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> ServiceB serviceB;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServiceB</span><span class="params">(ServiceB serviceB)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span> serviceB = serviceB;</span><br><span class="line">        System.out.println(<span class="string">&quot;A里面设置了B&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceB</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> ServiceA serviceA;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setServiceA</span><span class="params">(ServiceA serviceA)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span> serviceA = serviceA;</span><br><span class="line">        System.out.println(<span class="string">&quot;B里面设置了A&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientConstructor</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建serviceA</span></span><br><span class="line">        ServiceA a = <span class="keyword">new</span> ServiceA();</span><br><span class="line">        <span class="comment">//创建serviceA</span></span><br><span class="line">        ServiceB b = <span class="keyword">new</span> ServiceB();</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">        b.setServiceA(a);</span><br><span class="line">        <span class="comment">//</span></span><br><span class="line">		a.setServiceB(b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于Spring容器的循环依赖"><a href="#基于Spring容器的循环依赖" class="headerlink" title="基于Spring容器的循环依赖"></a>基于Spring容器的循环依赖</h3><p><img src="/images/aop11.png"></p>
+<h4 id="循环依赖异常"><a href="#循环依赖异常" class="headerlink" title="循环依赖异常"></a>循环依赖异常</h4><p><img src="/images/aop12.png"></p>
+<h4 id="重要结论："><a href="#重要结论：" class="headerlink" title="重要结论："></a>重要结论：</h4><p>Spring内部通过三级缓存来解决循环依赖 —–&gt;DefaultSingletonBeanRegistry</p>
+<p><img src="/images/aop13.png"></p>
+<p><img src="/images/aop14.png"></p>
+<h3 id="Spring循环依赖debug的前置知识"><a href="#Spring循环依赖debug的前置知识" class="headerlink" title="Spring循环依赖debug的前置知识"></a>Spring循环依赖debug的前置知识</h3><p><img src="/images/aop15.png"></p>
+<p><img src="/images/aop16.png"></p>
+<p><img src="/images/aop17.png"></p>
+<p><img src="/images/aop18.png"></p>
+<h3 id="Spring是怎么如何解决的循环依赖debug"><a href="#Spring是怎么如何解决的循环依赖debug" class="headerlink" title="Spring是怎么如何解决的循环依赖debug"></a>Spring是怎么如何解决的循环依赖debug</h3>
     
 
     
@@ -276,7 +377,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/08/03/RabbitMQ/" title="" target="_blank">http://example.com/2021/08/03/RabbitMQ/</a>
+          <a href="http://example.com/2021/04/13/Spring循环依赖/" title="Spring的aop顺序和循环依赖" target="_blank">http://example.com/2021/04/13/Spring循环依赖/</a>
         </li>
         
         <li>
@@ -293,7 +394,29 @@
   <div class="article-info article-info-index">
     
     
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java框架</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
     
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spring//" class="article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
     
 
@@ -343,7 +466,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/03/RabbitMQ/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/04/13/Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -358,18 +481,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2021/08/03/%E6%9C%80%E9%95%BF%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2-LC3/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/04/13/%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E5%AE%9E%E7%8E%B0%E6%A0%88/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          最长无重复字符的最长子串 LC3
+          使用数组实现栈
         
       </div>
     </a>
   
   
-    <a href="/2021/07/31/gateway%E5%81%9A%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">使用gateway网关 完成对微服务的权限鉴定</div>
+    <a href="/2021/04/13/myBatis%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mybatis</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -396,7 +519,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-MQ%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1 MQ引言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFMQ"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是MQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-MQ%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 MQ有哪些</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%B8%8D%E5%90%8CMQ%E7%89%B9%E7%82%B9"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 不同MQ特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-RabbitMQ-%E7%9A%84%E5%BC%95%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">2 RabbitMQ 的引言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-RabbitMQ"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 RabbitMQ</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E7%9A%84aop%E9%A1%BA%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text">Spring的aop顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AOP%E7%9A%84%E5%89%8D%E7%BD%AE%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">AOP的前置注解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="toc-number">2.</span> <span class="toc-text">Spring的循环依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">面试题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">什么是循环依赖：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F%E5%AF%B9%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84%E5%BD%B1%E5%93%8D%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">两种注入方式对循环依赖的影响：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96Java%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81%EF%BC%9A"><span class="toc-number">2.4.</span> <span class="toc-text">循环依赖Java代码验证：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E5%BC%8F%E6%B3%A8%E5%85%A5%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.4.1.</span> <span class="toc-text">构造方式注入依赖：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Setter%E6%96%B9%E5%BC%8F%E6%B3%A8%E5%85%A5%E4%BE%9D%E8%B5%96%EF%BC%9A"><span class="toc-number">2.4.2.</span> <span class="toc-text">Setter方式注入依赖：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ESpring%E5%AE%B9%E5%99%A8%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="toc-number">2.5.</span> <span class="toc-text">基于Spring容器的循环依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E5%BC%82%E5%B8%B8"><span class="toc-number">2.5.1.</span> <span class="toc-text">循环依赖异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E7%BB%93%E8%AE%BA%EF%BC%9A"><span class="toc-number">2.5.2.</span> <span class="toc-text">重要结论：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96debug%E7%9A%84%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">2.6.</span> <span class="toc-text">Spring循环依赖debug的前置知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E6%98%AF%E6%80%8E%E4%B9%88%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96debug"><span class="toc-number">2.7.</span> <span class="toc-text">Spring是怎么如何解决的循环依赖debug</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -601,6 +724,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MQ</a>
               </li>
             
             <div class="clearfix"></div>

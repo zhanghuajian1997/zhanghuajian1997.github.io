@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>有效的括号 LC20 | Hexo</title>
+  <title>Comparable 、Comparator | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content=".">
+  <meta name="description" content="Comparable 、Comparator">
 <meta property="og:type" content="article">
-<meta property="og:title" content="有效的括号 LC20">
-<meta property="og:url" content="http://example.com/2021/08/03/%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%20LC20/index.html">
+<meta property="og:title" content="Comparable 、Comparator">
+<meta property="og:url" content="http://example.com/2021/08/12/%E6%AF%94%E8%BE%83%E5%99%A8%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content=".">
+<meta property="og:description" content="Comparable 、Comparator">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-08-03T13:20:47.963Z">
-<meta property="article:modified_time" content="2021-08-03T14:23:38.917Z">
+<meta property="article:published_time" content="2021-08-12T06:43:51.035Z">
+<meta property="article:modified_time" content="2021-08-12T08:05:47.363Z">
 <meta property="article:author" content="ZHANG_JAVA">
-<meta property="article:tag" content="数据结构、算法">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -212,14 +212,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-有效的括号 LC20" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-比较器以及优先队列" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      有效的括号 LC20
+      Comparable 、Comparator
     </h1>
   
 
@@ -231,8 +231,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2021/08/03/%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%20LC20/" class="archive-article-date">
-        <time datetime="2021-08-03T13:20:47.963Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-03</time>
+<a href="/2021/08/12/%E6%AF%94%E8%BE%83%E5%99%A8%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" class="archive-article-date">
+        <time datetime="2021-08-12T06:43:51.035Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-12</time>
 </a>
 
   
@@ -245,7 +245,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">293字</span>
+      <span class="post-count">717字</span>
     </span>
   </span>
 
@@ -254,7 +254,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">3分</span>
     </span>
   </span>
 </div>
@@ -265,19 +265,53 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p> .</p>
+    <p> Comparable 、Comparator</p>
 <span id="more"></span>
 
-<h1 id="有效的括号-LC20"><a href="#有效的括号-LC20" class="headerlink" title="有效的括号 LC20"></a>有效的括号 LC20</h1><p>给定一个只包括 <code>&#39;(&#39;</code>，<code>&#39;)&#39;</code>，<code>&#39;&#123;&#39;</code>，<code>&#39;&#125;&#39;</code>，<code>&#39;[&#39;</code>，<code>&#39;]&#39;</code> 的字符串 <code>s</code> ，判断字符串是否有效。</p>
-<p>有效字符串需满足：</p>
-<ol>
-<li>左括号必须用相同类型的右括号闭合。</li>
-<li>左括号必须以正确的顺序闭合。</li>
+<h1 id="1-Java比较器的使用背景："><a href="#1-Java比较器的使用背景：" class="headerlink" title="1.Java比较器的使用背景："></a>1.Java比较器的使用背景：</h1><p>Java中的对象，正常情况下，只能进行比较：==  或  != 。不能使用 &gt; 或 &lt; 的<br>但是在开发场景中，我们需要对多个对象进行排序，言外之意，就需要比较对象的大小。<br>如何实现？使用两个接口中的任何一个：Comparable 或 Comparator</p>
+<h1 id="2-自然排序：使用Comparable接口"><a href="#2-自然排序：使用Comparable接口" class="headerlink" title="2.自然排序：使用Comparable接口"></a>2.自然排序：使用Comparable接口</h1><h2 id="2-1说明"><a href="#2-1说明" class="headerlink" title="2.1说明"></a>2.1说明</h2><p>1.像String、包装类等实现了Comparable接口，重写了compareTo(obj)方法，给出了比较两个对象大小的方式。</p>
+<p>2.像String、包装类重写compareTo()方法以后，进行了从小到大的排列</p>
+<ol start="3">
+<li><p>重写compareTo(obj)的规则：</p>
+<ul>
+<li><p>如果当前对象this大于形参对象obj，则返回正整数，</p>
+</li>
+<li><p>如果当前对象this小于形参对象obj，则返回负整数，</p>
+</li>
+<li><p>如果当前对象this等于形参对象obj，则返回零。</p>
+</li>
+</ul>
+</li>
+<li><p>对于自定义类来说，如果需要排序，我们可以让自定义类实现Comparable接口，重写compareTo(obj)方法。在compareTo(obj)方法中指明如何排序</p>
+</li>
 </ol>
-<h2 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(s.isEmpty())&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(s.length % <span class="number">2</span> != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Deque&lt;Character&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> c : s.toCharArray)&#123;</span><br><span class="line">            <span class="keyword">if</span>(c == <span class="string">&#x27;[&#x27;</span>)&#123;</span><br><span class="line">                stack.push(<span class="string">&#x27;]&#x27;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(c == )&#123;</span><br><span class="line">                stack.push(<span class="string">&#x27;)&#x27;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>()&#123;</span><br><span class="line">                stack.push(<span class="string">&#x27;&#125;&#x27;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(stack.empty() ||ｃ　!= stack.pop())&#123;  <span class="comment">//</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stack.isempty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-代码举例"><a href="#2-2-代码举例" class="headerlink" title="2.2 代码举例"></a>2.2 代码举例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Goods</span> <span class="keyword">implements</span>  <span class="title">Comparable</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">double</span> price;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//指明商品比较大小的方式:照价格从低到高排序,再照产品名称从高到低排序</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line"><span class="comment">//        System.out.println(&quot;**************&quot;);</span></span><br><span class="line">        <span class="keyword">if</span>(o <span class="keyword">instanceof</span> Goods)&#123;</span><br><span class="line">            Goods goods = (Goods)o;</span><br><span class="line">            <span class="comment">//方式一：</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.price &gt; goods.price)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">this</span>.price &lt; goods.price)&#123;</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line"><span class="comment">//                return 0;</span></span><br><span class="line">               <span class="keyword">return</span> -<span class="keyword">this</span>.name.compareTo(goods.name);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//方式二：</span></span><br><span class="line"><span class="comment">//           return Double.compare(this.price,goods.price);</span></span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">//        return 0;</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;传入的数据类型不一致！&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">// getter、setter、toString()、构造器：省略</span></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(s.isEmpty())&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(s.length % <span class="number">2</span> != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    Map&lt;Character&gt; map = <span class="keyword">new</span> Map&lt;&gt;();</span><br><span class="line">     map.put(<span class="string">&#x27;)&#x27;</span>,<span class="string">&#x27;(&#x27;</span>);</span><br><span class="line">     map.put(<span class="string">&#x27;]&#x27;</span>,<span class="string">&#x27;[&#x27;</span>);</span><br><span class="line">     map.put(<span class="string">&#x27;&#125;&#x27;</span>,<span class="string">&#x27;&#123;&#x27;</span>);</span><br><span class="line">     Deque&lt;Character&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; s.length;i++)&#123;</span><br><span class="line">        <span class="keyword">char</span> ch = s.charAt(i);</span><br><span class="line">        <span class="comment">//取到右括号，判断是否和栈顶元素相同</span></span><br><span class="line">        <span class="keyword">if</span>(map.containsKey(ch))&#123;</span><br><span class="line">            <span class="keyword">if</span>(stack.empty() ||　stack.peek() != map.get(ch))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//取到左括号，进入栈</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            stack.push(ch);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> stack.isEmpty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+
+
+<h1 id="3-定制排序：使用Comparator接口"><a href="#3-定制排序：使用Comparator接口" class="headerlink" title="3.定制排序：使用Comparator接口"></a>3.定制排序：使用Comparator接口</h1><h2 id="3-1-说明"><a href="#3-1-说明" class="headerlink" title="3.1 说明"></a>3.1 说明</h2><p>1.背景：</p>
+<p>当元素的类型没实现java.lang.Comparable接口而又不方便修改代码，或者实现了java.lang.Comparable接口的排序规则不适合当前的操</p>
+<p>作，那么可以考虑使用 Comparator 的对象来排序</p>
+<p>2.重写compare(Object o1,Object o2)方法，比较o1和o2的大小：</p>
+<ul>
+<li><p>如果方法返回正整数，则表示o1大于o2；</p>
+</li>
+<li><p>如果返回0，表示相等；</p>
+</li>
+<li><p>返回负整数，表示o1小于o2。</p>
+</li>
+</ul>
+<h2 id="3-2代码举例"><a href="#3-2代码举例" class="headerlink" title="3.2代码举例"></a>3.2代码举例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Comparator com = <span class="keyword">new</span> Comparator() &#123;</span><br><span class="line">    <span class="comment">//指明商品比较大小的方式:照产品名称从低到高排序,再照价格从高到低排序</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(o1 <span class="keyword">instanceof</span> Goods &amp;&amp; o2 <span class="keyword">instanceof</span> Goods)&#123;</span><br><span class="line">            Goods g1 = (Goods)o1;</span><br><span class="line">            Goods g2 = (Goods)o2;</span><br><span class="line">            <span class="keyword">if</span>(g1.getName().equals(g2.getName()))&#123;</span><br><span class="line">                <span class="keyword">return</span> -Double.compare(g1.getPrice(),g2.getPrice());</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> g1.getName().compareTo(g2.getName());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;输入的数据类型不一致&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用：<br>Arrays.sort(goods,com);</p>
+<p>Collections.sort(coll,com);</p>
+<p>new TreeSet(com);</p>
+<h1 id="4-两种排序方式对比"><a href="#4-两种排序方式对比" class="headerlink" title="4.两种排序方式对比"></a>4.两种排序方式对比</h1><ul>
+<li>   Comparable接口的方式一旦一定，保证Comparable接口实现类的对象在任何位置都可以比较大小。</li>
+<li>   Comparator接口属于临时性的比较。</li>
+</ul>
 
     
 
@@ -324,7 +358,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2021/08/03/有效的括号 LC20/" title="有效的括号 LC20" target="_blank">http://example.com/2021/08/03/有效的括号 LC20/</a>
+          <a href="http://example.com/2021/08/12/比较器以及优先队列/" title="Comparable 、Comparator" target="_blank">http://example.com/2021/08/12/比较器以及优先队列/</a>
         </li>
         
         <li>
@@ -346,7 +380,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构、算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
@@ -358,7 +392,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/栈//" class="article-tag-list-link color2">栈</a>
+        			<a href="/categories/比较器//" class="article-tag-list-link color4">比较器</a>
         		</li>
       		
 		</ul>
@@ -413,7 +447,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/03/%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7%20LC20/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/12/%E6%AF%94%E8%BE%83%E5%99%A8%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -428,18 +462,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2021/08/05/%E4%BA%94%E5%B1%82%E5%8D%8F%E8%AE%AE%EF%BC%8CTCP%E5%AE%89%E5%85%A8%EF%BC%8CDNS/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          五层协议，TCP如何保证安全
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/08/03/%E6%9C%80%E9%95%BF%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2-LC3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">最长无重复字符的最长子串 LC3</div>
+    <a href="/2021/08/11/LC%20198%20%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D%E7%B3%BB%E5%88%97%E9%A2%98%E7%9B%AE/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">lc 198 打家劫舍</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -466,7 +491,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7-LC20"><span class="toc-number">1.</span> <span class="toc-text">有效的括号 LC20</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">方法一：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A"><span class="toc-number">1.2.</span> <span class="toc-text">方法二：</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Java%E6%AF%94%E8%BE%83%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8%E8%83%8C%E6%99%AF%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">1.Java比较器的使用背景：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E8%87%AA%E7%84%B6%E6%8E%92%E5%BA%8F%EF%BC%9A%E4%BD%BF%E7%94%A8Comparable%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.</span> <span class="toc-text">2.自然排序：使用Comparable接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1%E8%AF%B4%E6%98%8E"><span class="toc-number">2.1.</span> <span class="toc-text">2.1说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E4%BB%A3%E7%A0%81%E4%B8%BE%E4%BE%8B"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 代码举例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E5%AE%9A%E5%88%B6%E6%8E%92%E5%BA%8F%EF%BC%9A%E4%BD%BF%E7%94%A8Comparator%E6%8E%A5%E5%8F%A3"><span class="toc-number">3.</span> <span class="toc-text">3.定制排序：使用Comparator接口</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E8%AF%B4%E6%98%8E"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2%E4%BB%A3%E7%A0%81%E4%B8%BE%E4%BE%8B"><span class="toc-number">3.2.</span> <span class="toc-text">3.2代码举例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E4%B8%A4%E7%A7%8D%E6%8E%92%E5%BA%8F%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="toc-number">4.</span> <span class="toc-text">4.两种排序方式对比</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -671,6 +696,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">MQ</a>
               </li>
             
             <div class="clearfix"></div>
