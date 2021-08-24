@@ -17,13 +17,19 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="布隆过滤器">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hiI8YQ.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hiIrY4.png">
 <meta property="og:image" content="http://example.com/images/bulong1.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hiHH58.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hibUdP.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hibKIK.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hiq8YT.png">
 <meta property="article:published_time" content="2021-06-25T13:42:54.859Z">
-<meta property="article:modified_time" content="2021-07-12T13:37:53.209Z">
+<meta property="article:modified_time" content="2021-08-24T02:09:32.902Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/bulong1.png">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/24/hiI8YQ.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -247,7 +253,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">798字</span>
+      <span class="post-count">913字</span>
     </span>
   </span>
 
@@ -256,7 +262,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">2分</span>
+      <span class="post-count">3分</span>
     </span>
   </span>
 </div>
@@ -273,7 +279,12 @@
 <h1 id="Bloom-Filter-概念"><a href="#Bloom-Filter-概念" class="headerlink" title="Bloom Filter 概念"></a>Bloom Filter 概念</h1><p>布隆过滤器（英语：Bloom Filter）是1970年由一个叫布隆的小伙子提出的。</p>
 <p>它实际上是一个很长的二进制向量和一系列随机映射函数。布隆过滤器可以用于检索一个元素是否在一个集合中。</p>
 <p>它的优点是空间效率和查询时间都远远超过一般的算法，缺点是有一定的误识别率和删除困难。</p>
-<h1 id="Bloom-Filter-原理"><a href="#Bloom-Filter-原理" class="headerlink" title="Bloom Filter 原理"></a>Bloom Filter 原理</h1><p>布隆过滤器的原理是，当一个元素被加入集合时，通过K个散列函数将这个元素映射成一个位数组中的K个点，把它们置为1。检索时，我们只要看看这些点是不是都是1就（大约）知道集合中有没有它了：如果这些点有任何一个0，则被检元素一定不在；如果都是1，则被检元素很可能在。这就是布隆过滤器的基本思想。</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hiI8YQ"><img src="https://z3.ax1x.com/2021/08/24/hiI8YQ.png" alt="hiI8YQ.png"></a></p>
+<h1 id="Bloom-Filter-原理"><a href="#Bloom-Filter-原理" class="headerlink" title="Bloom Filter 原理"></a>Bloom Filter 原理</h1><h2 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h2><p>将你好 这个数据存储到布隆过滤器中，经过三个Hash函数，计算出下标的位置，然后置为1</p>
+<p>查询过程：通过三个Hash函数算出下标，如果下标都是1，证明存在</p>
+<p>很难做删除的操作，容易出现误判（hash函数）</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hiIrY4"><img src="https://z3.ax1x.com/2021/08/24/hiIrY4.png" alt="hiIrY4.png"></a>](<a target="_blank" rel="noopener" href="https://imgtu.com/i/hiI8YQ">https://imgtu.com/i/hiI8YQ</a>)</p>
+<p>布隆过滤器的原理是，当一个元素被加入集合时，通过K个散列函数将这个元素映射成一个位数组中的K个点，把它们置为1。检索时，我们只要看看这些点是不是都是1就（大约）知道集合中有没有它了：如果这些点有任何一个0，则被检元素一定不在；如果都是1，则被检元素很可能在。这就是布隆过滤器的基本思想。</p>
 <p>Bloom Filter跟单哈希函数Bit-Map不同之处在于：Bloom Filter使用了k个哈希函数，每个字符串跟k个bit对应。从而降低了冲突的概率。</p>
 <p><img src="/images/bulong1.png"></p>
 <p>使用布隆过滤器防止缓存穿透</p>
@@ -283,6 +294,10 @@
 <p>反之如果不一样就说明不存在了</p>
 <p>那应用的场景在哪里呢？一般我们都会用来防止缓存击穿</p>
 <p>简单来说就是你数据库的id都是1开始然后自增的，那我知道你接口是通过id查询的，我就拿负数去查询，这个时候，会发现缓存里面没这个数据，我又去数据库查也没有，一个请求这样，100个，1000个，10000个呢？你的DB基本上就扛不住了，如果在缓存里面加上这个，是不是就不存在了，你判断没这个数据就不去查了，直接return一个数据为空不就好了嘛。</p>
+<h1 id="Bloom-Filter怎么解决缓存穿透的？"><a href="#Bloom-Filter怎么解决缓存穿透的？" class="headerlink" title="Bloom Filter怎么解决缓存穿透的？"></a>Bloom Filter怎么解决缓存穿透的？</h1><h2 id="白名单过滤器"><a href="#白名单过滤器" class="headerlink" title="白名单过滤器"></a>白名单过滤器</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hiHH58"><img src="https://z3.ax1x.com/2021/08/24/hiHH58.png" alt="hiHH58.png"></a></p>
+<h2 id="黑名单过滤器："><a href="#黑名单过滤器：" class="headerlink" title="黑名单过滤器："></a>黑名单过滤器：</h2><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hibUdP"><img src="https://z3.ax1x.com/2021/08/24/hibUdP.png" alt="hibUdP.png"></a></p>
+<h1 id="Bloom-Filter使用场景"><a href="#Bloom-Filter使用场景" class="headerlink" title="Bloom Filter使用场景"></a>Bloom Filter使用场景</h1><p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hibKIK"><img src="https://z3.ax1x.com/2021/08/24/hibKIK.png" alt="hibKIK.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hiq8YT"><img src="https://z3.ax1x.com/2021/08/24/hiq8YT.png" alt="hiq8YT.png"></a></p>
 <h1 id="Bloom-Filter的缺点"><a href="#Bloom-Filter的缺点" class="headerlink" title="Bloom Filter的缺点"></a>Bloom Filter的缺点</h1><p>bloom filter之所以能做到在时间和空间上的效率比较高，是因为牺牲了判断的准确率、删除的便利性</p>
 <ul>
 <li>存在误判，可能要查到的元素并没有在容器中，但是hash之后得到的k个位置上值都是1。如果bloom filter中存储的是黑名单，那么可以通过建立一个白名单来存储可能会误判的元素。</li>
@@ -465,7 +480,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bloom-Filter-%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">Bloom Filter 概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bloom-Filter-%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">Bloom Filter 原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bloom-Filter%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">Bloom Filter的缺点</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bloom-Filter-%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">Bloom Filter 概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bloom-Filter-%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">Bloom Filter 原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">举例：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bloom-Filter%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%9A%84%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">Bloom Filter怎么解决缓存穿透的？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BD%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">白名单过滤器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E5%90%8D%E5%8D%95%E8%BF%87%E6%BB%A4%E5%99%A8%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">黑名单过滤器：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bloom-Filter%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">4.</span> <span class="toc-text">Bloom Filter使用场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bloom-Filter%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">5.</span> <span class="toc-text">Bloom Filter的缺点</span></a></li></ol>
                     </div>
                 </span>
             </div>

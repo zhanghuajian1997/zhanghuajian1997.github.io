@@ -17,13 +17,14 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Redis">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hkK1oR.png">
 <meta property="og:image" content="http://example.com/images/redis5.png">
 <meta property="article:published_time" content="2021-06-25T12:40:12.708Z">
-<meta property="article:modified_time" content="2021-07-20T13:24:59.292Z">
+<meta property="article:modified_time" content="2021-08-24T08:05:52.467Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/redis5.png">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/24/hkK1oR.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -334,6 +335,7 @@
 <li>事件处理器（连接应答处理器、命令请求处理器、命令回复处理器）</li>
 </ul>
 <p>多个 <strong>Socket</strong> 可能会并发产生不同的操作，每个操作对应不同的文件事件，但是 IO 多路复用程序会监听多个 <strong>Socket</strong>，会将 <strong>Socket</strong> 产生的事件放入队列中排队，事件分派器每次从队列中取出一个事件，把该事件交给对应的事件处理器进行处理。</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hkK1oR"><img src="https://z3.ax1x.com/2021/08/24/hkK1oR.png" alt="hkK1oR.png"></a></p>
 <h2 id="Redis为什么那么快？"><a href="#Redis为什么那么快？" class="headerlink" title="Redis为什么那么快？"></a>Redis为什么那么快？</h2><p>1.完全基于内存，绝大部分请求是纯粹的内存操作，非常快速。它的，数据存在内存中，类似于HashMap，HashMap的优势就是查找和操作的时间复杂度都是O(1)；</p>
 <p>2.数据结构简单，对数据操作也简单，Redis中的数据结构是专门进行设计的；</p>
 <p>3.采用单线程，避免了不必要的上下文切换和竞争条件，也不存在多进程或者多线程导致的切换而消耗 CPU，不用去考虑各种锁的问题，不存在加锁释放锁操作，没有因为可能出现死锁而导致的性能消耗；</p>

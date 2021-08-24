@@ -17,16 +17,19 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Redis深度解析">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hi4u9A.png">
 <meta property="og:image" content="http://example.com/images/redis1.png">
 <meta property="og:image" content="http://example.com/images/redis2.png">
 <meta property="og:image" content="http://example.com/images/redis3.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hi4a3n.png">
 <meta property="og:image" content="http://example.com/images/redis4.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hi5wPH.png">
 <meta property="article:published_time" content="2021-04-13T07:27:26.000Z">
-<meta property="article:modified_time" content="2021-07-21T11:46:40.960Z">
+<meta property="article:modified_time" content="2021-08-24T01:32:55.131Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/redis1.png">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/24/hi4u9A.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -284,6 +287,7 @@
 <p>缓存穿透是指，<strong>缓存和数据库都没有的数据</strong>，被大量请求，比如订单号不可能为<code>-1</code>，但是用户请求了大量订单号为<code>-1</code>的数据，由于数据不存在，缓存就也不会存在该数据，所有的请求都会直接穿透到数据库。</p>
 <p>注意：穿透的意思是，都没有，直接一路打到数据库。</p>
 <p>这里需要注意和缓存击穿的区别，缓存击穿，是指一个key非常热点，在不停的扛着大并发，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个屏障上凿开了一个洞。</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hi4u9A"><img src="https://z3.ax1x.com/2021/08/24/hi4u9A.png" alt="hi4u9A.png"></a></p>
 <h4 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h4><p>（1）布隆过滤器是一种数据结构，垃圾网站和正常网站加起来全世界据统计也有几十亿个。网警要过滤这些垃圾网站，总不能到数据库里面一个一个去比较吧，这就可以使用布隆过滤器。假设我们存储一亿个垃圾网站地址。</p>
 <p>可以先有一亿个二进制比特，然后网警用八个不同的随机数产生器（F1,F2, …,F8） 产生八个信息指纹（f1, f2, …, f8）。接下来用一个随机数产生器 G 把这八个信息指纹映射到 1 到1亿中的八个自然数 g1, g2, …,g8。最后把这八个位置的二进制全部设置为一。过程如下：</p>
 <p><img src="/images/redis1.png" alt="redis1"></p>
@@ -295,20 +299,23 @@
 <p>但是这种方法会存在两个问题：</p>
 <p>如果空值能够被缓存起来，这就意味着缓存需要更多的空间存储更多的键，因为这当中可能会有很多的空值的键；即使对空值设置了过期时间，还是会存在缓存层和存储层的数据会有一段时间窗口的不一致，这对于需要保持一致性的业务会有影响。（优化：后台设置时主动删除空值，并缓存把值进去）</p>
 <p>另外一个常见的方法，则是针对数据库与缓存都没有的数据，对空的结果进行缓存，但是过期时间设置得较短，一般五分钟内。而这种数据，如果数据库有写入，或者更新，必须同时刷新缓存，否则会导致不一致的问题存在</p>
-<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿:"></a>缓存击穿:</h3><h4 id="概念：-1"><a href="#概念：-1" class="headerlink" title="概念："></a>概念：</h4><p>   缓存击穿是指缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力</p>
+<h3 id="缓存击穿"><a href="#缓存击穿" class="headerlink" title="缓存击穿:"></a>缓存击穿:</h3><h4 id="概念：-1"><a href="#概念：-1" class="headerlink" title="概念："></a>概念：</h4><p>   缓存击穿是指一个非常热点的key，缓存中没有但数据库中有的数据（一般是缓存时间到期），这时由于并发用户特别多，同时读缓存没读到数据，又同时去数据库去取数据，引起数据库压力瞬间增大，造成过大压力</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hi4a3n"><img src="https://z3.ax1x.com/2021/08/24/hi4a3n.png" alt="hi4a3n.png"></a></p>
 <h4 id="解决方案：-1"><a href="#解决方案：-1" class="headerlink" title="解决方案："></a>解决方案：</h4><ol>
 <li>设置热点数据永远不过期。</li>
-<li>如果数据一定会过期，那么就需要在数据为空的时候，设置一个互斥的锁，只让一个请求通过，只有一个请求去数据库拉取数据，取完数据，不管如何都需要释放锁，异常的时候也需要释放锁，要不其他线程会一直拿不到锁。</li>
+<li><strong>分布式锁：</strong>如果数据一定会过期，那么就需要在数据为空的时候，为数据库设置一个互斥的锁，只让一个请求通过，只有一个请求去数据库拉取数据，取完数据，然后写回到redis中，这样其他线程就在redis取到数据就返回了。不管如何都需要释放锁，异常的时候也需要释放锁，要不其他线程会一直拿不到锁。</li>
 </ol>
 <h3 id="缓存雪崩："><a href="#缓存雪崩：" class="headerlink" title="缓存雪崩："></a>缓存雪崩：</h3><h4 id="概念：-2"><a href="#概念：-2" class="headerlink" title="概念："></a>概念：</h4><p>缓存雪崩是指，缓存中有大量的数据，在同一个时间点，或者较短的时间段内，全部过期了或者缓存层出现了错误，这个时候请求过来，缓存没有数据，都会请求数据库，则数据库的压力就会突增，扛不住就会宕机。</p>
 <p><img src="/images/redis4.png" alt="redis4"></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hi5wPH"><img src="https://z3.ax1x.com/2021/08/24/hi5wPH.png" alt="hi5wPH.png"></a></p>
 <h4 id="解决方案：-2"><a href="#解决方案：-2" class="headerlink" title="解决方案："></a>解决方案：</h4><p><strong>（1）redis高可用</strong></p>
 <p>这个思想的含义是，既然redis有可能挂掉，那我多增设几台redis，这样一台挂掉之后其他的还可以继续工作，其实就是搭建的集群。</p>
 <p><strong>（2）限流降级</strong></p>
 <p>这个解决方案的思想是，在缓存失效后，通过加锁或者队列来控制读数据库写缓存的线程数量。比如对某个key只允许一个线程查询数据和写缓存，其他线程等待。</p>
-<p><strong>（3）数据预热</strong></p>
-<p>数据加热的含义就是在正式部署之前，我先把可能的数据先预先访问一遍，这样部分可能大量访问的数据就会加载到缓存中。在即将发生大并发访问前手动触发加载缓存不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。</p>
+<p><strong>（3）数据预热</strong>,</p>
+<p>数据加热的含义就是在正式部署之前，我先把可能的数据先预先访问一遍，这样部分可能大量访问的数据就会加载到缓存中。在即将发生大并发访问前手动触发加载缓存不同的key，<strong>设置不同的过期时间，让缓存失效的时间点尽量均匀。</strong></p>
 <p><strong>（4）如果是热点数据，那么可以考虑设置永不过期</strong></p>
+<p> <strong>（5） 定时任务跑 设置缓存的时间</strong></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>缓存穿透是指数据库原本就没有的数据，请求如入无人之境，直奔数据库，而缓存击穿，则是指数据库有数据，缓存也本应该有数据，但是突然缓存过期了，这层保护屏障被击穿了，请求直奔数据库，缓存雪崩则是指很多缓存同一个时间失效了，流量全部涌入数据库，造成数据库极大的压力。</p>
 <h2 id="Redis常见性能问题和解决方案？"><a href="#Redis常见性能问题和解决方案？" class="headerlink" title="Redis常见性能问题和解决方案？"></a>Redis常见性能问题和解决方案？</h2><p>(1) Master最好不要做任何持久化工作，如RDB内存快照和AOF日志文件</p>
 <p>(2) 如果数据比较重要，某个Slave开启AOF备份数据，策略设置为每秒同步一次</p>
@@ -470,18 +477,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2021/04/13/javaweb/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/04/13/ssm/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          javaweb常见问题
+          ssm框架相关知识
         
       </div>
     </a>
   
   
-    <a href="/2021/04/13/CopyOnWriteArrayList/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">CopyOnWriteArrayList</div>
+    <a href="/2021/04/13/RabbitMQ/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MQ</div>
       <i class="icon-circle-right"></i>
     </a>
   

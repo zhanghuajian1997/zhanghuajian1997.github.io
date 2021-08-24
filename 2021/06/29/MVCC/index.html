@@ -17,14 +17,17 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="MVCC">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hFv8jU.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hFvO5n.png">
+<meta property="og:image" content="https://z3.ax1x.com/2021/08/24/hFzw6K.png">
 <meta property="og:image" content="http://example.com/images/mvcc1.png">
 <meta property="og:image" content="http://example.com/images/mvcc2.png">
 <meta property="article:published_time" content="2021-06-29T06:54:30.088Z">
-<meta property="article:modified_time" content="2021-06-29T06:54:30.088Z">
+<meta property="article:modified_time" content="2021-08-24T07:02:10.338Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/mvcc1.png">
+<meta name="twitter:image" content="https://z3.ax1x.com/2021/08/24/hFv8jU.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -284,7 +287,7 @@
 <p>​    insert (排他锁)</p>
 <p>​    delete (排他锁)</p>
 <p>​    串行化事务隔离级别</p>
-<p>快照读<br>    快照读的实现是基于多版本并发控制，即MVCC，既然是多版本，那么快照读读到的数据不一定是当前最新的数据，有可能是之前历史    版本的数据。</p>
+<p>快照读：<br>    快照读的实现是基于多版本并发控制，<strong>即MVCC</strong>，既然是多版本，那么快照读读到的数据不一定是当前最新的数据，有可能是之前历史    版本的数据。</p>
 <p>​    如下操作是快照读：</p>
 <p>​    不加锁的select操作（注：事务级别不是串行化）</p>
 <p>快照读与mvcc的关系：</p>
@@ -300,6 +303,10 @@
 <h3 id="因此有了下面提高并发性能的组合拳："><a href="#因此有了下面提高并发性能的组合拳：" class="headerlink" title="因此有了下面提高并发性能的组合拳："></a>因此有了下面提高并发性能的组合拳：</h3><p>MVCC + 悲观锁：MVCC解决读写冲突，悲观锁解决写写冲突</p>
 <p>MVCC + 乐观锁：MVCC解决读写冲突，乐观锁解决写写冲突</p>
 <h2 id="MVCC的实现原理："><a href="#MVCC的实现原理：" class="headerlink" title="MVCC的实现原理："></a>MVCC的实现原理：</h2><p>它的实现原理主要是版本链，undo日志 ，Read View 来实现的</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hFv8jU"><img src="https://z3.ax1x.com/2021/08/24/hFv8jU.png" alt="hFv8jU.png"></a></p>
+<p>ReadView是判断在版本链中应选择哪个版本？</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hFvO5n"><img src="https://z3.ax1x.com/2021/08/24/hFvO5n.png" alt="hFvO5n.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/hFzw6K"><img src="https://z3.ax1x.com/2021/08/24/hFzw6K.png" alt="hFzw6K.png"></a></p>
 <h3 id="版本链"><a href="#版本链" class="headerlink" title="版本链"></a>版本链</h3><p>我们数据库中的每行数据，除了我们肉眼看见的数据，还有几个<code>隐藏字段</code>，得开天眼才能看到。分别是<code>db_trx_id</code>、<code>db_roll_pointer</code>、<code>db_row_id</code>。</p>
 <p>db_trx_id</p>
 <p>​    6byte，最近修改(修改/插入)<code>事务ID</code>：记录<code>创建</code>这条记录/<code>最后一次修改</code>该记录的<code>事务ID</code>。</p>
