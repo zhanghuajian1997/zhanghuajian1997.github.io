@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://example.com/images/jiazai6.png">
 <meta property="og:image" content="http://example.com/images/weipai1.png">
 <meta property="article:published_time" content="2021-06-28T14:31:10.805Z">
-<meta property="article:modified_time" content="2021-07-12T13:39:29.988Z">
+<meta property="article:modified_time" content="2021-09-10T13:52:08.981Z">
 <meta property="article:author" content="ZHANG_JAVA">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
@@ -255,7 +255,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">4.3k字</span>
+      <span class="post-count">4.7k字</span>
     </span>
   </span>
 
@@ -264,7 +264,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">14分</span>
+      <span class="post-count">16分</span>
     </span>
   </span>
 </div>
@@ -349,10 +349,22 @@
 </ul>
 <h3 id="用户自定义类加载器"><a href="#用户自定义类加载器" class="headerlink" title="用户自定义类加载器"></a>用户自定义类加载器</h3><p>在Java的日常应用程序开发中，类的加载几乎是由上述3种类加载器相互配合执行的，在必要时，我们还可以自定义类加载器，来定制类的加载方式。 为什么要自定义类加载器？</p>
 <ul>
-<li>隔离加载类</li>
-<li>修改类加载的方式</li>
-<li>扩展加载源</li>
-<li>防止源码泄漏</li>
+<li>隔离加载类<ul>
+<li>在某个应用中需要使用中间件，这个中间件有自己的依赖的jar包，在同一个工程里面，如果引用多个框架的话，有可能会出现某些类的路径一样、类名也相同，这样就会出现类的冲突了，这个时候就需要做一个类的仲裁，像现在主流的容器类的框架一样，它们都会自定义类的加载器，实现不同的中间件隔离，避免类的冲突</li>
+</ul>
+</li>
+<li>修改类加载的方式<ul>
+<li>在整个类的加载过程中，bootstrap引导类加载器是一定被使用的，用来加载系统需要的核心API，除了bootstrap引导类加载器之外，其他的类加载器也不是必须的，我们可以根据实际情况中修改类的加载方式，具体要用的时候我们再引用</li>
+</ul>
+</li>
+<li>扩展加载源<ul>
+<li>加载的类除了可以在网络、本地物理磁盘、jar包去加载之外，我们还可以考虑通过数据库、电视机的机顶盒等等来扩展加载源</li>
+</ul>
+</li>
+<li>防止源码泄漏<ul>
+<li>当有了字节码文件或者没有反编译的手段，java代码是很容易被编译和篡改，所以，为了防止编译和篡改，我们可以对字节码文件进行加密，当我们需要运行这个字节码文件时候，我们需要解密来还原成内存中的类，而这个解密的操作，就需要自定义类的加载器来实现</li>
+</ul>
+</li>
 </ul>
 <p>用户自定义类加载器实现步骤：</p>
 <ul>
